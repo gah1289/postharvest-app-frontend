@@ -1,0 +1,32 @@
+.navbar {
+	background-image: linear-gradient(96.5deg, rgba(39, 103, 187, 1) 10.4%, rgba(16, 72, 144, 1) 87.7%);
+	font-family: 'Source Sans Pro', sans-serif;
+	text-decoration: none;
+	color: rgb(137, 207, 240);
+}
+
+.navbar button,
+.navbar a {
+	color: rgb(137, 207, 240);
+	border: none;
+	/* font-size: 16px; */
+	/* height: 45px; */
+}
+
+.navbar a:hover,
+.navbar button:hover {
+	font-family: 'Source Sans Pro', sans-serif;
+	text-decoration: none;
+	color: rgb(170, 215, 236);
+	font-weight: 700;
+}
+img {
+	min-height: var(--bs-navbar-toggler-font-size);
+}
+
+.logged-in-btn {
+	border: 2px solid;
+	padding: 7px;
+	border-radius: 100px;
+	background-color: rgba(39, 103, 187, 1);
+}

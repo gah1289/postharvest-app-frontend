@@ -1,0 +1,40 @@
+Home Page  
+    Login logo top right - dropdown menu
+        If logged in:            
+            Profile
+                Edit Profile
+            Commodity List
+            Shelf Life Studies (Admin only)
+            Log Out
+        If Logged Out:
+            Commodity List
+            Log In
+    Search Component
+
+Login
+    Login Form
+    Link to register
+Register
+    Register Form
+Advanced Search
+    Search Component
+    Filter by:
+        Commodity Name
+        Respiration Class
+        Climacteric vs non-Climacteric
+
+Commodity Card
+    Commodity Information
+    Commodity name
+    Variety
+    Scientific Name
+    Recommended cooling methods
+    Climacteric or non-climacteric
+    Shelf Life Card
+    Respiration Rate Card
+    Temperature Card
+    Links to download any Windham Packaging Studies
+    Sources
+
+
+

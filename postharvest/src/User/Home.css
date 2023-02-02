@@ -1,0 +1,61 @@
+.windham-logo {
+	font-family: 'Cinzel', serif;
+	font-size: 6vh;
+	color: rgb(170, 215, 236);
+}
+
+.windham-logo-img {
+	height: 6vh;
+	display: inline-flex;
+}
+
+.postharvest-banner {
+	margin-top: 20px;
+	font-family: 'Source Sans Pro', sans-serif;
+	font-size: 13vh;
+
+	margin-bottom: 40px;
+	text-transform: uppercase;
+	color: #fff;
+	letter-spacing: 3px;
+}
+
+.search-bar input {
+	font-family: 'Source Sans Pro', sans-serif;
+	font-weight: bolder;
+	letter-spacing: 1.5px;
+	width: 50%;
+	height: 40px;
+	padding: 10px;
+	background: url("/home/gah1289/springboard_assignments/50-capstone-two/postharvest-app-frontend/postharvest/src/Images/search-regular.svg")
+		no-repeat;
+	background-color: #fff;
+	background-position: 95%, 5%;
+	background-image: rgba(39, 103, 187, 1);
+	background-size: 20px;
+}
+
+.banner {
+	padding: 10px;
+	height: 400px;
+	min-height: auto;
+	background-image: linear-gradient(96.5deg, rgba(39, 103, 187, 1) 10.4%, rgba(16, 72, 144, 1) 87.7%);
+	overflow: hidden;
+	float: inline-end;
+}
+
+.link {
+	margin-right: 12.5%;
+}
+
+.magnifying-glass {
+	background-color: #fff;
+}
+
+.footer {
+	padding: 10px;
+	font-family: 'Source Sans Pro', sans-serif;
+	text-transform: uppercase;
+	letter-spacing: 1.5px;
+	font-size: 13px;
+}
