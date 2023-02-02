@@ -21,8 +21,16 @@ function App() {
 		isLoggedIn,
 		setIsLoggedIn
 	] = useState(false);
+
+	const [
+		isLoading,
+		setIsLoading
+	] = useState(true);
 	PostharvestApi.token = localStorage.token || undefined;
 	const user = useRef(INITIAL_USER);
+
+	console.log('USER', user);
+	console.log('Logged in', isLoggedIn);
 
 	const username = localStorage.getItem('username') || undefined;
 
@@ -31,7 +39,7 @@ function App() {
 		if (username) {
 			let userRes = await PostharvestApi.getUser(username);
 			user.current = userRes;
-			// setIsLoading(false);
+			setIsLoading(false);
 		}
 	}
 	setUser();
@@ -42,7 +50,7 @@ function App() {
 
 	return (
 		<div className="App">
-			<ItemContext.Provider value={{ setIsLoggedIn, user, isLoggedIn }}>
+			<ItemContext.Provider value={{ setIsLoggedIn, user, isLoggedIn, isLoading }}>
 				<NavBar />
 				<PostharvestRoutes />
 			</ItemContext.Provider>

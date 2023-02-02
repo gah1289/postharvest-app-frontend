@@ -54,6 +54,11 @@ function NavBar(props) {
 						)}
 						{isLoggedIn && (
 							<NavItem>
+								<NavLink href="/profile">Profile</NavLink>
+							</NavItem>
+						)}
+						{isLoggedIn && (
+							<NavItem>
 								<NavLink href="/logout">Log Out</NavLink>
 							</NavItem>
 						)}

@@ -68,6 +68,22 @@ class PostharvestApi {
 		this.token = undefined;
 		localStorage.clear();
 	}
+
+	// Allows a user update their information. Can be a partial update. Automatically updates user information by logging them out and logging them back in with updated information.
+
+	static async updateUser(currUsername, currPw, data) {
+		const verifyUserData = { username: currUsername, password: currPw };
+		await this.request(`auth/token`, { ...verifyUserData }, 'post');
+		const patchRes = await this.request(`users/${currUsername}`, { ...data }, 'patch');
+		await this.logout();
+		const newUserLoginData = {
+			username : patchRes.user.username || currUsername,
+			password : data.password || currPw
+		};
+		const userRes = await this.login(newUserLoginData);
+
+		return userRes.user;
+	}
 }
 
 export default PostharvestApi;
