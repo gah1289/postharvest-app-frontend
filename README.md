@@ -1,5 +1,27 @@
 # postharvest-app-frontend
 
+## User Flow
+### NavBar
+- Appears at the top of every page:
+  - User Logged Out: 
+    - Button with Windham logo on the left that is a link to Home. 
+    - Button with user logo on the right that is a drop down menu with links to the following Routes:
+      -  Login 
+  - User Logged In:
+    - Button with Windham logo on the left that is a link to Home. 
+    - Button with user initials on the right that is a drop down menu with links to the following Routes:
+      - Profile 
+      - Logout
+
+### Routes
+#### User
+##### Home
+- Shows a basic search bar for commodities.
+##### Login
+- Login form => onSubmit call Postharvest.Api.login(), logs the user in
+##### Signup
+- Register form onSubmit call Postharvest.Api.register(), resisters the user and logs them in
+
 
 ## API
 **token**: Stores token for auth
