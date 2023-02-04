@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { Axios } from 'axios';
 
 const BASE_URL = process.env.REACT_APP_BASE_URL || 'http://localhost:3001';
 
@@ -83,6 +83,41 @@ class PostharvestApi {
 		const userRes = await this.login(newUserLoginData);
 
 		return userRes.user;
+	}
+
+	// *****************COMMODITY****************
+
+	// Get a list of commodities from commodities table.
+	static async getCommodoties() {
+		const commodities = await this.request(`commodities/`);
+		return commodities;
+	}
+
+	// Get a single commodity and its details.
+	static async getCommodity(id) {
+		const commodity = await this.request(`commodities/${id}`);
+
+		return commodity;
+	}
+
+	// ***********TEMPERATURE RECOMMENDATIONS
+
+	// Add a temperature recommendation to temperature_recommendations
+	static async addTempRec(id, data) {
+		const tempRes = await this.request(`temperature`, { commodityId: id, data }, 'post');
+		return tempRes;
+	}
+
+	// Update a temperature recommendation in temperature_recommendations given an id
+	static async updateTempRec(id, data) {
+		const tempRes = await this.request(`temperature/${id}`, { ...data }, 'patch');
+		return tempRes;
+	}
+
+	static async deleteTempRec(id) {
+		const res = await this.request(`temperature/${id}`, {}, 'delete');
+
+		return res;
 	}
 }
 

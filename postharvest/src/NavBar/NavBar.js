@@ -3,7 +3,6 @@ import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } f
 import logo from '../Images/windham-logo-blue.svg';
 import './NavBar.css';
 
-import { Container, Row, Col, InputGroup, Input, Form } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -52,6 +51,9 @@ function NavBar(props) {
 								<NavLink href="/login">Log In</NavLink>
 							</NavItem>
 						)}
+						<NavItem>
+							<NavLink href="/search">Commodities</NavLink>
+						</NavItem>
 						{isLoggedIn && (
 							<NavItem>
 								<NavLink href="/profile">Profile</NavLink>

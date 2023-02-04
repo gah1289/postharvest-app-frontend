@@ -3,13 +3,8 @@ import './Home.css';
 import React, { useState } from 'react';
 import { Container, Row, Col, InputGroup, Input, Form } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { faUser } from '@fortawesome/free-solid-svg-icons/faUser';
 
 function Home() {
-	library.add(faUser);
-
 	return (
 		<div>
 			<div className="banner">

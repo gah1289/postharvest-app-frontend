@@ -1,9 +1,7 @@
-import logo from '../Images/windham-logo-blue.svg';
 import './Signup.css';
-import React, { useEffect, useState, useContext, useRef } from 'react';
-import { Container, Row, Col, Button, Form, FormGroup, Label, Input, FormFeedback } from 'reactstrap';
+import React, { useState, useContext } from 'react';
+import { Container, Row, Col, Form, FormGroup, Label, Input, FormFeedback } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { useNavigate } from 'react-router-dom';
 import PostharvestApi from '../api';

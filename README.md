@@ -23,6 +23,10 @@
 #### Profile
 - Allows user to see and edit their profile information. 
 - Profile foorm onSubmit call Postharvest.Api.updateUser()
+#### Search
+- Displays list of commodities. 
+  - Each Item on the list is a link that directs the user to a Commodity page 
+  - Admins can add, update, and delete temperature recommendations, shelf life, study, and respiration information
 
 
 ## API

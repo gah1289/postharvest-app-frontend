@@ -1,0 +1,23 @@
+.edit-mode {
+	visibility: visible;
+}
+
+.view-mode {
+	visibility: hidden;
+}
+
+.delete {
+	color: rgb(234, 67, 53);
+}
+.delete:hover {
+	color: rgb(178, 53, 41);
+}
+
+.add {
+	border: solid rgb(24, 82, 158);
+	color: rgb(24, 82, 158);
+}
+
+.edit {
+	color: rgb(24, 82, 158);
+}
