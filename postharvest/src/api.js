@@ -88,7 +88,7 @@ class PostharvestApi {
 	// *****************COMMODITY****************
 
 	// Get a list of commodities from commodities table.
-	static async getCommodoties() {
+	static async getCommodities() {
 		const commodities = await this.request(`commodities/`);
 		return commodities;
 	}
@@ -104,18 +104,136 @@ class PostharvestApi {
 
 	// Add a temperature recommendation to temperature_recommendations
 	static async addTempRec(id, data) {
-		const tempRes = await this.request(`temperature`, { commodityId: id, data }, 'post');
-		return tempRes;
+		const res = await this.request(`temperature`, { commodityId: id, data }, 'post');
+		return res;
 	}
 
 	// Update a temperature recommendation in temperature_recommendations given an id
 	static async updateTempRec(id, data) {
-		const tempRes = await this.request(`temperature/${id}`, { ...data }, 'patch');
-		return tempRes;
+		const res = await this.request(`temperature/${id}`, { ...data }, 'patch');
+		return res;
 	}
 
 	static async deleteTempRec(id) {
 		const res = await this.request(`temperature/${id}`, {}, 'delete');
+
+		return res;
+	}
+
+	// ***********SHELF LIFE
+
+	// Add a shelf life data to shelf_life
+	static async addShelfLifeData(id, data) {
+		const res = await this.request(`shelf-life`, { commodityId: id, data }, 'post');
+		return res;
+	}
+
+	// Update shelf life data in shelf_lifes given an id
+	static async updateShelfLifeData(id, data) {
+		const res = await this.request(`shelf-life/${id}`, { ...data }, 'patch');
+		return res;
+	}
+
+	static async deleteShelfLifeData(id) {
+		const res = await this.request(`shelf-life/${id}`, {}, 'delete');
+
+		return res;
+	}
+
+	// ***********RESPIRATION RATE
+	// Add a respiration data to respiration_rates
+	static async addRespirationData(id, data) {
+		const res = await this.request(`respiration`, { commodityId: id, data }, 'post');
+		return res;
+	}
+
+	// Update shelf life data in respiration_rates given an id
+	static async updateRespirationData(id, data) {
+		const res = await this.request(`respiration/${id}`, { ...data }, 'patch');
+		return res;
+	}
+
+	// Delete respiration data
+
+	static async deleteRespirationData(id) {
+		const res = await this.request(`respiration/${id}`, {}, 'delete');
+
+		return res;
+	}
+
+	// ***********ETHYLENE DATA
+
+	// Add  ethylene data to ethylene_sensitivity
+	static async addEthyleneData(id, data) {
+		console.log(id, data);
+		const ethyleneRes = await this.request(`ethylene`, { commodityId: id, data }, 'post');
+		console.log(ethyleneRes);
+		return ethyleneRes;
+	}
+
+	// Update a ethylene data in ethylene_sensitivity given an id
+	static async updateEthyleneData(id, data) {
+		const ethyleneRes = await this.request(`ethylene/${id}`, { ...data }, 'patch');
+		return ethyleneRes;
+	}
+
+	// Delete ethylene data
+	static async deleteEthyleneData(id) {
+		const res = await this.request(`ethylene/${id}`, {}, 'delete');
+
+		return res;
+	}
+
+	// ***********WINDHAM SHELF LIFE STUDIES
+
+	// get study by id
+	static async getStudy(id) {
+		const res = await this.request(`studies/${id}`);
+		return res;
+	}
+	// get study by id
+	static async getStudies() {
+		let studies = [];
+		const res = await this.request(`studies/`);
+		for (let study of res.studies) {
+			console.log(study.id);
+			let s = await this.getStudy(study.id);
+			studies.push(s);
+		}
+		return studies;
+	}
+
+	// Add  ethylene data to ethylene_sensitivity
+	static async addStudy(id, data) {
+		const res = await this.request(`studies`, { commodityId: id, data }, 'post');
+		console.log(res);
+		return res;
+	}
+
+	// Update a ethylene data in ethylene_sensitivity given an id
+	static async updateStudy(id, data) {
+		const res = await this.request(`studies/${id}`, { ...data }, 'patch');
+		return res;
+	}
+
+	// Delete shelf life study from windham_studies
+	static async deleteStudy(id) {
+		const res = await this.request(`studies/${id}`, {}, 'delete');
+
+		return res;
+	}
+
+	// ***********REFERENCES
+
+	// Add  references to refs
+	static async addReference(id, data) {
+		const res = await this.request(`ref`, { commodityId: id, data }, 'post');
+		return res;
+	}
+
+	// Delete reference from refs
+	static async deleteReference(id, source) {
+		const res = await this.request(`ref/${id}`, { source }, 'delete');
 
 		return res;
 	}

@@ -32,35 +32,20 @@ function CommoditiesList() {
 	const location = useLocation();
 
 	useEffect(() => {
-		async function getCommodoties(data) {
+		async function getCommodities(data) {
 			if (location.state) {
 				setCommodities(location.state.props);
 			}
 			else {
-				let commoditiesFromApi = await PostharvestApi.getCommodoties();
+				let commoditiesFromApi = await PostharvestApi.getCommodities();
 				filterCommodities(commodities);
 				setCommodities(commoditiesFromApi.commodities);
 			}
 
 			setIsLoading(false);
 		}
-		getCommodoties();
+		getCommodities();
 	}, []);
-	// useEffect(() => {
-	// 	async function getJobs(data) {
-	// 		if (location.state) {
-	// 			setJobs(location.state.props);
-	// 		}
-	// 		else {
-	// 			let jobsFromApi = await JoblyApi.getJobs();
-	// 			filterJobs(jobs);
-	// 			setJobs(jobsFromApi);
-	// 		}
-
-	// 		setIsLoading(false);
-	// 	}
-	// 	getJobs();
-	// }, []);
 
 	if (isLoading) {
 		return;

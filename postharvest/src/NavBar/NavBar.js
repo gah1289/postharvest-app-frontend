@@ -59,6 +59,11 @@ function NavBar(props) {
 								<NavLink href="/profile">Profile</NavLink>
 							</NavItem>
 						)}
+						{user.current.isAdmin && (
+							<NavItem>
+								<NavLink href="/studies-list">Shelf Life Studies</NavLink>
+							</NavItem>
+						)}
 						{isLoggedIn && (
 							<NavItem>
 								<NavLink href="/logout">Log Out</NavLink>

@@ -8,15 +8,14 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import PostharvestApi from '../../api';
 import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus';
 
-function AddTempForm(id) {
+function AddRespirationForm(id) {
 	library.add(faPlus);
 	const commodityId = id.id;
 
 	const INITIAL_STATE = {
-		minTemp     : '',
-		optimumTemp : '',
-		description : '',
-		rh          : ''
+		temperature : '',
+		rrRate      : '',
+		rrClass     : ''
 	};
 
 	const [
@@ -33,7 +32,8 @@ function AddTempForm(id) {
 		e.preventDefault();
 
 		try {
-			await PostharvestApi.addTempRec(commodityId, formData);
+			const data = await PostharvestApi.addRespirationData(commodityId, formData);
+			console.log(data);
 			// refresh page and automatically show new data
 			window.location.reload(false);
 		} catch (e) {
@@ -45,37 +45,38 @@ function AddTempForm(id) {
 
 	return (
 		<div>
-			<ModalHeader>Add Storage Recommendation</ModalHeader>
+			<ModalHeader>Add Respiration Rate</ModalHeader>
 			<ModalBody>
 				<Form onSubmit={handleSubmit}>
 					<FormGroup>
-						<Label htmlFor="description">Description:</Label>
+						<Label htmlFor="temperature">Temperature ({'\u00b0'}C):</Label>
+						<Input
+							type="number"
+							name="temperature"
+							id="temperature"
+							required
+							onChange={handleChange}
+							value={formData.temperature || ''}
+						/>
+						<Label htmlFor="rrRate">
+							Respiration Rate<br /> (ml/kg·hr)
+						</Label>
 						<Input
 							type="text"
-							name="description"
-							id="description"
+							name="rrRate"
+							id="rrRate"
 							onChange={handleChange}
-							value={formData.description || ''}
+							value={formData.rrRate || ''}
 						/>
-						<Label htmlFor="minTemp">Minimum Temperature:</Label>
+						<Label htmlFor="rrClass">Class:</Label>
 						<Input
 							type="text"
-							name="minTemp"
-							id="minTemp"
+							name="rrClass"
+							id="rrClass"
 							onChange={handleChange}
-							value={formData.minTemp || ''}
-						/>
-						<Label htmlFor="optimumTemp">Optimum Temperature:</Label>
-						<Input
-							type="text"
-							name="optimumTemp"
-							id="optimumTemp"
-							onChange={handleChange}
-							value={formData.optimumTemp || ''}
-						/>
-						<Label htmlFor="rh">Relative Humidity:</Label>
-						<Input type="text" name="rh" id="rh" onChange={handleChange} value={formData.rh || ''} />
-						<button>Make Changes</button>
+							value={formData.rrClass || ''}
+						/>{' '}
+						<button>Add Data</button>
 					</FormGroup>
 				</Form>
 			</ModalBody>
@@ -83,4 +84,4 @@ function AddTempForm(id) {
 	);
 }
 
-export default AddTempForm;
+export default AddRespirationForm;

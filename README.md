@@ -27,6 +27,7 @@
 - Displays list of commodities. 
   - Each Item on the list is a link that directs the user to a Commodity page 
   - Admins can add, update, and delete temperature recommendations, shelf life, study, and respiration information
+  - Users and anon can see all information associated with commodity
 
 
 ## API

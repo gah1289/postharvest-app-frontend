@@ -8,6 +8,7 @@ import Logout from '../User/Logout';
 import Profile from '../User/Profile';
 import CommoditiesList from '../Commodity/CommoditiesList';
 import Commodity from '../Commodity/Commodity';
+import StudiesList from '../WindhamStudies/WindhamStudiesList';
 import NotFound from '../NotFound/PageNotFound';
 
 function PostharvestRoutes() {
@@ -19,6 +20,7 @@ function PostharvestRoutes() {
 			<Route path="/logout" element={<Logout />} />
 			<Route path="/profile" element={<Profile />} />
 			<Route path="/search" element={<CommoditiesList />} />
+			<Route path="/studies-list" element={<StudiesList />} />
 			<Route path="/commodity/:id" element={<Commodity />} />
 			<Route path="*" element={<NotFound />} />
 		</Routes>

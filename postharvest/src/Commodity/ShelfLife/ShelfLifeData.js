@@ -10,12 +10,14 @@ import PostharvestApi from '../../api';
 import ItemContext from '../../ItemContext';
 import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus';
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons/faPenToSquare';
-import AddTempForm from './AddTempForm';
-import EditTempForm from './EditTempForm';
 
-function TemperatureData(commodity) {
+import AddShelfLifeForm from './AddShelfLife';
+import EditShelfLifeForm from './EditShelfLife';
+
+function ShelfLifeData(commodity) {
 	library.add(faPlus, faPenToSquare);
-	const { id, temperatureRecommendations } = commodity.commodity;
+	const { id, shelfLife } = commodity.commodity;
+	console.log(shelfLife);
 
 	const { user } = useContext(ItemContext);
 
@@ -24,26 +26,26 @@ function TemperatureData(commodity) {
 		setEditMode
 	] = useState(false);
 	const [
-		showEditTempForm,
-		setShowEditTempForm
-	] = useState(false);
-
-	const [
-		editTempData,
-		setEditTempData
+		editShelfLifeData,
+		setEditShelfLifeData
 	] = useState();
+
 	const [
-		showAddTempForm,
-		setShowAddTempForm
+		showAddShelfLifeForm,
+		setShowAddShelfLifeForm
 	] = useState(false);
 
-	const editTempForm = () => {
-		showEditTempForm ? setShowEditTempForm(false) : setShowEditTempForm(true);
+	const toggleAddShelfLifeForm = () => {
+		showAddShelfLifeForm ? setShowAddShelfLifeForm(false) : setShowAddShelfLifeForm(true);
 	};
 
-	const toggleAddTempForm = () => {
-		console.log(showAddTempForm);
-		showAddTempForm ? setShowAddTempForm(false) : setShowAddTempForm(true);
+	const [
+		showEditShelfLifeForm,
+		setShowEditShelfLifeForm
+	] = useState(false);
+
+	const editShelfLifeForm = () => {
+		showEditShelfLifeForm ? setShowEditShelfLifeForm(false) : setShowEditShelfLifeForm(true);
 	};
 
 	const toggleEdit = () => {
@@ -55,13 +57,13 @@ function TemperatureData(commodity) {
 			{user.current.isAdmin && <button onClick={toggleEdit}>{editMode ? 'View' : 'Edit'}</button>}
 
 			<Table>
-				{temperatureRecommendations.length ? (
+				{shelfLife.length ? (
 					<thead>
 						<tr>
-							<th>Description</th>
-							<th>Minimum Temperature ({'\u00b0'}C)</th>
-							<th>Optimum Temperature</th>
-							<th>Relative Humidity</th>
+							<th>Temperature ({'\u00b0'}C)</th>
+							<th>Shelf Life</th>
+							<th>Class</th>
+							<th />
 							<th />
 						</tr>
 					</thead>
@@ -72,23 +74,25 @@ function TemperatureData(commodity) {
 						</tr>
 					</thead>
 				)}
+
 				<tbody>
-					<Modal key={uuid()} isOpen={showEditTempForm} toggle={editTempForm}>
-						<EditTempForm tempData={editTempData} />
+					<Modal key={uuid()} isOpen={showEditShelfLifeForm} toggle={editShelfLifeForm}>
+						<EditShelfLifeForm shelfLifeData={editShelfLifeData} />
 					</Modal>
 
-					{temperatureRecommendations.map((t) => (
-						<tr className={!showEditTempForm ? 'edit-mode ' : 'view-mode'} key={uuid()}>
-							<td>{t.description}</td>
-							<td>{t.minTemp}</td>
-							<td>{t.optimumTemp}</td>
-							<td>{t.rh}</td>
+					{shelfLife.map((s) => (
+						<tr className={!showEditShelfLifeForm ? 'edit-mode ' : 'view-mode'} key={uuid()}>
+							<td>{s.temperature}</td>
+							<td>{s.shelfLife}</td>
+							<td>{s.packaging}</td>
+							<td>{s.description}</td>
+
 							<td>
 								<a
 									className={editMode ? 'edit-mode edit' : 'view-mode'}
 									onClick={() => {
-										setEditTempData(t);
-										editTempForm(id);
+										setEditShelfLifeData(s);
+										editShelfLifeForm(id);
 									}}
 								>
 									<FontAwesomeIcon icon="fa-solid fa-pen-to-square" />
@@ -96,7 +100,7 @@ function TemperatureData(commodity) {
 								<a
 									className={editMode ? 'edit-mode delete' : 'view-mode'}
 									onClick={() => {
-										PostharvestApi.deleteTempRec(t.id);
+										PostharvestApi.deleteShelfLifeData(s.id);
 										window.location.reload(false);
 									}}
 								>
@@ -108,15 +112,15 @@ function TemperatureData(commodity) {
 					<tr />
 				</tbody>
 			</Table>
-			<button onClick={toggleAddTempForm} className={editMode ? 'edit-mode add' : 'view-mode'}>
-				<FontAwesomeIcon icon="fa-solid fa-plus" /> Storage Recommendation
+			<button onClick={toggleAddShelfLifeForm} className={editMode ? 'edit-mode add' : 'view-mode'}>
+				<FontAwesomeIcon icon="fa-solid fa-plus" /> Shelf Life Data
 			</button>
 
-			<Modal key={uuid()} isOpen={showAddTempForm} toggle={toggleAddTempForm}>
-				<AddTempForm id={id} />
+			<Modal key={uuid()} isOpen={showAddShelfLifeForm} toggle={toggleAddShelfLifeForm}>
+				<AddShelfLifeForm id={id} />
 			</Modal>
 		</div>
 	);
 }
 
-export default TemperatureData;
+export default ShelfLifeData;

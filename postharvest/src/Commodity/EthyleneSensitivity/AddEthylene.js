@@ -8,15 +8,14 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import PostharvestApi from '../../api';
 import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus';
 
-function AddTempForm(id) {
+function AddEthyleneForm(id) {
 	library.add(faPlus);
 	const commodityId = id.id;
 
 	const INITIAL_STATE = {
-		minTemp     : '',
-		optimumTemp : '',
-		description : '',
-		rh          : ''
+		temperature    : '',
+		c2h4Production : '',
+		c2h4Class      : ''
 	};
 
 	const [
@@ -26,14 +25,15 @@ function AddTempForm(id) {
 
 	const handleChange = async (e) => {
 		const { name, value } = e.target;
-
+		console.log(name, value);
 		setFormData((formData) => ({ ...formData, [name]: value }));
 	};
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 
 		try {
-			await PostharvestApi.addTempRec(commodityId, formData);
+			const data = await PostharvestApi.addEthyleneData(commodityId, formData);
+			console.log(data);
 			// refresh page and automatically show new data
 			window.location.reload(false);
 		} catch (e) {
@@ -45,37 +45,36 @@ function AddTempForm(id) {
 
 	return (
 		<div>
-			<ModalHeader>Add Storage Recommendation</ModalHeader>
+			<ModalHeader>Add Ethylene Data</ModalHeader>
 			<ModalBody>
 				<Form onSubmit={handleSubmit}>
 					<FormGroup>
-						<Label htmlFor="description">Description:</Label>
+						<Label htmlFor="temperature">Temperature ({'\u00b0'}C):</Label>
 						<Input
 							type="text"
-							name="description"
-							id="description"
+							name="temperature"
+							id="temperature"
 							onChange={handleChange}
-							value={formData.description || ''}
+							value={formData.temperature || ''}
 						/>
-						<Label htmlFor="minTemp">Minimum Temperature:</Label>
+						<Label htmlFor="c2h4Production">Ethylene Production:</Label>
 						<Input
 							type="text"
-							name="minTemp"
-							id="minTemp"
+							name="c2h4Production"
+							id="c2h4Production"
 							onChange={handleChange}
-							value={formData.minTemp || ''}
+							value={formData.c2h4Production || ''}
 						/>
-						<Label htmlFor="optimumTemp">Optimum Temperature:</Label>
+						<Label htmlFor="c2h4Class">Ethylene Class:</Label>
 						<Input
 							type="text"
-							name="optimumTemp"
-							id="optimumTemp"
+							name="c2h4Class"
+							id="c2h4Class"
 							onChange={handleChange}
-							value={formData.optimumTemp || ''}
+							value={formData.c2h4Class || ''}
 						/>
-						<Label htmlFor="rh">Relative Humidity:</Label>
-						<Input type="text" name="rh" id="rh" onChange={handleChange} value={formData.rh || ''} />
-						<button>Make Changes</button>
+
+						<button>Add Data</button>
 					</FormGroup>
 				</Form>
 			</ModalBody>
@@ -83,4 +82,4 @@ function AddTempForm(id) {
 	);
 }
 
-export default AddTempForm;
+export default AddEthyleneForm;

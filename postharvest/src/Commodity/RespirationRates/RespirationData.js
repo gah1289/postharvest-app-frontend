@@ -10,12 +10,13 @@ import PostharvestApi from '../../api';
 import ItemContext from '../../ItemContext';
 import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus';
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons/faPenToSquare';
-import AddTempForm from './AddTempForm';
-import EditTempForm from './EditTempForm';
 
-function TemperatureData(commodity) {
+import AddRespirationForm from './AddRespiration';
+import EditRespirationForm from './EditRespiration';
+
+function RespirationData(commodity) {
 	library.add(faPlus, faPenToSquare);
-	const { id, temperatureRecommendations } = commodity.commodity;
+	const { id, respirationRate } = commodity.commodity;
 
 	const { user } = useContext(ItemContext);
 
@@ -24,26 +25,26 @@ function TemperatureData(commodity) {
 		setEditMode
 	] = useState(false);
 	const [
-		showEditTempForm,
-		setShowEditTempForm
-	] = useState(false);
-
-	const [
-		editTempData,
-		setEditTempData
+		editRespirationData,
+		setEditRespirationData
 	] = useState();
+
 	const [
-		showAddTempForm,
-		setShowAddTempForm
+		showAddRespirationForm,
+		setShowAddRespirationForm
 	] = useState(false);
 
-	const editTempForm = () => {
-		showEditTempForm ? setShowEditTempForm(false) : setShowEditTempForm(true);
+	const toggleAddRespirationForm = () => {
+		showAddRespirationForm ? setShowAddRespirationForm(false) : setShowAddRespirationForm(true);
 	};
 
-	const toggleAddTempForm = () => {
-		console.log(showAddTempForm);
-		showAddTempForm ? setShowAddTempForm(false) : setShowAddTempForm(true);
+	const [
+		showEditRespirationForm,
+		setShowEditRespirationForm
+	] = useState(false);
+
+	const editRespirationForm = () => {
+		showEditRespirationForm ? setShowEditRespirationForm(false) : setShowEditRespirationForm(true);
 	};
 
 	const toggleEdit = () => {
@@ -55,13 +56,13 @@ function TemperatureData(commodity) {
 			{user.current.isAdmin && <button onClick={toggleEdit}>{editMode ? 'View' : 'Edit'}</button>}
 
 			<Table>
-				{temperatureRecommendations.length ? (
+				{respirationRate.length ? (
 					<thead>
 						<tr>
-							<th>Description</th>
-							<th>Minimum Temperature ({'\u00b0'}C)</th>
-							<th>Optimum Temperature</th>
-							<th>Relative Humidity</th>
+							<th>Temperature ({'\u00b0'}C)</th>
+							<th>Respiration Rate</th>
+							<th>Class</th>
+							<th />
 							<th />
 						</tr>
 					</thead>
@@ -72,23 +73,24 @@ function TemperatureData(commodity) {
 						</tr>
 					</thead>
 				)}
+
 				<tbody>
-					<Modal key={uuid()} isOpen={showEditTempForm} toggle={editTempForm}>
-						<EditTempForm tempData={editTempData} />
+					<Modal key={uuid()} isOpen={showEditRespirationForm} toggle={editRespirationForm}>
+						<EditRespirationForm respirationData={editRespirationData} />
 					</Modal>
 
-					{temperatureRecommendations.map((t) => (
-						<tr className={!showEditTempForm ? 'edit-mode ' : 'view-mode'} key={uuid()}>
-							<td>{t.description}</td>
-							<td>{t.minTemp}</td>
-							<td>{t.optimumTemp}</td>
-							<td>{t.rh}</td>
+					{respirationRate.map((s) => (
+						<tr className={!showEditRespirationForm ? 'edit-mode ' : 'view-mode'} key={uuid()}>
+							<td>{s.temperature}</td>
+							<td>{s.rrRate}</td>
+							<td>{s.rrClass}</td>
+
 							<td>
 								<a
 									className={editMode ? 'edit-mode edit' : 'view-mode'}
 									onClick={() => {
-										setEditTempData(t);
-										editTempForm(id);
+										setEditRespirationData(s);
+										editRespirationForm(id);
 									}}
 								>
 									<FontAwesomeIcon icon="fa-solid fa-pen-to-square" />
@@ -96,7 +98,7 @@ function TemperatureData(commodity) {
 								<a
 									className={editMode ? 'edit-mode delete' : 'view-mode'}
 									onClick={() => {
-										PostharvestApi.deleteTempRec(t.id);
+										PostharvestApi.deleteRespirationData(s.id);
 										window.location.reload(false);
 									}}
 								>
@@ -108,15 +110,15 @@ function TemperatureData(commodity) {
 					<tr />
 				</tbody>
 			</Table>
-			<button onClick={toggleAddTempForm} className={editMode ? 'edit-mode add' : 'view-mode'}>
-				<FontAwesomeIcon icon="fa-solid fa-plus" /> Storage Recommendation
+			<button onClick={toggleAddRespirationForm} className={editMode ? 'edit-mode add' : 'view-mode'}>
+				<FontAwesomeIcon icon="fa-solid fa-plus" /> Respiration Rate
 			</button>
 
-			<Modal key={uuid()} isOpen={showAddTempForm} toggle={toggleAddTempForm}>
-				<AddTempForm id={id} />
+			<Modal key={uuid()} isOpen={showAddRespirationForm} toggle={toggleAddRespirationForm}>
+				<AddRespirationForm id={id} />
 			</Modal>
 		</div>
 	);
 }
 
-export default TemperatureData;
+export default RespirationData;

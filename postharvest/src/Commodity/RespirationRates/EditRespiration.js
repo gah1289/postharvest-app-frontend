@@ -1,23 +1,19 @@
 // import '../Commodities.css';
 
 import React, { useState } from 'react';
-import { Form, FormGroup, ModalBody, ModalHeader, Label, Input } from 'reactstrap';
+import { Form, FormGroup, Label, Input, ModalHeader, ModalBody } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import PostharvestApi from '../../api';
 import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus';
 
-function AddTempForm(id) {
+function EditRespirationForm(respirationData) {
 	library.add(faPlus);
-	const commodityId = id.id;
 
-	const INITIAL_STATE = {
-		minTemp     : '',
-		optimumTemp : '',
-		description : '',
-		rh          : ''
-	};
+	const { id, temperature, rrRate, rrClass } = respirationData.respirationData;
+
+	const INITIAL_STATE = {};
 
 	const [
 		formData,
@@ -26,6 +22,7 @@ function AddTempForm(id) {
 
 	const handleChange = async (e) => {
 		const { name, value } = e.target;
+		console.log(name, value);
 
 		setFormData((formData) => ({ ...formData, [name]: value }));
 	};
@@ -33,7 +30,7 @@ function AddTempForm(id) {
 		e.preventDefault();
 
 		try {
-			await PostharvestApi.addTempRec(commodityId, formData);
+			await PostharvestApi.updateRespirationData(id, formData);
 			// refresh page and automatically show new data
 			window.location.reload(false);
 		} catch (e) {
@@ -45,36 +42,40 @@ function AddTempForm(id) {
 
 	return (
 		<div>
-			<ModalHeader>Add Storage Recommendation</ModalHeader>
+			<ModalHeader>Edit Respiration Rate</ModalHeader>
 			<ModalBody>
 				<Form onSubmit={handleSubmit}>
 					<FormGroup>
-						<Label htmlFor="description">Description:</Label>
+						<Label htmlFor="temperature">Temperature ({'\u00b0'}C):</Label>
 						<Input
 							type="text"
-							name="description"
-							id="description"
+							name="temperature"
+							id="temperature"
+							placeholder={temperature}
 							onChange={handleChange}
-							value={formData.description || ''}
+							value={formData.temperature || ''}
 						/>
-						<Label htmlFor="minTemp">Minimum Temperature:</Label>
+						<Label htmlFor="rrRate">
+							Respiration Rate<br /> (ml/kg·hr)
+						</Label>
 						<Input
 							type="text"
-							name="minTemp"
-							id="minTemp"
+							name="rrRate"
+							id="rrRate"
 							onChange={handleChange}
-							value={formData.minTemp || ''}
+							placeholder={rrRate}
+							value={formData.rrRate || ''}
 						/>
-						<Label htmlFor="optimumTemp">Optimum Temperature:</Label>
+						<Label htmlFor="rrClass">Class:</Label>
 						<Input
 							type="text"
-							name="optimumTemp"
-							id="optimumTemp"
+							name="rrClass"
+							id="rrClass"
 							onChange={handleChange}
-							value={formData.optimumTemp || ''}
+							placeholder={rrClass}
+							value={formData.rrClass || ''}
 						/>
-						<Label htmlFor="rh">Relative Humidity:</Label>
-						<Input type="text" name="rh" id="rh" onChange={handleChange} value={formData.rh || ''} />
+
 						<button>Make Changes</button>
 					</FormGroup>
 				</Form>
@@ -83,4 +84,4 @@ function AddTempForm(id) {
 	);
 }
 
-export default AddTempForm;
+export default EditRespirationForm;

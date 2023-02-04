@@ -8,15 +8,12 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import PostharvestApi from '../../api';
 import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus';
 
-function AddTempForm(id) {
+function AddReferenceForm(id) {
 	library.add(faPlus);
 	const commodityId = id.id;
 
 	const INITIAL_STATE = {
-		minTemp     : '',
-		optimumTemp : '',
-		description : '',
-		rh          : ''
+		source : '0'
 	};
 
 	const [
@@ -33,7 +30,7 @@ function AddTempForm(id) {
 		e.preventDefault();
 
 		try {
-			await PostharvestApi.addTempRec(commodityId, formData);
+			const data = await PostharvestApi.addReference(commodityId, formData);
 			// refresh page and automatically show new data
 			window.location.reload(false);
 		} catch (e) {
@@ -45,37 +42,20 @@ function AddTempForm(id) {
 
 	return (
 		<div>
-			<ModalHeader>Add Storage Recommendation</ModalHeader>
+			<ModalHeader>Add Reference</ModalHeader>
 			<ModalBody>
 				<Form onSubmit={handleSubmit}>
 					<FormGroup>
-						<Label htmlFor="description">Description:</Label>
+						<Label htmlFor="source">Source :</Label>
 						<Input
 							type="text"
-							name="description"
-							id="description"
+							name="source"
+							id="source"
 							onChange={handleChange}
-							value={formData.description || ''}
+							value={formData.source || ''}
 						/>
-						<Label htmlFor="minTemp">Minimum Temperature:</Label>
-						<Input
-							type="text"
-							name="minTemp"
-							id="minTemp"
-							onChange={handleChange}
-							value={formData.minTemp || ''}
-						/>
-						<Label htmlFor="optimumTemp">Optimum Temperature:</Label>
-						<Input
-							type="text"
-							name="optimumTemp"
-							id="optimumTemp"
-							onChange={handleChange}
-							value={formData.optimumTemp || ''}
-						/>
-						<Label htmlFor="rh">Relative Humidity:</Label>
-						<Input type="text" name="rh" id="rh" onChange={handleChange} value={formData.rh || ''} />
-						<button>Make Changes</button>
+
+						<button>Add Reference</button>
 					</FormGroup>
 				</Form>
 			</ModalBody>
@@ -83,4 +63,4 @@ function AddTempForm(id) {
 	);
 }
 
-export default AddTempForm;
+export default AddReferenceForm;

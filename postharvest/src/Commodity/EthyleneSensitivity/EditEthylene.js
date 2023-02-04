@@ -1,23 +1,20 @@
 // import '../Commodities.css';
 
 import React, { useState } from 'react';
-import { Form, FormGroup, ModalBody, ModalHeader, Label, Input } from 'reactstrap';
+import { Form, FormGroup, Label, Input, ModalHeader, ModalBody } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import PostharvestApi from '../../api';
 import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus';
 
-function AddTempForm(id) {
+function EditEthyleneForm(ethyleneData) {
+	console.log(ethyleneData);
 	library.add(faPlus);
-	const commodityId = id.id;
 
-	const INITIAL_STATE = {
-		minTemp     : '',
-		optimumTemp : '',
-		description : '',
-		rh          : ''
-	};
+	const { id, temperature, c2h4Class, c2h4Production } = ethyleneData.ethyleneData;
+
+	const INITIAL_STATE = {};
 
 	const [
 		formData,
@@ -26,6 +23,7 @@ function AddTempForm(id) {
 
 	const handleChange = async (e) => {
 		const { name, value } = e.target;
+		console.log(name, value);
 
 		setFormData((formData) => ({ ...formData, [name]: value }));
 	};
@@ -33,7 +31,7 @@ function AddTempForm(id) {
 		e.preventDefault();
 
 		try {
-			await PostharvestApi.addTempRec(commodityId, formData);
+			await PostharvestApi.updateEthyleneData(id, formData);
 			// refresh page and automatically show new data
 			window.location.reload(false);
 		} catch (e) {
@@ -45,36 +43,37 @@ function AddTempForm(id) {
 
 	return (
 		<div>
-			<ModalHeader>Add Storage Recommendation</ModalHeader>
+			<ModalHeader>Edit Ethylene Data</ModalHeader>
 			<ModalBody>
 				<Form onSubmit={handleSubmit}>
 					<FormGroup>
-						<Label htmlFor="description">Description:</Label>
+						<Label htmlFor="temperature">Temperature ({'\u00b0'}C):</Label>
 						<Input
 							type="text"
-							name="description"
-							id="description"
+							name="temperature"
+							id="temperature"
 							onChange={handleChange}
-							value={formData.description || ''}
+							placeholder={temperature}
+							value={formData.temperature || ''}
 						/>
-						<Label htmlFor="minTemp">Minimum Temperature:</Label>
+						<Label htmlFor="c2h4Production">Ethylene Production:</Label>
 						<Input
 							type="text"
-							name="minTemp"
-							id="minTemp"
+							name="c2h4Production"
+							id="c2h4Production"
 							onChange={handleChange}
-							value={formData.minTemp || ''}
+							placeholder={c2h4Production}
+							value={formData.c2h4Production || ''}
 						/>
-						<Label htmlFor="optimumTemp">Optimum Temperature:</Label>
+						<Label htmlFor="c2h4Class">Ethylene Class:</Label>
 						<Input
 							type="text"
-							name="optimumTemp"
-							id="optimumTemp"
+							name="c2h4Class"
+							id="c2h4Class"
 							onChange={handleChange}
-							value={formData.optimumTemp || ''}
+							placeholder={c2h4Class}
+							value={formData.c2h4Class || ''}
 						/>
-						<Label htmlFor="rh">Relative Humidity:</Label>
-						<Input type="text" name="rh" id="rh" onChange={handleChange} value={formData.rh || ''} />
 						<button>Make Changes</button>
 					</FormGroup>
 				</Form>
@@ -83,4 +82,4 @@ function AddTempForm(id) {
 	);
 }
 
-export default AddTempForm;
+export default EditEthyleneForm;
