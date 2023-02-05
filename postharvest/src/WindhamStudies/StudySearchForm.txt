@@ -1,0 +1,15 @@
+To do: add a search bar to filter study by commodity
+
+
+<Row className="  justify-content-center text-center">
+				<Col xs="2" />
+				<Col className="search-bar">
+					<Form className="d-flex flex-row mb-3 justify-content-center">
+						<InputGroup>
+							<Input placeholder="Search by title..." />
+						</InputGroup>
+					</Form>
+				</Col>
+				<Col xs="2" />
+			</Row> 
+

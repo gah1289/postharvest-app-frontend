@@ -29,9 +29,6 @@ function App() {
 	PostharvestApi.token = localStorage.token || undefined;
 	const user = useRef(INITIAL_USER);
 
-	console.log('USER', user);
-	console.log('Logged in', isLoggedIn);
-
 	const username = localStorage.getItem('username') || undefined;
 
 	async function setUser() {

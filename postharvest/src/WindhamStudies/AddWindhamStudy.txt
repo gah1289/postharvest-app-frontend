@@ -1,0 +1,200 @@
+// In progress: form for adding a shelf life study.
+// It's functioning and uploads a file path to the database
+// TO DO:
+// Figure out how to add that file to the public folder so it can be downloaded.
+// figure out how to add comodities to link study to windham_studies_commodities table
+
+**********************************
+
+// WindhamStudiesList.js --> 
+{/* Button to add study form.  */}
+			{/* <button onClick={toggleAddStudyForm} className={editMode ? 'edit-mode add' : 'view-mode'}>
+				<FontAwesomeIcon icon="fa-solid fa-plus" /> Study
+			</button> */}
+
+
+
+********************************8
+
+// AddWindhamStudy.js -->
+
+import React, { useState, useEffect, useRef } from 'react';
+import { unmountComponentAtNode } from 'react-dom';
+import { Form, FormGroup, ModalBody, ModalHeader, Label, Input, Badge } from 'reactstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import PostharvestApi from '../api';
+import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus';
+import { faCircleXmark } from '@fortawesome/free-solid-svg-icons/faCircleXmark';
+
+function AddWindhamStudyForm(id) {
+	library.add(faPlus, faCircleXmark);
+	const commodityId = id.id;
+
+	const badges = useRef(0);
+
+	const INITIAL_STATE = {
+		title     : 'd',
+		objective : '',
+		source    : '',
+		date      : '1990-01-01'
+	};
+
+	const [
+		commodities,
+		setCommodities
+	] = useState(new Set());
+	const [
+		allCommodities,
+		setAllCommodities
+	] = useState([]);
+
+	const [
+		isLoading,
+		setIsLoading
+	] = useState(true);
+
+	const [
+		formData,
+		setFormData
+	] = useState(INITIAL_STATE);
+
+	const handleChange = async (e) => {
+		const { name, value } = e.target;
+
+		if (name === 'commodities') {
+			setCommodities((commodities) => commodities.add(value), ...commodities);
+		}
+
+		setFormData((formData) => ({ ...formData, [name]: value }));
+	};
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+
+		try {
+			if (commodities.length) {
+				for (let commodity of commodities) {
+					await PostharvestApi.addStudyCommodity(commodity);
+				}
+			}
+
+			const data = await PostharvestApi.addStudy(formData);
+
+			// console.log(data);
+			// refresh page and automatically show new data
+			// window.location.reload(false);
+		} catch (e) {
+			console.log({ e });
+		}
+
+		setFormData(INITIAL_STATE);
+	};
+
+	const removeCommodity = (id) => {
+		console.log(id);
+		unmountComponentAtNode(<div id={id} />);
+		commodities.delete(id);
+		// setCommodities((commodities) => commodities.delete(id), ...commodities);
+		console.log('remove');
+	};
+
+	badges.current = JSON.parse(localStorage.getItem('commodities'));
+
+	useEffect(() => {
+		async function getCommodities() {
+			let res = await PostharvestApi.getCommodities();
+			setAllCommodities(res.commodities);
+			setIsLoading(false);
+		}
+		getCommodities();
+	}, []);
+
+	const selectOptions = [];
+	function getSelectOptions() {
+		for (let commodity of allCommodities) {
+			if (commodity.variety) {
+				selectOptions.push(
+					<option key={commodity.id} value={commodity.id}>
+						{' '}
+						{commodity.commodityName}, {commodity.variety}{' '}
+					</option>
+				);
+			}
+			else {
+				selectOptions.push(
+					<option key={commodity.id} value={commodity.id}>
+						{commodity.commodityName}
+					</option>
+				);
+			}
+		}
+	}
+	localStorage.setItem('commodities', JSON.stringify(Array.from(commodities.values())));
+	getSelectOptions();
+	return (
+		<div>
+			<ModalHeader>Add Shelf Life Study</ModalHeader>
+			<ModalBody>
+				<Form>
+					<FormGroup>
+						<Label htmlFor="title">Title:</Label>
+						<Input
+							type="text"
+							required
+							name="title"
+							id="title"
+							onChange={handleChange}
+							value={formData.title || ''}
+						/>
+						<Label htmlFor="date">Date:</Label>
+						<Input type="date" name="date" id="date" onChange={handleChange} value={formData.date || ''} />
+						<Label htmlFor="objective">Objective:</Label>
+						<Input
+							type="textarea"
+							name="objective"
+							id="objective"
+							onChange={handleChange}
+							value={formData.objective || ''}
+						/>{' '}
+						<Label htmlFor="commodities">Commodities:</Label>
+						<Input
+							type="select"
+							name="commodities"
+							id="commodities"
+							onChange={handleChange}
+							value={formData.commodities || []}
+							multiple
+						>
+							{selectOptions.map((option) => option)}
+						</Input>
+						<div>
+							{badges.current.map((c) => (
+								<div id={c}>
+									<Badge color="secondary">
+										{c}
+										<a onClick={() => removeCommodity(c)}>
+											<FontAwesomeIcon icon=" fa-solid fa-circle-xmark" />
+										</a>
+									</Badge>
+								</div>
+							))}
+						</div>
+						<Label htmlFor="source">Source:</Label>
+						<Input
+							type="file"
+							required
+							name="source"
+							id="source"
+							onChange={handleChange}
+							value={formData.source || ''}
+						/>{' '}
+						<button onClick={handleSubmit}>Add Study</button>
+					</FormGroup>
+				</Form>
+			</ModalBody>
+		</div>
+	);
+}
+
+export default AddWindhamStudyForm;

@@ -5,13 +5,14 @@ import { Form, FormGroup, Label, Input, ModalHeader, ModalBody } from 'reactstra
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import PostharvestApi from '../../api';
+import PostharvestApi from '../api';
 import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus';
 
-function EditWindhamStudyForm(respirationData) {
+function EditWindhamStudyForm(id) {
 	library.add(faPlus);
 
-	const { id, temperature, rrRate, rrClass } = respirationData.respirationData;
+	const { title, objective, date } = id.id.study;
+	const studyId = id.id.study.id;
 
 	const INITIAL_STATE = {};
 
@@ -22,7 +23,6 @@ function EditWindhamStudyForm(respirationData) {
 
 	const handleChange = async (e) => {
 		const { name, value } = e.target;
-		console.log(name, value);
 
 		setFormData((formData) => ({ ...formData, [name]: value }));
 	};
@@ -30,7 +30,8 @@ function EditWindhamStudyForm(respirationData) {
 		e.preventDefault();
 
 		try {
-			await PostharvestApi.updateRespirationData(id, formData);
+			const res = await PostharvestApi.updateStudy(studyId, formData);
+
 			// refresh page and automatically show new data
 			window.location.reload(false);
 		} catch (e) {
@@ -42,41 +43,39 @@ function EditWindhamStudyForm(respirationData) {
 
 	return (
 		<div>
-			<ModalHeader>Edit Respiration Rate</ModalHeader>
+			<ModalHeader>Edit Study:</ModalHeader>
 			<ModalBody>
-				<Form onSubmit={handleSubmit}>
+				<Form>
 					<FormGroup>
-						<Label htmlFor="temperature">Temperature ({'\u00b0'}C):</Label>
+						<Label htmlFor="title">Title:</Label>
 						<Input
 							type="text"
-							name="temperature"
-							id="temperature"
-							placeholder={temperature}
+							name="title"
+							id="title"
+							placeholder={title}
 							onChange={handleChange}
-							value={formData.temperature || ''}
+							value={formData.title || ''}
 						/>
-						<Label htmlFor="rrRate">
-							Respiration Rate<br /> (ml/kg·hr)
-						</Label>
+						<Label htmlFor="objective">Objective</Label>
 						<Input
 							type="text"
-							name="rrRate"
-							id="rrRate"
+							name="objective"
+							id="objective"
 							onChange={handleChange}
-							placeholder={rrRate}
-							value={formData.rrRate || ''}
+							placeholder={objective}
+							value={formData.objective || ''}
 						/>
-						<Label htmlFor="rrClass">Class:</Label>
+						<Label htmlFor="date">Date:</Label>
 						<Input
-							type="text"
-							name="rrClass"
-							id="rrClass"
+							type="date"
+							name="date"
+							id="date"
 							onChange={handleChange}
-							placeholder={rrClass}
-							value={formData.rrClass || ''}
+							placeholder={date}
+							value={formData.date || ''}
 						/>
 
-						<button>Make Changes</button>
+						<button onClick={handleSubmit}>Make Changes</button>
 					</FormGroup>
 				</Form>
 			</ModalBody>

@@ -11,8 +11,6 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus';
 function EditTempForm(tempData) {
 	library.add(faPlus);
 
-	console.log(tempData);
-
 	const { id, minTemp, optimumTemp, description, rh } = tempData.tempData;
 
 	const INITIAL_STATE = {};

@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import PostharvestApi from '../api';
 import './Commodities.css';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Card, CardBody, CardTitle, CardSubtitle, Table, Spinner, Row, Col } from 'reactstrap';
+import { Card, CardBody, CardTitle, CardSubtitle, Table, Spinner, Row, Col, Modal } from 'reactstrap';
 import { v4 as uuid } from 'uuid';
 import ItemContext from '../ItemContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -16,10 +16,11 @@ import ShelfLifeData from './ShelfLife/ShelfLifeData';
 import RespirationData from './RespirationRates/RespirationData';
 import ReferenceData from './References/ReferenceData';
 import WindhamStudies from './WindhamStudies/WindhamStudyData';
+import EditCommodityForm from './EditCommodityForm';
 
 function Commodity() {
 	library.add(faDownload, faCircleXmark, faPlus);
-	const { isLoggedIn, user } = useContext(ItemContext);
+	const { user } = useContext(ItemContext);
 	const { id } = useParams();
 	const [
 		commodity,
@@ -37,13 +38,21 @@ function Commodity() {
 		setIsLoading
 	] = useState(true);
 
+	const navigate = useNavigate();
+
 	const [
-		editMode,
-		setEditMode
+		showEditCommodityForm,
+		setShowEditCommodityForm
 	] = useState(false);
 
-	const navigate = useNavigate();
-	// const { user } = useContext(ItemContext);
+	const deleteCommodity = async () => {
+		try {
+			await PostharvestApi.deleteCommodity(id);
+			navigate('/search');
+		} catch (e) {
+			console.log(e);
+		}
+	};
 
 	useEffect(() => {
 		async function getCommodity(id) {
@@ -60,26 +69,17 @@ function Commodity() {
 		return <Spinner />;
 	}
 
-	const {
-		commodityName,
-		variety,
-		scientificName,
-		coolingMethod,
-		ethyleneSensitivity,
-		shelfLife,
-		temperatureRecommendations,
-		windhamStudies
-	} =
-		commodity || undefined;
+	const { commodityName, variety, scientificName, coolingMethod, climacteric } = commodity || undefined;
 
-	console.log(commodity);
-
-	const toggleEdit = () => {
-		editMode ? setEditMode(false) : setEditMode(true);
+	const editCommodityForm = () => {
+		showEditCommodityForm ? setShowEditCommodityForm(false) : setShowEditCommodityForm(true);
 	};
 
 	return (
 		<Card key={uuid()} style={{ minWidth: '30vw' }} className="job-card">
+			<Modal key={uuid()} isOpen={showEditCommodityForm} toggle={editCommodityForm}>
+				<EditCommodityForm commodityData={commodity} />
+			</Modal>
 			<CardBody>
 				<CardTitle tag="h1">
 					<Row>
@@ -91,16 +91,27 @@ function Commodity() {
 						<Col>
 							{commodityName}: {variety}
 						</Col>
-						<Col>
-							{user.current.isAdmin && <button onClick={toggleEdit}>{editMode ? 'View' : 'Edit'}</button>}
-						</Col>
+						<Col />
 					</Row>
 				</CardTitle>
+
 				<CardSubtitle className="mb-2 text-muted" tag="h6">
 					{scientificName}
 				</CardSubtitle>
+				{user.current.isAdmin && (
+					<button
+						onClick={() => {
+							editCommodityForm();
+						}}
+					>
+						Edit
+					</button>
+				)}
 				<CardTitle tag="h2">Cooling Methods</CardTitle>
 				{coolingMethod}
+				{climacteric === true && <CardTitle tag="h2">Climacteric</CardTitle>}
+				{climacteric === false && <CardTitle tag="h2">Non-Climacteric</CardTitle>}
+
 				<CardTitle tag="h2">Storage Recommendations</CardTitle>
 				<TemperatureData commodity={commodity} />
 				<CardTitle tag="h2">Shelf Life</CardTitle>
@@ -116,6 +127,7 @@ function Commodity() {
 
 				<CardTitle tag="h2">References</CardTitle>
 				<ReferenceData commodity={commodity} />
+				{user.current.isAdmin && <button onClick={deleteCommodity}>Delete {commodityName}</button>}
 			</CardBody>
 		</Card>
 	);

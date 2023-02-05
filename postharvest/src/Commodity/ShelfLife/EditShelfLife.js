@@ -9,7 +9,6 @@ import PostharvestApi from '../../api';
 import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus';
 
 function EditShelfLifeForm(shelfLifeData) {
-	console.log(shelfLifeData);
 	library.add(faPlus);
 
 	const { id, temperature, shelfLife, description, packaging } = shelfLifeData.shelfLifeData;
@@ -23,7 +22,6 @@ function EditShelfLifeForm(shelfLifeData) {
 
 	const handleChange = async (e) => {
 		const { name, value } = e.target;
-		console.log(name, value);
 
 		setFormData((formData) => ({ ...formData, [name]: value }));
 	};

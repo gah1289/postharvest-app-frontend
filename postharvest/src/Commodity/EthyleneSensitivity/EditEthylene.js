@@ -9,7 +9,6 @@ import PostharvestApi from '../../api';
 import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus';
 
 function EditEthyleneForm(ethyleneData) {
-	console.log(ethyleneData);
 	library.add(faPlus);
 
 	const { id, temperature, c2h4Class, c2h4Production } = ethyleneData.ethyleneData;
@@ -23,7 +22,6 @@ function EditEthyleneForm(ethyleneData) {
 
 	const handleChange = async (e) => {
 		const { name, value } = e.target;
-		console.log(name, value);
 
 		setFormData((formData) => ({ ...formData, [name]: value }));
 	};

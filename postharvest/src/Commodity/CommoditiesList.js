@@ -1,23 +1,29 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 
 import './Commodities.css';
-import { useLocation } from 'react-router-dom';
-import { Row, Col, Form, Input, InputGroup, ListGroup, ListGroupItem } from 'reactstrap';
+import { Spinner, Modal, Form, Input, InputGroup, ListGroup, ListGroupItem } from 'reactstrap';
 import { v4 as uuid } from 'uuid';
 import PostharvestApi from '../api';
+import CommoditySearchForm from './CommoditySearchForm';
+import AddCommodityForm from './AddCommodity';
+import ItemContext from '../ItemContext';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus';
 
 function CommoditiesList() {
+	library.add(faPlus);
+	const { user } = useContext(ItemContext);
 	const [
 		commodities,
 		setCommodities
 	] = useState([
 		{
-			id             : 'id',
-			commodityName  : 'Test Commodity',
-			variety        : 'Test',
-			scientificName : 'Test',
-			coolingMethod  : 'Test',
-			climacteric    : true
+			id             : '',
+			commodityName  : '',
+			variety        : '',
+			scientificName : '',
+			coolingMethod  : ''
 		}
 	]);
 
@@ -27,49 +33,50 @@ function CommoditiesList() {
 	] = useState(true);
 
 	const filterCommodities = (c) => {
-		setCommodities(c);
+		setCommodities(c.commodities);
 	};
-	const location = useLocation();
 
 	useEffect(() => {
 		async function getCommodities(data) {
-			if (location.state) {
-				setCommodities(location.state.props);
-			}
-			else {
-				let commoditiesFromApi = await PostharvestApi.getCommodities();
-				filterCommodities(commodities);
-				setCommodities(commoditiesFromApi.commodities);
-			}
+			let commoditiesFromApi = await PostharvestApi.getCommodities(data);
+			filterCommodities(commodities);
+			setCommodities(commoditiesFromApi.commodities);
 
 			setIsLoading(false);
 		}
 		getCommodities();
 	}, []);
 
+	const [
+		showAddCommodityForm,
+		setShowAddCommodityForm
+	] = useState(false);
+
+	const addCommodityForm = () => {
+		showAddCommodityForm ? setShowAddCommodityForm(false) : setShowAddCommodityForm(true);
+	};
+
 	if (isLoading) {
-		return;
+		return <Spinner />;
 	}
 
 	return (
 		<div>
 			<h1>Commodities</h1>
-			<Row className="  justify-content-center text-center">
-				<Col xs="2" />
-				<Col className="search-bar">
-					<Form className="d-flex flex-row mb-3 justify-content-center">
-						<InputGroup>
-							<Input placeholder="Search by fruit or vegetable..." />
-						</InputGroup>
-					</Form>
-				</Col>
-				<Col xs="2" />
-			</Row>
-			{/* {!location.state ? <JobSearchForm filterJobs={filterJobs} /> : ''} */}
+			<CommoditySearchForm filterCommodities={filterCommodities}> </CommoditySearchForm>
+			{user.current.isAdmin && (
+				<button onClick={addCommodityForm}>
+					<FontAwesomeIcon icon="fa-solid fa-plus" /> Commodity
+				</button>
+			)}
+			<Modal key={uuid()} isOpen={showAddCommodityForm} toggle={addCommodityForm}>
+				<AddCommodityForm />
+			</Modal>
+
 			<ListGroup>
 				{commodities.map((commodity) => (
 					<ListGroupItem key={uuid()} href={`/commodity/${commodity.id}`} tag="a">
-						{commodity.commodityName}, {commodity.variety}
+						{commodity.commodityName} <span className="muted">{commodity.variety} </span>
 					</ListGroupItem>
 				))}
 			</ListGroup>

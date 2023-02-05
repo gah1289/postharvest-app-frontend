@@ -88,8 +88,8 @@ class PostharvestApi {
 	// *****************COMMODITY****************
 
 	// Get a list of commodities from commodities table.
-	static async getCommodities() {
-		const commodities = await this.request(`commodities/`);
+	static async getCommodities(data) {
+		const commodities = await this.request(`commodities`, { ...data });
 		return commodities;
 	}
 
@@ -98,6 +98,33 @@ class PostharvestApi {
 		const commodity = await this.request(`commodities/${id}`);
 
 		return commodity;
+	}
+	// Add a new commodity
+	static async addCommodity(data) {
+		if (data.climacteric === 'true') {
+			data.climacteric = true;
+		}
+		if (data.climacteric === 'false') {
+			data.climacteric = false;
+		}
+
+		await this.request(`commodities/`, { ...data }, 'post');
+	}
+	// Edit a commodity given an id
+	static async editCommodity(id, data) {
+		if (data.climacteric === 'true') {
+			data.climacteric = true;
+		}
+		if (data.climacteric === 'false') {
+			data.climacteric = false;
+		}
+
+		const res = await this.request(`commodities/${id}`, { ...data }, 'patch');
+		return res;
+	}
+	// Delete a commodity given an id
+	static async deleteCommodity(id) {
+		await this.request(`commodities/${id}`, {}, 'delete');
 	}
 
 	// ***********TEMPERATURE RECOMMENDATIONS
@@ -114,6 +141,7 @@ class PostharvestApi {
 		return res;
 	}
 
+	//Delete temperarture recommendation given temperature id
 	static async deleteTempRec(id) {
 		const res = await this.request(`temperature/${id}`, {}, 'delete');
 
@@ -134,6 +162,7 @@ class PostharvestApi {
 		return res;
 	}
 
+	// Delete shelf life data given an id
 	static async deleteShelfLifeData(id) {
 		const res = await this.request(`shelf-life/${id}`, {}, 'delete');
 
@@ -165,9 +194,7 @@ class PostharvestApi {
 
 	// Add  ethylene data to ethylene_sensitivity
 	static async addEthyleneData(id, data) {
-		console.log(id, data);
 		const ethyleneRes = await this.request(`ethylene`, { commodityId: id, data }, 'post');
-		console.log(ethyleneRes);
 		return ethyleneRes;
 	}
 
@@ -191,26 +218,26 @@ class PostharvestApi {
 		const res = await this.request(`studies/${id}`);
 		return res;
 	}
-	// get study by id
+	// get all studies
 	static async getStudies() {
 		let studies = [];
 		const res = await this.request(`studies/`);
 		for (let study of res.studies) {
-			console.log(study.id);
 			let s = await this.getStudy(study.id);
 			studies.push(s);
 		}
 		return studies;
 	}
 
-	// Add  ethylene data to ethylene_sensitivity
-	static async addStudy(id, data) {
-		const res = await this.request(`studies`, { commodityId: id, data }, 'post');
-		console.log(res);
+	// add a new study. Not being used yet
+	static async addStudy(data) {
+		data.source = data.source.replace(/C:\\fakepath\\/i, '/studies/');
+		const res = await this.request(`studies/`, { ...data }, 'post');
+
 		return res;
 	}
 
-	// Update a ethylene data in ethylene_sensitivity given an id
+	// Update study title, date, or objective in windham_studies given an id
 	static async updateStudy(id, data) {
 		const res = await this.request(`studies/${id}`, { ...data }, 'patch');
 		return res;
@@ -221,6 +248,16 @@ class PostharvestApi {
 		const res = await this.request(`studies/${id}`, {}, 'delete');
 
 		return res;
+	}
+
+	// Add to windham_studies_commodities
+	static async addCommoditiesToShelflife(commodityIds, studyId) {
+		commodityIds.forEach(async (id) => await this.request(`studies/${id}`, { studyId }, 'post'));
+	}
+	// Delete all commodity-study data from windham_studies_commodities
+
+	static async clearCommoditiesFromStudy(studyId) {
+		await this.request(`studies/study/${studyId}`, {}, 'delete');
 	}
 
 	// ***********REFERENCES

@@ -2,13 +2,20 @@ import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faDownload } from '@fortawesome/free-solid-svg-icons/faDownload';
+import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus';
+
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Row, Col, Form, Input, InputGroup, Table, ListGroupItem } from 'reactstrap';
+import { Row, Col, Form, Input, InputGroup, Table, Modal, Spinner } from 'reactstrap';
 import { v4 as uuid } from 'uuid';
 import PostharvestApi from '../api';
+import AddWindhamStudyForm from './EditWindhamStudyCommodities;';
+import { faPenToSquare } from '@fortawesome/free-solid-svg-icons/faPenToSquare';
+import { faCircleXmark } from '@fortawesome/free-solid-svg-icons/faCircleXmark';
+import EditWindhamStudyForm from './EditWindhamStudy';
+import EditWindhamStudyCommodities from './EditWindhamStudyCommodities;';
 
 function StudiesList() {
-	library.add(faDownload);
+	library.add(faDownload, faPlus, faPenToSquare, faCircleXmark);
 
 	const navigate = useNavigate();
 
@@ -16,6 +23,42 @@ function StudiesList() {
 		studies,
 		setStudies
 	] = useState([]);
+
+	const [
+		editMode,
+		setEditMode
+	] = useState(false);
+
+	const [
+		editStudyData,
+		setEditStudyData
+	] = useState();
+	const [
+		editCommodityData,
+		setEditCommodityData
+	] = useState();
+
+	const [
+		showEditCommodityForm,
+		setShowEditCommodityForm
+	] = useState(false);
+
+	const editCommodityForm = () => {
+		showEditCommodityForm ? setShowEditCommodityForm(false) : setShowEditCommodityForm(true);
+	};
+
+	const [
+		showEditStudyForm,
+		setShowEditStudyForm
+	] = useState(false);
+
+	const editStudyForm = () => {
+		showEditStudyForm ? setShowEditStudyForm(false) : setShowEditStudyForm(true);
+	};
+
+	const toggleEdit = () => {
+		editMode ? setEditMode(false) : setEditMode(true);
+	};
 
 	const [
 		isLoading,
@@ -50,26 +93,24 @@ function StudiesList() {
 	}, []);
 
 	if (isLoading) {
-		return;
+		return <Spinner />;
 	}
-
-	console.log('studies', studies);
 
 	return (
 		<div>
-			<h1>Studies</h1>
-			<Row className="  justify-content-center text-center">
-				<Col xs="2" />
-				<Col className="search-bar">
-					<Form className="d-flex flex-row mb-3 justify-content-center">
-						<InputGroup>
-							<Input placeholder="Search by title..." />
-						</InputGroup>
-					</Form>
-				</Col>
-				<Col xs="2" />
-			</Row>
-			{/* {!location.state ? <JobSearchForm filterJobs={filterJobs} /> : ''} */}
+			<h1>Windham Packaging Shelf Life Studies</h1>
+			{/* Edit study commodities modal */}
+			<Modal key={uuid()} isOpen={showEditCommodityForm} toggle={editCommodityForm}>
+				<EditWindhamStudyCommodities id={editCommodityData} />
+			</Modal>
+			{/* Edit study modal */}
+			<Modal key={uuid()} isOpen={showEditStudyForm} toggle={editStudyForm}>
+				<EditWindhamStudyForm id={editStudyData} />
+			</Modal>
+
+			{<button onClick={toggleEdit}>{editMode ? 'View' : 'Edit'}</button>}
+
+			{/* List of studies */}
 			<Table>
 				<thead>
 					<tr>
@@ -80,25 +121,56 @@ function StudiesList() {
 					</tr>
 				</thead>
 				<tbody>
-					{/* {studies.map((s) => console.log(s.study.date.slice(0, 9)))} */}
 					{studies.map((study) => (
 						<tr key={uuid()}>
 							<td>{study.study.title}</td>
-							<td>{study.study.date}</td>
+							<td>{study.study.date.slice(0, 10)}</td>
 							<td>{study.study.objective}</td>
 							<td>
 								{study.study.commodities.map((c) => (
-									<div>
-										<a key={uuid()} href={`/commodity/${c.id}`}>
+									<div key={uuid()}>
+										<a href={`/commodity/${c.id}`}>
 											{c.commodityName} {c.variety}
 										</a>{' '}
 									</div>
 								))}
-								<button>Add Commodity</button>
+								<button
+									onClick={() => {
+										setEditCommodityData(study);
+										editCommodityForm();
+									}}
+									// onclick={() => {
+									// 	setEditCommodityData(study);
+									// 	toggleEditCommodityForm();
+									// }}
+								>
+									Edit Commodities
+								</button>
 							</td>
 							<td>
 								<a href={study.study.source} download>
 									<FontAwesomeIcon icon="fa-solid fa-download" />
+								</a>
+							</td>
+							<td>
+								<a
+									className={editMode ? 'edit-mode edit' : 'view-mode'}
+									onClick={() => {
+										setEditStudyData(study);
+										editStudyForm();
+									}}
+								>
+									<FontAwesomeIcon icon="fa-solid fa-pen-to-square" />
+								</a>
+								<a
+									className={editMode ? 'edit-mode delete' : 'view-mode'}
+									onClick={async () => {
+										await PostharvestApi.deleteStudy(study.study.id);
+
+										window.location.reload(false);
+									}}
+								>
+									<FontAwesomeIcon icon=" fa-solid fa-circle-xmark" />
 								</a>
 							</td>
 						</tr>

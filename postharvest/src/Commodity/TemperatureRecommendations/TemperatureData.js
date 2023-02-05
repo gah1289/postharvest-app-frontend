@@ -42,7 +42,6 @@ function TemperatureData(commodity) {
 	};
 
 	const toggleAddTempForm = () => {
-		console.log(showAddTempForm);
 		showAddTempForm ? setShowAddTempForm(false) : setShowAddTempForm(true);
 	};
 

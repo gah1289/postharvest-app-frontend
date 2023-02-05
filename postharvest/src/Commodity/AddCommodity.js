@@ -5,17 +5,17 @@ import { Form, FormGroup, ModalBody, ModalHeader, Label, Input } from 'reactstra
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import PostharvestApi from '../../api';
+import PostharvestApi from '../api';
 import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus';
 
-function AddEthyleneForm(id) {
+function AddCommodityForm() {
 	library.add(faPlus);
-	const commodityId = id.id;
 
 	const INITIAL_STATE = {
-		temperature    : '',
-		c2h4Production : '',
-		c2h4Class      : ''
+		commodityName  : '',
+		variety        : '',
+		scientificName : '',
+		coolingMethod  : ''
 	};
 
 	const [
@@ -32,7 +32,7 @@ function AddEthyleneForm(id) {
 		e.preventDefault();
 
 		try {
-			const data = await PostharvestApi.addEthyleneData(commodityId, formData);
+			await PostharvestApi.addCommodity(formData);
 
 			// refresh page and automatically show new data
 			window.location.reload(false);
@@ -45,34 +45,50 @@ function AddEthyleneForm(id) {
 
 	return (
 		<div>
-			<ModalHeader>Add Ethylene Data</ModalHeader>
+			<ModalHeader>Add Commodity</ModalHeader>
 			<ModalBody>
 				<Form onSubmit={handleSubmit}>
 					<FormGroup>
-						<Label htmlFor="temperature">Temperature ({'\u00b0'}C):</Label>
+						<Label htmlFor="commodityName">Commodity Name:</Label>
 						<Input
 							type="text"
-							name="temperature"
-							id="temperature"
+							name="commodityName"
+							id="commodityName"
+							required
 							onChange={handleChange}
-							value={formData.temperature || ''}
+							value={formData.commodityName || ''}
 						/>
-						<Label htmlFor="c2h4Production">Ethylene Production:</Label>
+						<Label htmlFor="variety">Variety:</Label>
 						<Input
 							type="text"
-							name="c2h4Production"
-							id="c2h4Production"
+							name="variety"
+							id="variety"
 							onChange={handleChange}
-							value={formData.c2h4Production || ''}
+							value={formData.variety || ''}
 						/>
-						<Label htmlFor="c2h4Class">Ethylene Class:</Label>
+						<Label htmlFor="scientificName">Scientific Name:</Label>
 						<Input
 							type="text"
-							name="c2h4Class"
-							id="c2h4Class"
+							name="scientificName"
+							id="scientificName"
 							onChange={handleChange}
-							value={formData.c2h4Class || ''}
+							value={formData.scientificName || ''}
 						/>
+						<Label htmlFor="coolingMethod">Cooling Methods:</Label>
+						<Input
+							type="textarea"
+							name="coolingMethod"
+							id="coolingMethod"
+							onChange={handleChange}
+							value={formData.coolingMethod || ''}
+						/>
+						<Label htmlFor="climacteric">Climacteric:</Label>
+						<Input type="select" name="climacteric" id="climacteric" onChange={handleChange}>
+							{' '}
+							<option> </option>
+							<option value={true}>Climacteric</option>
+							<option value={false}>Non-climacteric</option>
+						</Input>
 
 						<button>Add Data</button>
 					</FormGroup>
@@ -82,4 +98,4 @@ function AddEthyleneForm(id) {
 	);
 }
 
-export default AddEthyleneForm;
+export default AddCommodityForm;

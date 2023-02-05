@@ -23,7 +23,7 @@ function WindhamStudies(commodity) {
 				{windhamStudies.length ? (
 					<thead>
 						<tr>
-							<th>Title ({'\u00b0'}C)</th>
+							<th>Title</th>
 							<th>Date</th>
 							<th>Objective</th>
 							<th />
@@ -42,7 +42,7 @@ function WindhamStudies(commodity) {
 					{windhamStudies.map((s) => (
 						<tr>
 							<td>{s.title}</td>
-							<td>{s.date.slice(0, 9)}</td>
+							<td>{s.date.slice(0, 10)}</td>
 							<td>{s.objective}</td>
 							<td>
 								<a href={s.source} download>

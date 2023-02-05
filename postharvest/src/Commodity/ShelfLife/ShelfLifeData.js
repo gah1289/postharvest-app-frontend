@@ -10,14 +10,12 @@ import PostharvestApi from '../../api';
 import ItemContext from '../../ItemContext';
 import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus';
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons/faPenToSquare';
-
 import AddShelfLifeForm from './AddShelfLife';
 import EditShelfLifeForm from './EditShelfLife';
 
 function ShelfLifeData(commodity) {
 	library.add(faPlus, faPenToSquare);
 	const { id, shelfLife } = commodity.commodity;
-	console.log(shelfLife);
 
 	const { user } = useContext(ItemContext);
 
