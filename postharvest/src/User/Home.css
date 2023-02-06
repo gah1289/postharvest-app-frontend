@@ -1,3 +1,7 @@
+/* body {
+	color: white;
+} */
+
 .windham-logo {
 	font-family: 'Cinzel', serif;
 	font-size: 6vh;
@@ -10,13 +14,11 @@
 }
 
 .postharvest-banner {
-	margin-top: 20px;
 	font-family: 'Source Sans Pro', sans-serif;
 	font-size: 13vh;
-
 	margin-bottom: 40px;
 	text-transform: uppercase;
-	color: #fff;
+	color: rgba(255, 255, 255, 1);
 	letter-spacing: 3px;
 }
 
@@ -29,27 +31,21 @@
 	padding: 10px;
 	background: url("/home/gah1289/springboard_assignments/50-capstone-two/postharvest-app-frontend/postharvest/src/Images/search-regular.svg")
 		no-repeat;
-	background-color: #fff;
+	background-color: rgba(255, 255, 255, 1);
 	background-position: 95%, 5%;
-	background-image: rgba(39, 103, 187, 1);
 	background-size: 20px;
 }
 
 .banner {
-	padding: 10px;
-	height: 400px;
-	min-height: auto;
+	color: rgb(255, 255, 255);
+	height: fit-content;
+	min-height: 300px;
 	background-image: linear-gradient(96.5deg, rgba(39, 103, 187, 1) 10.4%, rgba(16, 72, 144, 1) 87.7%);
-	overflow: hidden;
 	float: inline-end;
 }
 
-.link {
-	margin-right: 12.5%;
-}
-
 .magnifying-glass {
-	background-color: #fff;
+	background-color: rgba(255, 255, 255, 1);
 }
 
 .footer {
@@ -58,4 +54,44 @@
 	text-transform: uppercase;
 	letter-spacing: 1.5px;
 	font-size: 13px;
+}
+
+.cards {
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+	padding: 10px;
+}
+
+.commodity-card {
+	margin: 10px;
+	align-self: center;
+	width: 150px;
+	background-color: rgba(255, 255, 255, 0.3);
+	height: 60px;
+}
+
+.commodity-name {
+	text-transform: uppercase;
+	color: rgba(255, 255, 255, 1);
+	font-weight: bold;
+	font-size: 20px;
+}
+
+.variety {
+	color: rgba(255, 255, 255, 1);
+	font-size: 18px;
+}
+
+a {
+	text-decoration: none;
+	font-family: 'Source Sans Pro', sans-serif;
+}
+
+.link a {
+	color: rgb(137, 207, 240);
+}
+
+.footer {
+	color: rgb(0, 0, 0);
 }

@@ -1,55 +1,24 @@
-.windham-logo {
-	font-family: 'Cinzel', serif;
-	font-size: 6vh;
-	color: rgb(170, 215, 236);
-}
-
-.windham-logo-img {
-	height: 6vh;
-	display: inline-flex;
-}
-
-.postharvest-banner {
-	margin-top: 20px;
+.login-div {
+	padding: 10px;
+	align-items: center;
+	justify-content: center;
 	font-family: 'Source Sans Pro', sans-serif;
-	font-size: 13vh;
+	font-weight: 500;
+}
 
-	margin-bottom: 40px;
+.login-title {
 	text-transform: uppercase;
-	color: #fff;
-	letter-spacing: 3px;
-}
-
-.search-bar input {
-	font-family: 'Source Sans Pro', sans-serif;
-	font-weight: bolder;
-	letter-spacing: 1.5px;
-	width: 50%;
-	height: 40px;
-	padding: 10px;
-	background: url("/home/gah1289/springboard_assignments/50-capstone-two/postharvest-app-frontend/postharvest/src/Images/search-regular.svg")
-		no-repeat;
-	background-color: #fff;
-	background-position: 95%, 5%;
-	background-image: rgba(39, 103, 187, 1);
-	background-size: 20px;
-}
-
-.banner {
-	padding: 10px;
-	max-height: max-content;
-
-	/* height: 400px;
-	min-height: auto; */
-	color: rgb(165, 221, 247);
-	background-image: linear-gradient(96.5deg, rgba(39, 103, 187, 1) 10.4%, rgba(16, 72, 144, 1) 87.7%);
-	overflow: hidden;
-	float: inline-end;
+	color: rgba(255, 255, 255, 1);
+	font-size: 45px;
 }
 
 .login-form {
-	font-family: 'Source Sans Pro', sans-serif;
-	font-weight: 500;
+	justify-content: center;
+	width: 500px;
+	padding: 10px;
+	align-items: center;
+	justify-content: center;
+	margin: auto;
 }
 .login-form button {
 	background-color: rgba(0, 0, 0, 0);
@@ -66,33 +35,26 @@
 	color: rgba(16, 72, 144, 1);
 }
 
-.link {
-	margin-right: 12.5%;
+.register-prompt {
+	color: rgb(165, 221, 247);
 }
 
-.windham-logo a,
-.link a {
-	font-family: 'Source Sans Pro', sans-serif;
+.register-prompt a {
+	color: rgb(165, 221, 247);
 	text-decoration: none;
-	color: rgb(137, 207, 240);
-}
-
-.windham-logo a:hover,
-.link a:hover {
-	font-family: 'Source Sans Pro', sans-serif;
-	text-decoration: none;
-	color: rgb(170, 215, 236);
-	font-weight: 700;
-}
-
-.magnifying-glass {
-	background-color: #fff;
-}
-
-.footer {
-	padding: 10px;
-	font-family: 'Source Sans Pro', sans-serif;
 	text-transform: uppercase;
-	letter-spacing: 1.5px;
-	font-size: 13px;
+	letter-spacing: 1px;
+	font-weight: bold;
+}
+.register-prompt a:hover {
+	color: rgba(255, 255, 255, 1);
+}
+
+.label {
+	color: rgb(165, 221, 247);
+	position: relative;
+	text-align: left;
+	text-transform: uppercase;
+	margin-bottom: -8px;
+	font-size: 14px;
 }

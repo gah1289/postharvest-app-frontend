@@ -1,9 +1,7 @@
-import logo from '../Images/windham-logo-blue.svg';
 import './Login.css';
-import React, { useEffect, useState, useContext, useRef } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Container, Row, Col, Button, Form, FormGroup, Label, Input, FormFeedback } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { useNavigate } from 'react-router-dom';
 import PostharvestApi from '../api';
@@ -44,7 +42,6 @@ function Login() {
 		setFormData((formData) => ({ ...formData, [name]: value }));
 	};
 	const handleSubmit = async (e) => {
-		let { username, password } = formData;
 		e.preventDefault();
 
 		if (!formData.username) {
@@ -73,53 +70,57 @@ function Login() {
 	return (
 		<div>
 			<div className="banner">
-				<Container>
-					<Row className="postharvest-banner justify-content-center">Log In</Row>
-					<Row>
-						<Form className="login-form" onSubmit={handleSubmit}>
-							<FormGroup row>
+				<Container className="login-div ">
+					<Row className="justify-content-center login-title">Log In</Row>
+					<Form className="login-form" onSubmit={handleSubmit}>
+						<FormGroup className="mb-3">
+							<div className="label">
 								<Label sm={2} for="username">
-									Username:{' '}
+									Username{' '}
 								</Label>
-								<Col sm={5}>
-									<Input
-										name="username"
-										invalid={usernameError}
-										id="username"
-										type="text"
-										value={formData.username || ''}
-										onChange={handleChange}
-									/>
-									<FormFeedback>Username Required.</FormFeedback>
-								</Col>
-							</FormGroup>
-							<FormGroup row>
+							</div>
+							<Col>
+								<Input
+									name="username"
+									invalid={usernameError}
+									id="username"
+									type="text"
+									value={formData.username || ''}
+									onChange={handleChange}
+								/>
+								<FormFeedback>Username Required.</FormFeedback>
+							</Col>
+						</FormGroup>
+
+						<FormGroup className="mb-3">
+							<div className="label">
 								<Label sm={2} for="password">
-									Password:{' '}
+									Password{' '}
 								</Label>{' '}
-								<Col sm={5}>
-									<Input
-										invalid={pwError}
-										name="password"
-										id="password"
-										type="password"
-										value={formData.password || ''}
-										onChange={handleChange}
-									/>
-									<FormFeedback>{errors}</FormFeedback>
-								</Col>
-							</FormGroup>
-							<button>Log In</button>
-							{/* <Button/> component on reactstrap keeps breaking by code >:(  */}
-						</Form>
-					</Row>
+							</div>
+
+							<Input
+								invalid={pwError}
+								name="password"
+								id="password"
+								type="password"
+								value={formData.password || ''}
+								onChange={handleChange}
+							/>
+							<FormFeedback>{errors}</FormFeedback>
+						</FormGroup>
+						<button>Log In</button>
+
+						{/* <Button/> component on reactstrap keeps breaking by code >:(  */}
+					</Form>
 					<Container>
-						<Row className="justify-content-center text-center">
+						<Row className="justify-content-center text-center register-prompt">
 							Don't have an account? <a href="signup/">Register here</a>
 						</Row>
 					</Container>
 				</Container>
 			</div>
+
 			<div className="footer">
 				<Container>
 					<Row className="justify-content-center text-center">Created by Gabriela McCarthy</Row>

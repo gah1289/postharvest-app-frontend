@@ -45,47 +45,12 @@ function CommoditySearchForm({ filterCommodities }) {
 							placeholder="Search by fruit or vegetable..."
 						/>
 					</InputGroup>
-					<button>Search</button>
+					<button className="search-btn">Search</button>
 				</Form>
 			</Col>
 			<Col xs="2" />
 			<div className="found-results">{numResultsMsg}</div>
 		</Row>
-		// 		<form className="jobs-form" onSubmit={handleSubmit}>
-		// 			<h2>Search by:</h2>
-		// 			<div>
-		// 				<label htmlFor="title">Title: </label>
-		// 				<input
-		// 					name="title"
-		// 					id="title"
-		// 					type="text"
-		// 					placeholder="Job Title"
-		// 					value={formData.title || ''}
-		// 					onChange={handleChange}
-		// 				/>
-		// 			</div>{' '}
-		// 			<div>
-		// 				<label>Minimum Salary: </label>
-		// 				<input
-		// 					name="minSalary"
-		// 					id="minSalary"
-		// 					type="number"
-		// 					placeholder="Minimum Salary"
-		// 					value={formData.minSalary || ''}
-		// 					onChange={handleChange}
-		// 				/>
-		// 				<label htmlFor="hasEquity">Equity </label>
-		// 				<input
-		// 					name="hasEquity"
-		// 					id="hasEquity"
-		// 					type="checkbox"
-		// 					value={formData.hasEquity || ''}
-		// 					onChange={checkboxChange}
-		// 				/>
-		// 			</div>{' '}
-		// 			<Button color="secondary">Search</Button>
-		// 			<div className="found-results">{numResultsMsg}</div>
-		// 		</form>
 	);
 }
 
