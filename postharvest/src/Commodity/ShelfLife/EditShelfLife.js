@@ -40,7 +40,7 @@ function EditShelfLifeForm(shelfLifeData) {
 	};
 
 	return (
-		<div>
+		<div className="edit-modal">
 			<ModalHeader>Edit Shelf Life Data</ModalHeader>
 			<ModalBody>
 				<Form onSubmit={handleSubmit}>
@@ -81,8 +81,9 @@ function EditShelfLifeForm(shelfLifeData) {
 							onChange={handleChange}
 							value={formData.description || ''}
 						/>
-
-						<button>Make Changes</button>
+						<div className="modal-btn">
+							<button>Edit</button>
+						</div>
 					</FormGroup>
 				</Form>
 			</ModalBody>

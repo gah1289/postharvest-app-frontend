@@ -23,16 +23,153 @@
 }
 
 .search-btn {
-	background-color: rgba(39, 103, 187, 1);
-	color: rgba(255, 255, 255, 1);
-	border: solid 2px rgba(39, 103, 187, 1);
-	border-radius: 0.375rem;
-	text-transform: uppercase;
 	margin-left: 5px;
-	line-height: 1.5;
 }
+
+.add-commodity-btn {
+	margin-bottom: 20px;
+	border: solid 1px rgb(214, 216, 221);
+	width: 500px;
+	color: rgb(0, 0, 0);
+}
+
+.add-commodity-btn:hover {
+	color: rgb(0, 0, 0);
+}
+
+.commodity-name-list {
+	font-weight: bold;
+}
+
 .search-btn:hover {
 	color: rgba(39, 103, 187, 1);
 	background-color: rgba(255, 255, 255, 1);
 	transition: 0.3s;
+}
+
+button {
+	border: solid 2px rgba(39, 103, 187, 1);
+	border-radius: 0.375rem;
+	text-transform: uppercase;
+	height: 40px;
+	color: rgba(39, 103, 187, 1);
+	background-color: rgba(255, 255, 255, 1);
+	transition: 0.3s;
+}
+
+.search-btn,
+button:hover {
+	background-color: rgba(39, 103, 187, 1);
+	color: rgba(255, 255, 255, 1);
+}
+.add-modal,
+.edit-modal,
+.modal-body,
+.commodity-card-page,
+.commodities-list {
+	font-family: 'Source Sans Pro', sans-serif;
+}
+.commodities-list h1 {
+	color: rgba(39, 103, 187, 1);
+	text-transform: uppercase;
+	margin: 30px 0;
+	font-size: 36px;
+	font-weight: bold;
+	justify-items: center;
+}
+
+.commodity-card-body,
+.commodities-list-group {
+	width: 500px;
+	margin: auto;
+	font-size: 16px;
+	font-family: ;
+}
+
+.add-commodity-btn:hover,
+.commodities-list-item:hover {
+	background-color: rgba(39, 103, 187, 0.05);
+}
+
+.variety-list {
+	color: rgba(39, 103, 187, 0.7);
+	font-size: 16px;
+}
+
+/* COMMODITY PAGE */
+
+.card-body {
+	width: 80vw;
+}
+
+.climacteric {
+	font-size: 20px;
+	margin-top: 20px;
+	text-transform: capitalize;
+}
+
+.back-to-commodities {
+	font-size: 20px;
+	text-align: left;
+}
+
+.back-to-commodities a {
+	text-decoration: none;
+	text-transform: uppercase;
+	color: rgba(39, 103, 187, 0.7);
+}
+
+.commodity-card-page h1 {
+	text-transform: uppercase;
+	font-weight: bold;
+}
+.commodity-card-page h2 {
+	text-transform: uppercase;
+	font-weight: bold;
+	color: rgba(39, 103, 187, 1);
+	margin-top: 40px;
+	font-size: 20px;
+}
+
+.commodity-card-page h3 {
+	margin: 20px;
+	font-size: 22px;
+}
+
+.edit-commodity-link {
+	margin: 0 5px;
+	color: rgb(39, 103, 187);
+	font-size: 16px;
+}
+.edit-commodity-link:hover {
+	color: rgb(28, 74, 134);
+}
+
+.delete-commodity {
+	color: rgb(234, 67, 53);
+	border: solid rgb(234, 67, 53);
+}
+.delete-commodity:hover {
+	background-color: rgb(234, 67, 53);
+	color: rgb(255, 255, 255);
+}
+
+.modal-header {
+	color: rgba(39, 103, 187, 1);
+	text-transform: uppercase;
+	font-weight: bold;
+}
+
+.modal-btn {
+	margin: 10px;
+	text-align: center;
+	font-weight: bold;
+}
+.modal-btn button {
+	font-weight: bold;
+	border: solid 1.5px;
+}
+
+th {
+	color: rgba(39, 103, 187, 0.7);
 }

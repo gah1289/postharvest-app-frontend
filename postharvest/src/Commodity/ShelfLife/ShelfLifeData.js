@@ -1,7 +1,7 @@
 import '../Commodity';
 import { v4 as uuid } from 'uuid';
 import React, { useState, useContext } from 'react';
-import { Table, Modal } from 'reactstrap';
+import { Table, Modal, CardTitle } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -52,7 +52,20 @@ function ShelfLifeData(commodity) {
 
 	return (
 		<div>
-			{user.current.isAdmin && <button onClick={toggleEdit}>{editMode ? 'View' : 'Edit'}</button>}
+			<CardTitle tag="h2">
+				Shelf Life{' '}
+				{user.current.isAdmin && (
+					<a onClick={toggleAddShelfLifeForm} className="edit-commodity-link">
+						<FontAwesomeIcon icon=" fa-circle-plus" />
+					</a>
+				)}
+				{user.current.isAdmin && (
+					<a className="edit-commodity-link" onClick={toggleEdit}>
+						{!editMode && <FontAwesomeIcon icon="fa-solid fa-pen-to-square" />}
+						{editMode && <FontAwesomeIcon icon="fa-eye" />}
+					</a>
+				)}
+			</CardTitle>
 
 			<Table>
 				{shelfLife.length ? (
@@ -60,7 +73,7 @@ function ShelfLifeData(commodity) {
 						<tr>
 							<th>Temperature ({'\u00b0'}C)</th>
 							<th>Shelf Life</th>
-							<th>Class</th>
+							<th>Packaging</th>
 							<th />
 							<th />
 						</tr>
@@ -86,15 +99,18 @@ function ShelfLifeData(commodity) {
 							<td>{s.description}</td>
 
 							<td>
-								<a
-									className={editMode ? 'edit-mode edit' : 'view-mode'}
-									onClick={() => {
-										setEditShelfLifeData(s);
-										editShelfLifeForm(id);
-									}}
-								>
-									<FontAwesomeIcon icon="fa-solid fa-pen-to-square" />
-								</a>
+								{editMode && (
+									<a
+										className="edit-commodity-link"
+										onClick={() => {
+											setEditShelfLifeData(s);
+											editShelfLifeForm(id);
+										}}
+									>
+										<FontAwesomeIcon icon="fa-solid fa-pen-to-square" />
+									</a>
+								)}
+
 								<a
 									className={editMode ? 'edit-mode delete' : 'view-mode'}
 									onClick={() => {
@@ -110,9 +126,6 @@ function ShelfLifeData(commodity) {
 					<tr />
 				</tbody>
 			</Table>
-			<button onClick={toggleAddShelfLifeForm} className={editMode ? 'edit-mode add' : 'view-mode'}>
-				<FontAwesomeIcon icon="fa-solid fa-plus" /> Shelf Life Data
-			</button>
 
 			<Modal key={uuid()} isOpen={showAddShelfLifeForm} toggle={toggleAddShelfLifeForm}>
 				<AddShelfLifeForm id={id} />

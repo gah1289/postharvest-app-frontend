@@ -5,8 +5,7 @@ import { Row, Col, Form, Input, InputGroup } from 'reactstrap';
 
 function CommoditySearchForm({ filterCommodities }) {
 	const INITIAL_STATE = {
-		commodityName : undefined,
-		climacteric   : undefined
+		commodityName : undefined
 	};
 	const [
 		formData,
@@ -45,7 +44,9 @@ function CommoditySearchForm({ filterCommodities }) {
 							placeholder="Search by fruit or vegetable..."
 						/>
 					</InputGroup>
-					<button className="search-btn">Search</button>
+					<button disabled={!formData.commodityName} className="search-btn">
+						Search
+					</button>
 				</Form>
 			</Col>
 			<Col xs="2" />

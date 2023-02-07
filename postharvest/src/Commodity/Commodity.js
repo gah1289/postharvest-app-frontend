@@ -2,14 +2,12 @@ import React, { useEffect, useState, useContext } from 'react';
 import PostharvestApi from '../api';
 import './Commodities.css';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Card, CardBody, CardTitle, CardSubtitle, Table, Spinner, Row, Col, Modal } from 'reactstrap';
+import { Card, CardBody, CardTitle, CardSubtitle, Spinner, Row, Col, Modal, ModalBody, ModalFooter } from 'reactstrap';
 import { v4 as uuid } from 'uuid';
 import ItemContext from '../ItemContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faDownload } from '@fortawesome/free-solid-svg-icons/faDownload';
-import { faCircleXmark } from '@fortawesome/free-solid-svg-icons/faCircleXmark';
-import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus';
+import * as Icons from '@fortawesome/free-solid-svg-icons';
 import TemperatureData from './TemperatureRecommendations/TemperatureData';
 import EthyleneData from './EthyleneSensitivity/EthyleneData';
 import ShelfLifeData from './ShelfLife/ShelfLifeData';
@@ -19,7 +17,10 @@ import WindhamStudies from './WindhamStudies/WindhamStudyData';
 import EditCommodityForm from './EditCommodityForm';
 
 function Commodity() {
-	library.add(faDownload, faCircleXmark, faPlus);
+	const iconList = Object.keys(Icons).filter((key) => key !== 'fas' && key !== 'prefix').map((icon) => Icons[icon]);
+
+	library.add(...iconList);
+
 	const { user } = useContext(ItemContext);
 	const { id } = useParams();
 	const [
@@ -43,6 +44,11 @@ function Commodity() {
 	const [
 		showEditCommodityForm,
 		setShowEditCommodityForm
+	] = useState(false);
+
+	const [
+		showDeleteModal,
+		setShowDeleteModal
 	] = useState(false);
 
 	const deleteCommodity = async () => {
@@ -74,60 +80,73 @@ function Commodity() {
 	const editCommodityForm = () => {
 		showEditCommodityForm ? setShowEditCommodityForm(false) : setShowEditCommodityForm(true);
 	};
+	const deleteModal = () => {
+		showDeleteModal ? setShowDeleteModal(false) : setShowDeleteModal(true);
+	};
 
 	return (
-		<Card key={uuid()} style={{ minWidth: '30vw' }} className="job-card">
+		<Card className="commodity-card-page" key={uuid()} style={{ minWidth: '30vw' }}>
 			<Modal key={uuid()} isOpen={showEditCommodityForm} toggle={editCommodityForm}>
 				<EditCommodityForm commodityData={commodity} />
 			</Modal>
-			<CardBody>
+			<Modal key={uuid()} isOpen={showDeleteModal} toggle={deleteModal}>
+				<ModalBody>
+					Are you sure you want to delete {commodityName} {variety}? This cannot be undone.
+				</ModalBody>
+				<ModalFooter>
+					<button className="delete-commodity" onClick={deleteCommodity}>
+						Delete {commodityName}
+					</button>
+				</ModalFooter>
+			</Modal>
+			<CardBody className="commodity-card-body">
 				<CardTitle tag="h1">
+					<div className="back-to-commodities justify-content-left">
+						{' '}
+						<a href="/search">
+							<FontAwesomeIcon icon="arrow-left" /> Commodities
+						</a>
+					</div>
 					<Row>
 						<Col>
-							<a className="h5" href="/search">
-								Back to Commodities
-							</a>
-						</Col>
-						<Col>
 							{commodityName}: {variety}
+							{user.current.isAdmin && (
+								<a
+									className="edit-commodity-link"
+									onClick={() => {
+										editCommodityForm();
+									}}
+								>
+									<FontAwesomeIcon icon="fa-solid fa-pen-to-square" />
+								</a>
+							)}
 						</Col>
-						<Col />
 					</Row>
 				</CardTitle>
 
-				<CardSubtitle className="mb-2 text-muted" tag="h6">
+				<CardSubtitle className="mb-2 text-muted" tag="h3">
 					{scientificName}
 				</CardSubtitle>
-				{user.current.isAdmin && (
-					<button
-						onClick={() => {
-							editCommodityForm();
-						}}
-					>
-						Edit
-					</button>
-				)}
+
 				<CardTitle tag="h2">Cooling Methods</CardTitle>
 				{coolingMethod}
-				{climacteric === true && <CardTitle tag="h2">Climacteric</CardTitle>}
-				{climacteric === false && <CardTitle tag="h2">Non-Climacteric</CardTitle>}
 
-				<CardTitle tag="h2">Storage Recommendations</CardTitle>
 				<TemperatureData commodity={commodity} />
-				<CardTitle tag="h2">Shelf Life</CardTitle>
+
 				<ShelfLifeData commodity={commodity} />
-				<CardTitle tag="h2">Respiration Rate </CardTitle>
 
 				<RespirationData commodity={commodity} />
-				<CardTitle tag="h2">Ethylene Sensitivity</CardTitle>
+
 				<EthyleneData commodity={commodity} />
 
-				{user.current.isAdmin && <CardTitle tag="h2">Shelf Life Studies</CardTitle>}
 				{user.current.isAdmin && <WindhamStudies commodity={commodity} />}
 
-				<CardTitle tag="h2">References</CardTitle>
 				<ReferenceData commodity={commodity} />
-				{user.current.isAdmin && <button onClick={deleteCommodity}>Delete {commodityName}</button>}
+				{user.current.isAdmin && (
+					<button className="delete-commodity" onClick={deleteModal}>
+						Delete
+					</button>
+				)}
 			</CardBody>
 		</Card>
 	);

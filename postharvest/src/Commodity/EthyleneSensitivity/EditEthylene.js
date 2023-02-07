@@ -40,7 +40,7 @@ function EditEthyleneForm(ethyleneData) {
 	};
 
 	return (
-		<div>
+		<div className="edit-modal">
 			<ModalHeader>Edit Ethylene Data</ModalHeader>
 			<ModalBody>
 				<Form onSubmit={handleSubmit}>
@@ -72,7 +72,9 @@ function EditEthyleneForm(ethyleneData) {
 							placeholder={c2h4Class}
 							value={formData.c2h4Class || ''}
 						/>
-						<button>Make Changes</button>
+						<div className="modal-btn">
+							<button>Edit</button>
+						</div>
 					</FormGroup>
 				</Form>
 			</ModalBody>

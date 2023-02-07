@@ -44,7 +44,7 @@ function AddTempForm(id) {
 	};
 
 	return (
-		<div>
+		<div className="add-modal">
 			<ModalHeader>Add Storage Recommendation</ModalHeader>
 			<ModalBody>
 				<Form onSubmit={handleSubmit}>
@@ -75,7 +75,11 @@ function AddTempForm(id) {
 						/>
 						<Label htmlFor="rh">Relative Humidity:</Label>
 						<Input type="text" name="rh" id="rh" onChange={handleChange} value={formData.rh || ''} />
-						<button>Make Changes</button>
+						<div className="modal-btn">
+							<button>
+								<FontAwesomeIcon icon="plus" /> Data
+							</button>
+						</div>
 					</FormGroup>
 				</Form>
 			</ModalBody>

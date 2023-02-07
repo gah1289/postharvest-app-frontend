@@ -1,7 +1,7 @@
 import '../Commodity';
 import { v4 as uuid } from 'uuid';
 import React, { useState, useContext } from 'react';
-import { Table, Modal } from 'reactstrap';
+import { Table, Modal, CardTitle } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -51,8 +51,20 @@ function TemperatureData(commodity) {
 
 	return (
 		<div>
-			{user.current.isAdmin && <button onClick={toggleEdit}>{editMode ? 'View' : 'Edit'}</button>}
-
+			<CardTitle tag="h2">
+				Storage{' '}
+				{user.current.isAdmin && (
+					<a onClick={toggleAddTempForm} className="edit-commodity-link">
+						<FontAwesomeIcon icon=" fa-circle-plus" />
+					</a>
+				)}
+				{user.current.isAdmin && (
+					<a className="edit-commodity-link" onClick={toggleEdit}>
+						{!editMode && <FontAwesomeIcon icon="fa-solid fa-pen-to-square" />}
+						{editMode && <FontAwesomeIcon icon="fa-eye" />}
+					</a>
+				)}
+			</CardTitle>
 			<Table>
 				{temperatureRecommendations.length ? (
 					<thead>
@@ -84,7 +96,7 @@ function TemperatureData(commodity) {
 							<td>{t.rh}</td>
 							<td>
 								<a
-									className={editMode ? 'edit-mode edit' : 'view-mode'}
+									className={editMode ? 'edit-mode edit edit-commodity-link' : 'view-mode'}
 									onClick={() => {
 										setEditTempData(t);
 										editTempForm(id);
@@ -107,9 +119,6 @@ function TemperatureData(commodity) {
 					<tr />
 				</tbody>
 			</Table>
-			<button onClick={toggleAddTempForm} className={editMode ? 'edit-mode add' : 'view-mode'}>
-				<FontAwesomeIcon icon="fa-solid fa-plus" /> Storage Recommendation
-			</button>
 
 			<Modal key={uuid()} isOpen={showAddTempForm} toggle={toggleAddTempForm}>
 				<AddTempForm id={id} />

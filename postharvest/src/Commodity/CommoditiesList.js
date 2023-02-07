@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 
 import './Commodities.css';
-import { Spinner, Modal, Form, Input, InputGroup, ListGroup, ListGroupItem } from 'reactstrap';
+import { Spinner, Modal, Row, Col, ListGroup, ListGroupItem } from 'reactstrap';
 import { v4 as uuid } from 'uuid';
 import PostharvestApi from '../api';
 import CommoditySearchForm from './CommoditySearchForm';
@@ -9,10 +9,13 @@ import AddCommodityForm from './AddCommodity';
 import ItemContext from '../ItemContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus';
+import * as Icons from '@fortawesome/free-solid-svg-icons';
 
 function CommoditiesList() {
-	library.add(faPlus);
+	const iconList = Object.keys(Icons).filter((key) => key !== 'fas' && key !== 'prefix').map((icon) => Icons[icon]);
+
+	library.add(...iconList);
+
 	const { user } = useContext(ItemContext);
 	const [
 		commodities,
@@ -61,22 +64,39 @@ function CommoditiesList() {
 	}
 
 	return (
-		<div>
+		<div className="commodities-list">
 			<h1>Commodities</h1>
-			<CommoditySearchForm filterCommodities={filterCommodities}> </CommoditySearchForm>
-			{user.current.isAdmin && (
-				<button onClick={addCommodityForm}>
-					<FontAwesomeIcon icon="fa-solid fa-plus" /> Commodity
-				</button>
-			)}
+			<Row>
+				<Col className="mb-3">
+					<CommoditySearchForm filterCommodities={filterCommodities}> </CommoditySearchForm>
+				</Col>
+			</Row>
+
 			<Modal key={uuid()} isOpen={showAddCommodityForm} toggle={addCommodityForm}>
 				<AddCommodityForm />
 			</Modal>
 
-			<ListGroup>
+			{user.current.isAdmin && (
+				<button onClick={addCommodityForm} className="add-commodity-btn">
+					<FontAwesomeIcon className="variety-list" icon="plus" /> Add
+				</button>
+			)}
+
+			<ListGroup className="commodities-list-group">
 				{commodities.map((commodity) => (
-					<ListGroupItem key={uuid()} href={`/commodity/${commodity.id}`} tag="a">
-						{commodity.commodityName} <span className="muted">{commodity.variety} </span>
+					<ListGroupItem
+						className="commodities-list-item"
+						key={uuid()}
+						href={`/commodity/${commodity.id}`}
+						tag="a"
+					>
+						{commodity.commodityName}
+						{commodity.variety && (
+							<span className="variety-list">
+								{' '}
+								<FontAwesomeIcon icon="caret-right" /> {commodity.variety}{' '}
+							</span>
+						)}
 					</ListGroupItem>
 				))}
 			</ListGroup>

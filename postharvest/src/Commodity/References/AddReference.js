@@ -55,7 +55,11 @@ function AddReferenceForm(id) {
 							value={formData.source || ''}
 						/>
 
-						<button>Add Reference</button>
+						<div className="modal-btn">
+							<button>
+								<FontAwesomeIcon icon="plus" /> Reference
+							</button>
+						</div>
 					</FormGroup>
 				</Form>
 			</ModalBody>

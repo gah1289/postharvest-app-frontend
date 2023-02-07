@@ -1,7 +1,7 @@
 import '../Commodity';
 import { v4 as uuid } from 'uuid';
 import React, { useState, useContext } from 'react';
-import { Table, Modal } from 'reactstrap';
+import { Table, Modal, CardTitle } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -16,7 +16,7 @@ import EditRespirationForm from './EditRespiration';
 
 function RespirationData(commodity) {
 	library.add(faPlus, faPenToSquare);
-	const { id, respirationRate } = commodity.commodity;
+	const { id, respirationRate, climacteric } = commodity.commodity;
 
 	const { user } = useContext(ItemContext);
 
@@ -53,16 +53,30 @@ function RespirationData(commodity) {
 
 	return (
 		<div>
-			{user.current.isAdmin && <button onClick={toggleEdit}>{editMode ? 'View' : 'Edit'}</button>}
-
+			<CardTitle tag="h2">
+				Respiration{' '}
+				{user.current.isAdmin && (
+					<a onClick={toggleAddRespirationForm} className="edit-commodity-link">
+						<FontAwesomeIcon icon=" fa-circle-plus" />
+					</a>
+				)}
+				{user.current.isAdmin && (
+					<a className="edit-commodity-link" onClick={toggleEdit}>
+						{!editMode && <FontAwesomeIcon icon="fa-solid fa-pen-to-square" />}
+						{editMode && <FontAwesomeIcon icon="fa-eye" />}
+					</a>
+				)}
+			</CardTitle>
+			{climacteric === true && <CardTitle className="climacteric">Climacteric</CardTitle>}
+			{climacteric === false && <CardTitle className="climacteric">Non-Climacteric</CardTitle>}
+			{/* <CardTitle className="climacteric">Class: {showClass()}</CardTitle> */}
 			<Table>
 				{respirationRate.length ? (
 					<thead>
 						<tr>
 							<th>Temperature ({'\u00b0'}C)</th>
 							<th>Respiration Rate</th>
-							<th>Class</th>
-							<th />
+
 							<th />
 						</tr>
 					</thead>
@@ -83,11 +97,10 @@ function RespirationData(commodity) {
 						<tr className={!showEditRespirationForm ? 'edit-mode ' : 'view-mode'} key={uuid()}>
 							<td>{s.temperature}</td>
 							<td>{s.rrRate}</td>
-							<td>{s.rrClass}</td>
 
 							<td>
 								<a
-									className={editMode ? 'edit-mode edit' : 'view-mode'}
+									className={editMode ? 'edit-mode edit edit-commodity-link' : 'view-mode'}
 									onClick={() => {
 										setEditRespirationData(s);
 										editRespirationForm(id);
@@ -102,7 +115,7 @@ function RespirationData(commodity) {
 										window.location.reload(false);
 									}}
 								>
-									<FontAwesomeIcon icon=" fa-solid fa-circle-xmark" />
+									<FontAwesomeIcon icon="  fa-circle-xmark" />
 								</a>
 							</td>
 						</tr>
@@ -110,9 +123,6 @@ function RespirationData(commodity) {
 					<tr />
 				</tbody>
 			</Table>
-			<button onClick={toggleAddRespirationForm} className={editMode ? 'edit-mode add' : 'view-mode'}>
-				<FontAwesomeIcon icon="fa-solid fa-plus" /> Respiration Rate
-			</button>
 
 			<Modal key={uuid()} isOpen={showAddRespirationForm} toggle={toggleAddRespirationForm}>
 				<AddRespirationForm id={id} />

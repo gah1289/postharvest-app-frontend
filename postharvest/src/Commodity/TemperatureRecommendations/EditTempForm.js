@@ -81,7 +81,9 @@ function EditTempForm(tempData) {
 							onChange={handleChange}
 							value={formData.rh || ''}
 						/>
-						<button>Make Changes</button>
+						<div className="modal-btn">
+							<button>Edit</button>
+						</div>
 					</FormGroup>
 				</Form>
 			</ModalBody>

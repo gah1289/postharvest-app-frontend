@@ -1,7 +1,7 @@
 import '../Commodity';
 import { v4 as uuid } from 'uuid';
 import React, { useState, useContext } from 'react';
-import { Table, Modal } from 'reactstrap';
+import { Table, Modal, CardTitle } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -18,6 +18,14 @@ function EthyleneData(commodity) {
 	const { id, ethyleneSensitivity } = commodity.commodity;
 
 	const { user } = useContext(ItemContext);
+
+	// const ethyleneClass = () => {
+	// 	let ethyleneClass;
+	// 	while (!ethyleneSensitivity.c2h4Class || ethyleneSensitivity.c2h4Class === '') {
+	// 		ethyleneClass = commodity.ethyleneSensitivity;
+	// 	}
+	// 	return ethyleneClass;
+	// };
 
 	const [
 		editMode,
@@ -52,7 +60,21 @@ function EthyleneData(commodity) {
 
 	return (
 		<div>
-			{user.current.isAdmin && <button onClick={toggleEdit}>{editMode ? 'View' : 'Edit'}</button>}
+			<CardTitle tag="h2">
+				Ethylene{' '}
+				{user.current.isAdmin && (
+					<a onClick={toggleAddEthyleneForm} className="edit-commodity-link">
+						<FontAwesomeIcon icon=" fa-circle-plus" />
+					</a>
+				)}
+				{user.current.isAdmin && (
+					<a className="edit-commodity-link" onClick={toggleEdit}>
+						{!editMode && <FontAwesomeIcon icon="fa-solid fa-pen-to-square" />}
+						{editMode && <FontAwesomeIcon icon="fa-eye" />}
+					</a>
+				)}
+			</CardTitle>
+			<CardTitle className="climacteric">Class: {ethyleneSensitivity[0].c2h4Class}</CardTitle>
 
 			<Table>
 				{ethyleneSensitivity.length ? (

@@ -87,9 +87,9 @@ function Home() {
 							<CardGroup className="cards">
 								{filteredCommodities.map((commodity) => (
 									<a href={`commodity/${commodity.id}`}>
-										<Card className="commodity-card" key={commodity.id}>
+										<Card className="commodity-card-home" key={commodity.id}>
 											<div className="commodity-name">{commodity.commodityName} </div>{' '}
-											<div className="variety">{commodity.variety} </div>{' '}
+											<div className="variety-home">{commodity.variety} </div>{' '}
 										</Card>
 									</a>
 								))}
@@ -102,6 +102,9 @@ function Home() {
 			<div className="footer">
 				<Container>
 					<Row className="justify-content-center text-center">Created by Gabriela McCarthy</Row>
+					<Row className="justify-content-center text-center">
+						<a href="https://windhampkg.com/">Windham Packaging, LLC</a>
+					</Row>
 				</Container>
 			</div>
 		</div>

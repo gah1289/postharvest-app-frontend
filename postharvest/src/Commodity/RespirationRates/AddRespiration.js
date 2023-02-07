@@ -44,7 +44,7 @@ function AddRespirationForm(id) {
 	};
 
 	return (
-		<div>
+		<div className="add-modal">
 			<ModalHeader>Add Respiration Rate</ModalHeader>
 			<ModalBody>
 				<Form onSubmit={handleSubmit}>
@@ -58,9 +58,7 @@ function AddRespirationForm(id) {
 							onChange={handleChange}
 							value={formData.temperature || ''}
 						/>
-						<Label htmlFor="rrRate">
-							Respiration Rate<br /> (ml/kg·hr)
-						</Label>
+						<Label htmlFor="rrRate">Respiration Rate (ml/kg·hr)</Label>
 						<Input
 							type="text"
 							name="rrRate"
@@ -76,7 +74,11 @@ function AddRespirationForm(id) {
 							onChange={handleChange}
 							value={formData.rrClass || ''}
 						/>{' '}
-						<button>Add Data</button>
+						<div className="modal-btn">
+							<button>
+								<FontAwesomeIcon icon="plus" /> Data
+							</button>
+						</div>
 					</FormGroup>
 				</Form>
 			</ModalBody>

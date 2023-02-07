@@ -45,8 +45,8 @@ function AddShelfLifeForm(id) {
 	};
 
 	return (
-		<div>
-			<ModalHeader>Add Shelf Life Data</ModalHeader>
+		<div className="add-modal">
+			<ModalHeader className="modal-header">Add Shelf Life Data</ModalHeader>
 			<ModalBody>
 				<Form onSubmit={handleSubmit}>
 					<FormGroup>
@@ -83,8 +83,11 @@ function AddShelfLifeForm(id) {
 							onChange={handleChange}
 							value={formData.description || ''}
 						/>
-
-						<button>Add Data</button>
+						<div className="modal-btn">
+							<button>
+								<FontAwesomeIcon icon="plus" /> Data
+							</button>
+						</div>
 					</FormGroup>
 				</Form>
 			</ModalBody>

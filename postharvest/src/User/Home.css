@@ -63,7 +63,7 @@
 	padding: 10px;
 }
 
-.commodity-card {
+.commodity-card-home {
 	margin: 10px;
 	align-self: center;
 	width: 150px;
@@ -78,7 +78,7 @@
 	font-size: 20px;
 }
 
-.variety {
+.variety-home {
 	color: rgba(255, 255, 255, 1);
 	font-size: 18px;
 }

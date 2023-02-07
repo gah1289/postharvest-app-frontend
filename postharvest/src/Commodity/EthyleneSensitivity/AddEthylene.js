@@ -44,7 +44,7 @@ function AddEthyleneForm(id) {
 	};
 
 	return (
-		<div>
+		<div className="add-modal">
 			<ModalHeader>Add Ethylene Data</ModalHeader>
 			<ModalBody>
 				<Form onSubmit={handleSubmit}>
@@ -74,7 +74,11 @@ function AddEthyleneForm(id) {
 							value={formData.c2h4Class || ''}
 						/>
 
-						<button>Add Data</button>
+						<div className="modal-btn">
+							<button>
+								<FontAwesomeIcon icon="plus" /> Data
+							</button>
+						</div>
 					</FormGroup>
 				</Form>
 			</ModalBody>

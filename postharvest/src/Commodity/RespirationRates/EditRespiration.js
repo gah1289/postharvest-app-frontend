@@ -42,7 +42,7 @@ function EditRespirationForm(respirationData) {
 
 	return (
 		<div>
-			<ModalHeader>Edit Respiration Rate</ModalHeader>
+			<ModalHeader className="edit-modal">Edit Respiration Rate</ModalHeader>
 			<ModalBody>
 				<Form onSubmit={handleSubmit}>
 					<FormGroup>
@@ -55,9 +55,7 @@ function EditRespirationForm(respirationData) {
 							onChange={handleChange}
 							value={formData.temperature || ''}
 						/>
-						<Label htmlFor="rrRate">
-							Respiration Rate<br /> (ml/kg·hr)
-						</Label>
+						<Label htmlFor="rrRate">Respiration Rate (ml/kg·hr)</Label>
 						<Input
 							type="text"
 							name="rrRate"
@@ -76,7 +74,9 @@ function EditRespirationForm(respirationData) {
 							value={formData.rrClass || ''}
 						/>
 
-						<button>Make Changes</button>
+						<div className="modal-btn">
+							<button>Edit</button>
+						</div>
 					</FormGroup>
 				</Form>
 			</ModalBody>
