@@ -2,7 +2,19 @@ import React, { useEffect, useState, useContext } from 'react';
 import PostharvestApi from '../api';
 import './Commodities.css';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Card, CardBody, CardTitle, CardSubtitle, Spinner, Row, Col, Modal, ModalBody, ModalFooter } from 'reactstrap';
+import {
+	Card,
+	CardBody,
+	CardTitle,
+	CardSubtitle,
+	Spinner,
+	Row,
+	Col,
+	Modal,
+	ModalBody,
+	ModalFooter,
+	ModalHeader
+} from 'reactstrap';
 import { v4 as uuid } from 'uuid';
 import ItemContext from '../ItemContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -90,13 +102,16 @@ function Commodity() {
 				<EditCommodityForm commodityData={commodity} />
 			</Modal>
 			<Modal key={uuid()} isOpen={showDeleteModal} toggle={deleteModal}>
-				<ModalBody>
-					Are you sure you want to delete {commodityName} {variety}? This cannot be undone.
-				</ModalBody>
+				<ModalHeader>
+					Are you sure you want to delete {commodityName} {variety}?
+				</ModalHeader>
+				<ModalBody>This cannot be undone.</ModalBody>
 				<ModalFooter>
-					<button className="delete-commodity" onClick={deleteCommodity}>
-						Delete {commodityName}
-					</button>
+					<div className="modal-btn">
+						<button className="delete-modal" onClick={deleteCommodity}>
+							Delete {commodityName}
+						</button>
+					</div>
 				</ModalFooter>
 			</Modal>
 			<CardBody className="commodity-card-body">
@@ -142,7 +157,7 @@ function Commodity() {
 				<ReferenceData commodity={commodity} />
 				{user.current.isAdmin && (
 					<button className="delete-commodity" onClick={deleteModal}>
-						Delete
+						<FontAwesomeIcon icon="fa-solid fa-trash-can" /> Delete
 					</button>
 				)}
 			</CardBody>
