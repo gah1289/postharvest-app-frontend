@@ -2,12 +2,6 @@
 	height: 25px;
 }
 
-.profile-bg {
-	font-family: 'Source Sans Pro', sans-serif;
-	background-image: linear-gradient(96.5deg, rgba(39, 103, 187, 1) 10.4%, rgba(16, 72, 144, 1) 87.7%);
-	color: rgb(137, 207, 240);
-}
-
 .profile-form button {
 	background-color: rgba(0, 0, 0, 0);
 	border: solid rgb(165, 221, 247);
@@ -18,7 +12,43 @@
 	border-radius: 25px;
 	transition: 0.3s;
 }
+
 .profile-form button:hover {
 	background-color: rgb(165, 221, 247);
 	color: rgba(16, 72, 144, 1);
+}
+
+.profile-form h2 {
+	text-transform: uppercase;
+}
+
+.profile-title {
+	font-weight: bold;
+	margin-bottom: 30px;
+}
+
+.modal-btns {
+	margin: auto;
+}
+
+.modal-btns button {
+	margin: 0 20px;
+}
+
+.pw-confirm-submit-btn {
+	background-color: rgb(39, 103, 187);
+	color: rgb(255, 255, 255);
+}
+.pw-confirm-submit-btn:hover {
+	background-color: rgb(22, 54, 95);
+	border-color: rgb(22, 54, 95);
+}
+
+.edit-profile-success {
+	transition: 0.3s;
+	margin: auto;
+	align-items: center;
+	color: rgb(115, 192, 107);
+	text-align: center;
+	font-size: 25px;
 }

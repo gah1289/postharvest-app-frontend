@@ -122,7 +122,7 @@ function EditWindhamStudyCommodities(id) {
 								key={commodity.id}
 								name="commodityId"
 								value={commodity.id}
-							/>
+							/>{' '}
 							{commodity.commodityName}
 						</Label>
 					</div>
@@ -143,7 +143,9 @@ function EditWindhamStudyCommodities(id) {
 				<Form>
 					<FormGroup>
 						{selectOptions}
-						<button onClick={handleSubmit}>Update Commodities</button>
+						<div className="modal-btn">
+							<button onClick={handleSubmit}>Update Commodities</button>
+						</div>
 					</FormGroup>
 				</Form>
 			</ModalBody>

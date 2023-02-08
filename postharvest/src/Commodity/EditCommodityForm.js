@@ -93,18 +93,19 @@ function EditCommodityForm(commodityData) {
 							<option value={true}>Climacteric</option>
 							<option value={false}>Non-climacteric</option>
 						</Input>
-
-						<button
-							disabled={
-								!formData.climacteric &&
-								!formData.commodityName &&
-								!formData.variety &&
-								!formData.coolingMethod &&
-								!formData.scientificName
-							}
-						>
-							Make Changes
-						</button>
+						<div className="modal-btn">
+							<button
+								disabled={
+									!formData.climacteric &&
+									!formData.commodityName &&
+									!formData.variety &&
+									!formData.coolingMethod &&
+									!formData.scientificName
+								}
+							>
+								Make Changes
+							</button>
+						</div>
 					</FormGroup>
 				</Form>
 			</ModalBody>

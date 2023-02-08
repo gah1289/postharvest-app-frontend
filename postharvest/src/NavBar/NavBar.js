@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
+import { Collapse, Navbar, NavbarToggler, UncontrolledDropdown, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
 import logo from '../Images/windham-logo-blue.svg';
 import './NavBar.css';
 
@@ -28,7 +28,6 @@ function NavBar(props) {
 
 				<button
 					onClick={toggleNavbar}
-					className="navbar-toggler"
 					type="button"
 					data-toggle="collapse"
 					data-target="#navbarTogglerDemo01"
@@ -44,8 +43,9 @@ function NavBar(props) {
 						</div>
 					)}
 				</button>
+
 				<Collapse isOpen={!collapsed} navbar>
-					<Nav navbar>
+					<Nav navbar className="align-items-center">
 						{!isLoggedIn && (
 							<NavItem>
 								<NavLink href="/login">Log In</NavLink>

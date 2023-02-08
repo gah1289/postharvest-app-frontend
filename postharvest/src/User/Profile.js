@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import {
+	Container,
 	Row,
 	Col,
 	Form,
@@ -18,11 +19,11 @@ import { Navigate, useNavigate } from 'react-router-dom';
 import PostharvestApi from '../api';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faCheck } from '@fortawesome/free-solid-svg-icons/faCheck';
+import { faCircleCheck } from '@fortawesome/free-solid-svg-icons/faCircleCheck';
 import './Profile.css';
 
 function Profile() {
-	library.add(faCheck);
+	library.add(faCircleCheck);
 	const { user, isLoggedIn, isLoading } = useContext(ItemContext);
 
 	const navigate = useNavigate();
@@ -131,7 +132,7 @@ function Profile() {
 	}
 
 	return (
-		<div className="profile-bg">
+		<div className="banner">
 			{/*Modal:  Verify password before submitting changes.  */}
 			<Modal isOpen={modal}>
 				<ModalHeader>Please Enter Current Password</ModalHeader>
@@ -151,10 +152,12 @@ function Profile() {
 				</ModalBody>
 				<ModalFooter>
 					{success ? (
-						<FontAwesomeIcon icon="fa-solid fa-check" />
+						<div className="edit-profile-success">
+							<FontAwesomeIcon icon="fa-solid fa-circle-check" />
+						</div>
 					) : (
-						<div>
-							<button className="primary" onClick={handleSubmit}>
+						<div className="modal-btns">
+							<button className="pw-confirm-submit-btn" onClick={handleSubmit}>
 								Submit
 							</button>
 							<button className="secondary" onClick={() => setModal(false)}>
@@ -164,113 +167,118 @@ function Profile() {
 					)}
 				</ModalFooter>
 			</Modal>
-			<Form className="profile-form">
-				<h1>{user.current.firstName}'s Profile</h1>
-
-				<FormGroup row>
-					<Label for="username" sm={2}>
-						Username
-					</Label>
-					<Col sm={5}>
-						<Input
-							type="text"
-							name="username"
-							id="username"
-							placeholder={user.current.username}
-							onChange={handleChange}
-						/>
-					</Col>
-				</FormGroup>
-
-				<FormGroup row>
-					<Label for="firstName" sm={2}>
-						First Name
-					</Label>
-					<Col sm={5}>
-						<Input
-							type="text"
-							name="firstName"
-							id="firstName"
-							placeholder={user.current.firstName}
-							onChange={handleChange}
-						/>
-					</Col>
-				</FormGroup>
-
-				<FormGroup row>
-					<Label for="lastName" sm={2}>
-						Last Name
-					</Label>
-					<Col sm={5}>
-						<Input
-							type="text"
-							name="lastName"
-							id="lastName"
-							placeholder={user.current.lastName}
-							onChange={handleChange}
-						/>
-					</Col>
-				</FormGroup>
-				<FormGroup row>
-					<Label for="email" sm={2}>
-						Email
-					</Label>
-					<Col sm={5}>
-						<Input
-							type="email"
-							name="email"
-							id="email"
-							placeholder={user.current.email}
-							onChange={handleChange}
-						/>
-					</Col>
-				</FormGroup>
-				<FormGroup row>
-					<Label for="jobTitle" sm={2}>
-						Job Title
-					</Label>
-					<Col sm={5}>
-						<Input
-							type="text"
-							name="jobTitle"
-							id="jobTitle"
-							placeholder={user.current.jobTitle}
-							onChange={handleChange}
-						/>
-					</Col>
-				</FormGroup>
-
-				<div className="separator" />
-				<h2>Change Password</h2>
-				<div>
-					<FormGroup row>
-						<Label for="password" sm={2}>
-							New Password
-						</Label>
-						<Col sm={5}>
-							<Input type="password" name="password" id="password" onChange={handleChange} />
-						</Col>
-					</FormGroup>
-					<FormGroup row>
-						<Label for="password" sm={2}>
-							Re-enter Password to Confirm
-						</Label>
-						<Col sm={5}>
+			<Container className="profile-div ">
+				<Row className="justify-content-center profile-title">{user.current.firstName}'s Profile</Row>
+				<Form className="profile-form">
+					<FormGroup className="mb-3" row>
+						<div className="label">
+							<Label for="username">Username</Label>
+						</div>
+						<Col>
 							<Input
-								type="password"
-								name="reEnterPassword"
-								id="reEnterPassword"
-								invalid={changePwInvalid}
-								onChange={handleChange && checkPasswordsMatch}
+								type="text"
+								name="username"
+								id="username"
+								placeholder={user.current.username}
+								onChange={handleChange}
 							/>
-							<FormFeedback>{changePwError}</FormFeedback>
 						</Col>
 					</FormGroup>
-					<Col sm={{ size: 5, offset: 2 }}>
-						<button onClick={toggle}>Submit Changes</button>
-					</Col>
-				</div>
-			</Form>
+
+					<FormGroup row>
+						<div className="label">
+							<Label for="firstName">First Name</Label>
+						</div>
+						<Col>
+							<Input
+								type="text"
+								name="firstName"
+								id="firstName"
+								placeholder={user.current.firstName}
+								onChange={handleChange}
+							/>
+						</Col>
+					</FormGroup>
+
+					<FormGroup row>
+						<div className="label">
+							<Label for="lastName">Last Name</Label>
+						</div>
+						<Col>
+							<Input
+								type="text"
+								name="lastName"
+								id="lastName"
+								placeholder={user.current.lastName}
+								onChange={handleChange}
+							/>
+						</Col>
+					</FormGroup>
+					<FormGroup row>
+						<div className="label">
+							<Label for="email" sm={2}>
+								Email
+							</Label>
+						</div>
+						<Col>
+							<Input
+								type="email"
+								name="email"
+								id="email"
+								placeholder={user.current.email}
+								onChange={handleChange}
+							/>
+						</Col>
+					</FormGroup>
+					<FormGroup row>
+						<div className="label">
+							<Label for="jobTitle" sm={2}>
+								Job Title
+							</Label>
+						</div>
+						<Col>
+							<Input
+								type="text"
+								name="jobTitle"
+								id="jobTitle"
+								placeholder={user.current.jobTitle}
+								onChange={handleChange}
+							/>
+						</Col>
+					</FormGroup>
+
+					<div className="separator" />
+					<h2>Change Password</h2>
+					<div>
+						<FormGroup row>
+							<div className="label">
+								<Label for="password">New Password</Label>
+							</div>
+							<Col>
+								<Input type="password" name="password" id="password" onChange={handleChange} />
+							</Col>
+						</FormGroup>
+						<FormGroup row>
+							<div className="label">
+								<Label for="reEnterPassword">Re-enter Password to Confirm</Label>
+							</div>
+							<Col>
+								<Input
+									type="password"
+									name="reEnterPassword"
+									id="reEnterPassword"
+									invalid={changePwInvalid}
+									onChange={handleChange && checkPasswordsMatch}
+								/>
+								<FormFeedback>{changePwError}</FormFeedback>
+							</Col>
+						</FormGroup>
+						<Col className="text-align-center">
+							<button onClick={toggle}>Submit Changes</button>
+						</Col>
+					</div>
+				</Form>
+			</Container>
 		</div>
 	);
 }

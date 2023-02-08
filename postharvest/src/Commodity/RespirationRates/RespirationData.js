@@ -20,6 +20,22 @@ function RespirationData(commodity) {
 
 	const { user } = useContext(ItemContext);
 
+	// Loop through each object in respirationRate, set the first object that has a rrClass value as respirationClass value.
+	let respirationClass;
+	function getRespirationClass() {
+		if (respirationRate.length) {
+			for (let resp of respirationRate) {
+				if (resp.rrClass !== '') {
+					respirationClass = resp.rrClass;
+					break;
+				}
+			}
+			// I entered 'mod' for some commodities. That was dumb.
+			if (respirationClass === 'mod') respirationClass = 'moderate';
+		}
+	}
+	getRespirationClass();
+
 	const [
 		editMode,
 		setEditMode
@@ -69,13 +85,13 @@ function RespirationData(commodity) {
 			</CardTitle>
 			{climacteric === true && <CardTitle className="climacteric">Climacteric</CardTitle>}
 			{climacteric === false && <CardTitle className="climacteric">Non-Climacteric</CardTitle>}
-			{/* <CardTitle className="climacteric">Class: {showClass()}</CardTitle> */}
+			{respirationClass && <CardTitle className="commodity-class">Class: {respirationClass}</CardTitle>}
 			<Table>
 				{respirationRate.length ? (
 					<thead>
 						<tr>
 							<th>Temperature ({'\u00b0'}C)</th>
-							<th>Respiration Rate</th>
+							<th>Respiration Rate (ml/kg·hr)</th>
 
 							<th />
 						</tr>
@@ -98,7 +114,7 @@ function RespirationData(commodity) {
 							<td>{s.temperature}</td>
 							<td>{s.rrRate}</td>
 
-							<td>
+							<td className="edit-col">
 								<a
 									className={editMode ? 'edit-mode edit edit-commodity-link' : 'view-mode'}
 									onClick={() => {

@@ -1,7 +1,7 @@
 import '../Commodity';
 import { v4 as uuid } from 'uuid';
 import React, { useState, useContext } from 'react';
-import { Table, Modal } from 'reactstrap';
+import { Table, Modal, CardTitle } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -19,6 +19,7 @@ function WindhamStudies(commodity) {
 
 	return (
 		<div>
+			<CardTitle tag="h2">Shelf Life Studies </CardTitle>
 			<Table>
 				{windhamStudies.length ? (
 					<thead>

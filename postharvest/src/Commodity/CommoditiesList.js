@@ -75,12 +75,13 @@ function CommoditiesList() {
 			<Modal key={uuid()} isOpen={showAddCommodityForm} toggle={addCommodityForm}>
 				<AddCommodityForm />
 			</Modal>
-
-			{user.current.isAdmin && (
-				<button onClick={addCommodityForm} className="add-commodity-btn">
-					<FontAwesomeIcon className="variety-list" icon="plus" /> Add
-				</button>
-			)}
+			<div className="commodities-list-search-form">
+				{user.current.isAdmin && (
+					<button onClick={addCommodityForm} className="add-commodity-btn">
+						<FontAwesomeIcon className="variety-list" icon="plus" /> Add
+					</button>
+				)}
+			</div>
 
 			<ListGroup className="commodities-list-group">
 				{commodities.map((commodity) => (

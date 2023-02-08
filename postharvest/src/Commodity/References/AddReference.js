@@ -13,7 +13,7 @@ function AddReferenceForm(id) {
 	const commodityId = id.id;
 
 	const INITIAL_STATE = {
-		source : '0'
+		source : ''
 	};
 
 	const [
@@ -42,7 +42,7 @@ function AddReferenceForm(id) {
 
 	return (
 		<div>
-			<ModalHeader>Add Reference</ModalHeader>
+			<ModalHeader className="add-modal">Add Reference</ModalHeader>
 			<ModalBody>
 				<Form onSubmit={handleSubmit}>
 					<FormGroup>

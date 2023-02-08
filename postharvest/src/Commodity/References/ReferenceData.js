@@ -1,7 +1,7 @@
 import '../Commodity';
 import { v4 as uuid } from 'uuid';
 import React, { useState, useContext } from 'react';
-import { Table, Modal } from 'reactstrap';
+import { Table, Modal, CardTitle } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -39,7 +39,20 @@ function ReferenceData(commodity) {
 
 	return (
 		<div>
-			{user.current.isAdmin && <button onClick={toggleEdit}>{editMode ? 'View' : 'Edit'}</button>}
+			<CardTitle tag="h2">
+				References{' '}
+				{user.current.isAdmin && (
+					<a onClick={toggleAddReferenceForm} className="edit-commodity-link">
+						<FontAwesomeIcon icon=" fa-circle-plus" />
+					</a>
+				)}
+				{user.current.isAdmin && (
+					<a className="edit-commodity-link" onClick={toggleEdit}>
+						{!editMode && <FontAwesomeIcon icon="fa-solid fa-pen-to-square" />}
+						{editMode && <FontAwesomeIcon icon="fa-eye" />}
+					</a>
+				)}
+			</CardTitle>
 
 			<Table>
 				{references.length ? (
@@ -47,7 +60,6 @@ function ReferenceData(commodity) {
 						<tr>
 							<th />
 
-							<th />
 							<th />
 						</tr>
 					</thead>
@@ -62,7 +74,7 @@ function ReferenceData(commodity) {
 				<tbody>
 					{references.map((r) => (
 						<tr key={uuid()}>
-							<td>{r.source}</td>
+							<td className="refs-table">{r.source}</td>
 
 							<td>
 								<a
@@ -80,9 +92,6 @@ function ReferenceData(commodity) {
 					<tr />
 				</tbody>
 			</Table>
-			<button onClick={toggleAddReferenceForm} className={editMode ? 'edit-mode add' : 'view-mode'}>
-				<FontAwesomeIcon icon="fa-solid fa-plus" /> Reference
-			</button>
 
 			<Modal key={uuid()} isOpen={showAddReferenceForm} toggle={toggleAddReferenceForm}>
 				<AddReferenceForm id={id} />

@@ -75,7 +75,7 @@ function Commodity() {
 		return <Spinner />;
 	}
 
-	const { commodityName, variety, scientificName, coolingMethod, climacteric } = commodity || undefined;
+	const { commodityName, variety, scientificName, coolingMethod } = commodity || undefined;
 
 	const editCommodityForm = () => {
 		showEditCommodityForm ? setShowEditCommodityForm(false) : setShowEditCommodityForm(true);
@@ -124,9 +124,7 @@ function Commodity() {
 					</Row>
 				</CardTitle>
 
-				<CardSubtitle className="mb-2 text-muted" tag="h3">
-					{scientificName}
-				</CardSubtitle>
+				<CardSubtitle className="mb-2 scientific-name">{scientificName}</CardSubtitle>
 
 				<CardTitle tag="h2">Cooling Methods</CardTitle>
 				{coolingMethod}

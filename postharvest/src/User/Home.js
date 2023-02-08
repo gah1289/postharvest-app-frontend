@@ -102,8 +102,10 @@ function Home() {
 			<div className="footer">
 				<Container>
 					<Row className="justify-content-center text-center">Created by Gabriela McCarthy</Row>
-					<Row className="justify-content-center text-center">
-						<a href="https://windhampkg.com/">Windham Packaging, LLC</a>
+					<Row>
+						<Col>
+							<a href="https://windhampkg.com/">Windham Packaging, LLC</a>
+						</Col>
 					</Row>
 				</Container>
 			</div>

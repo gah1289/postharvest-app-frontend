@@ -74,8 +74,9 @@ function EditWindhamStudyForm(id) {
 							placeholder={date}
 							value={formData.date || ''}
 						/>
-
-						<button onClick={handleSubmit}>Make Changes</button>
+						<div className="modal-btn">
+							<button onClick={handleSubmit}>Make Changes</button>
+						</div>
 					</FormGroup>
 				</Form>
 			</ModalBody>

@@ -74,7 +74,7 @@ function ShelfLifeData(commodity) {
 							<th>Temperature ({'\u00b0'}C)</th>
 							<th>Shelf Life</th>
 							<th>Packaging</th>
-							<th />
+							<th>Description </th>
 							<th />
 						</tr>
 					</thead>

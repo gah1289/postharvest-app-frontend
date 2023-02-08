@@ -1,21 +1,25 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faDownload } from '@fortawesome/free-solid-svg-icons/faDownload';
-import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus';
+
+import './WindhamStudies.css';
 
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Row, Col, Form, Input, InputGroup, Table, Modal, Spinner } from 'reactstrap';
 import { v4 as uuid } from 'uuid';
 import PostharvestApi from '../api';
 import AddWindhamStudyForm from './EditWindhamStudyCommodities;';
-import { faPenToSquare } from '@fortawesome/free-solid-svg-icons/faPenToSquare';
-import { faCircleXmark } from '@fortawesome/free-solid-svg-icons/faCircleXmark';
+import * as Icons from '@fortawesome/free-solid-svg-icons';
 import EditWindhamStudyForm from './EditWindhamStudy';
 import EditWindhamStudyCommodities from './EditWindhamStudyCommodities;';
+import ItemContext from '../ItemContext';
 
 function StudiesList() {
-	library.add(faDownload, faPlus, faPenToSquare, faCircleXmark);
+	const iconList = Object.keys(Icons).filter((key) => key !== 'fas' && key !== 'prefix').map((icon) => Icons[icon]);
+
+	library.add(...iconList);
+
+	const { user } = useContext(ItemContext);
 
 	const navigate = useNavigate();
 
@@ -97,8 +101,20 @@ function StudiesList() {
 	}
 
 	return (
-		<div>
-			<h1>Windham Packaging Shelf Life Studies</h1>
+		<div className="studies-list">
+			<h1>
+				Windham Packaging Shelf Life Studies
+				{!editMode && (
+					<a className="edit-list" onClick={toggleEdit}>
+						<FontAwesomeIcon icon=" fa-edit" />
+					</a>
+				)}
+				{editMode && (
+					<a className="edit-list" onClick={toggleEdit}>
+						<FontAwesomeIcon icon=" fa-eye" />
+					</a>
+				)}
+			</h1>
 			{/* Edit study commodities modal */}
 			<Modal key={uuid()} isOpen={showEditCommodityForm} toggle={editCommodityForm}>
 				<EditWindhamStudyCommodities id={editCommodityData} />
@@ -108,8 +124,6 @@ function StudiesList() {
 				<EditWindhamStudyForm id={editStudyData} />
 			</Modal>
 
-			{<button onClick={toggleEdit}>{editMode ? 'View' : 'Edit'}</button>}
-
 			{/* List of studies */}
 			<Table>
 				<thead>
@@ -118,43 +132,46 @@ function StudiesList() {
 						<th>Date</th>
 						<th>Objective</th>
 						<th>Commodities</th>
+						<th />
+						<th />
 					</tr>
 				</thead>
 				<tbody>
 					{studies.map((study) => (
 						<tr key={uuid()}>
-							<td>{study.study.title}</td>
-							<td>{study.study.date.slice(0, 10)}</td>
-							<td>{study.study.objective}</td>
-							<td>
+							<td className="title-col">{study.study.title}</td>
+							<td className="date-col">{study.study.date.slice(0, 10)}</td>
+							<td className="objective-col">{study.study.objective}</td>
+							<td className="commodities-col">
 								{study.study.commodities.map((c) => (
-									<div key={uuid()}>
+									<div className="commodities-list" key={uuid()}>
+										<FontAwesomeIcon className="bullet" icon=" fa-circle" />
 										<a href={`/commodity/${c.id}`}>
 											{c.commodityName} {c.variety}
 										</a>{' '}
 									</div>
 								))}
-								<button
-									onClick={() => {
-										setEditCommodityData(study);
-										editCommodityForm();
-									}}
-									// onclick={() => {
-									// 	setEditCommodityData(study);
-									// 	toggleEditCommodityForm();
-									// }}
-								>
-									Edit Commodities
-								</button>
+								{user.current.isAdmin && (
+									<div className=" edit-commodity-btn ">
+										<a
+											onClick={() => {
+												setEditCommodityData(study);
+												editCommodityForm();
+											}}
+										>
+											Edit Commodities
+										</a>
+									</div>
+								)}
 							</td>
 							<td>
 								<a href={study.study.source} download>
-									<FontAwesomeIcon icon="fa-solid fa-download" />
+									<FontAwesomeIcon icon=" fa-download" />
 								</a>
 							</td>
 							<td>
 								<a
-									className={editMode ? 'edit-mode edit' : 'view-mode'}
+									className={editMode ? 'edit-mode edit edit-commodity-link' : 'view-mode'}
 									onClick={() => {
 										setEditStudyData(study);
 										editStudyForm();

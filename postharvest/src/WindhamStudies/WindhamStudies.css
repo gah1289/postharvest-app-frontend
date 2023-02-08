@@ -1,0 +1,84 @@
+.modal,
+.studies-list {
+	font-family: 'Source Sans Pro', sans-serif;
+}
+
+.studies-list h1 {
+	margin: 20px 0 50px;
+	text-transform: uppercase;
+	font-weight: bold;
+	color: rgba(39, 103, 187, 1);
+}
+
+.studies-list th {
+	font-size: 20px;
+}
+
+.edit-commodity-btn {
+	margin-top: 5px;
+	color: rgba(39, 103, 187, 0.7);
+	border: solid 1px;
+	border-radius: 5px;
+}
+.edit-commodity-btn:hover {
+	background-color: rgba(39, 103, 187, 0.2);
+}
+
+.edit-study-link {
+	margin: 0 5px;
+	color: rgb(39, 103, 187);
+	font-size: 16px;
+}
+
+.title-col {
+	font-weight: bold;
+	width: 20%;
+}
+.date-col {
+	width: 15%;
+}
+
+.objective-col,
+.commodities.col {
+	width: 33%;
+}
+
+a,
+.commodities-list {
+	text-align: left;
+	color: rgba(39, 103, 187, 0.7);
+}
+
+.edit-commodity-link:hover,
+.edit-commodity-btn:hover,
+.commodities-list:hover {
+	cursor: pointer;
+}
+
+.bullet {
+	font-size: 5px;
+	padding-bottom: 2%;
+	margin-right: 5px;
+}
+
+.fa-list {
+	margin-right: 5px;
+}
+
+.studies-list h1 {
+	padding: 50px, 0;
+}
+
+.fa-download {
+	font-size: 25px;
+}
+
+.edit-commodity-link:hover,
+.fa-download:hover {
+	color: rgba(39, 103, 187, 1);
+}
+
+.edit-list {
+	font-size: 20px;
+	margin-left: 15px;
+}

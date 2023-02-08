@@ -19,13 +19,19 @@ function EthyleneData(commodity) {
 
 	const { user } = useContext(ItemContext);
 
-	// const ethyleneClass = () => {
-	// 	let ethyleneClass;
-	// 	while (!ethyleneSensitivity.c2h4Class || ethyleneSensitivity.c2h4Class === '') {
-	// 		ethyleneClass = commodity.ethyleneSensitivity;
-	// 	}
-	// 	return ethyleneClass;
-	// };
+	// Loop through each object in ethyleneSensitivity, set the first object that has a c2h4Class value as ethylene class as the value.
+	let ethyleneClass;
+	function getEthyleneClass() {
+		if (ethyleneSensitivity.length) {
+			for (let eth of ethyleneSensitivity) {
+				if (eth.c2h4Class !== '') {
+					ethyleneClass = eth.c2h4Class;
+					break;
+				}
+			}
+		}
+	}
+	getEthyleneClass();
 
 	const [
 		editMode,
@@ -74,7 +80,7 @@ function EthyleneData(commodity) {
 					</a>
 				)}
 			</CardTitle>
-			<CardTitle className="climacteric">Class: {ethyleneSensitivity[0].c2h4Class}</CardTitle>
+			{ethyleneClass && <CardTitle className="commodity-class">Class: {ethyleneClass}</CardTitle>}
 
 			<Table>
 				{ethyleneSensitivity.length ? (
@@ -82,9 +88,6 @@ function EthyleneData(commodity) {
 						<tr>
 							<th>Temperature ({'\u00b0'}C)</th>
 							<th>Ethylene Production (µl/kg·hr)</th>
-							<th>Class</th>
-
-							<th />
 						</tr>
 					</thead>
 				) : (
@@ -103,12 +106,11 @@ function EthyleneData(commodity) {
 					{ethyleneSensitivity.map((e) => (
 						<tr className={!showEditEthyleneForm ? 'edit-mode ' : 'view-mode'} key={uuid()}>
 							<td>{e.temperature}</td>
-							<td>{e.c2h4Production}</td>
-							<td>{e.c2h4Class}</td>
-
 							<td>
+								{e.c2h4Production}
+
 								<a
-									className={editMode ? 'edit-mode edit' : 'view-mode'}
+									className={editMode ? 'edit-mode edit edit-commodity-link' : 'view-mode'}
 									onClick={() => {
 										setEditEthyleneData(e);
 										editEthyleneForm(id);
@@ -131,9 +133,6 @@ function EthyleneData(commodity) {
 					<tr />
 				</tbody>
 			</Table>
-			<button onClick={toggleAddEthyleneForm} className={editMode ? 'edit-mode add' : 'view-mode'}>
-				<FontAwesomeIcon icon="fa-solid fa-plus" /> Ethylene Data
-			</button>
 
 			<Modal key={uuid()} isOpen={showAddEthyleneForm} toggle={toggleAddEthyleneForm}>
 				<AddEthyleneForm id={id} />

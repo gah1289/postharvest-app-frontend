@@ -22,10 +22,6 @@
 	color: rgb(24, 82, 158);
 }
 
-.search-btn {
-	margin-left: 5px;
-}
-
 .add-commodity-btn {
 	margin-bottom: 20px;
 	border: solid 1px rgb(214, 216, 221);
@@ -40,10 +36,14 @@
 .commodity-name-list {
 	font-weight: bold;
 }
-
+.search-btn {
+	margin-left: 5px;
+	background-color: rgba(39, 103, 187, 1);
+	color: rgba(255, 255, 255, 1);
+	border: none;
+}
 .search-btn:hover {
-	color: rgba(39, 103, 187, 1);
-	background-color: rgba(255, 255, 255, 1);
+	background-color: rgb(27, 71, 129);
 	transition: 0.3s;
 }
 
@@ -57,11 +57,11 @@ button {
 	transition: 0.3s;
 }
 
-.search-btn,
 button:hover {
 	background-color: rgba(39, 103, 187, 1);
 	color: rgba(255, 255, 255, 1);
 }
+
 .add-modal,
 .edit-modal,
 .modal-body,
@@ -78,12 +78,17 @@ button:hover {
 	justify-items: center;
 }
 
+.commodities-list h1,
+.commodities-list-search-form,
+.commodity-card-home {
+	text-align: center;
+}
+
 .commodity-card-body,
 .commodities-list-group {
 	width: 500px;
 	margin: auto;
 	font-size: 16px;
-	font-family: ;
 }
 
 .add-commodity-btn:hover,
@@ -103,7 +108,7 @@ button:hover {
 }
 
 .climacteric {
-	font-size: 20px;
+	font-size: 18px;
 	margin-top: 20px;
 	text-transform: capitalize;
 }
@@ -122,13 +127,20 @@ button:hover {
 .commodity-card-page h1 {
 	text-transform: uppercase;
 	font-weight: bold;
+	color: rgba(0, 0, 0, 1);
 }
 .commodity-card-page h2 {
 	text-transform: uppercase;
 	font-weight: bold;
 	color: rgba(39, 103, 187, 1);
-	margin-top: 40px;
-	font-size: 20px;
+	margin-top: 50px;
+	font-size: 22px;
+}
+
+.scientific-name {
+	font-size: 28px;
+	color: rgba(39, 103, 187, 0.7);
+	font-weight: bold;
 }
 
 .commodity-card-page h3 {
@@ -137,7 +149,7 @@ button:hover {
 }
 
 .edit-commodity-link {
-	margin: 0 5px;
+	margin: 0 10px;
 	color: rgb(39, 103, 187);
 	font-size: 16px;
 }
@@ -145,13 +157,15 @@ button:hover {
 	color: rgb(28, 74, 134);
 }
 
-.delete-commodity {
-	color: rgb(234, 67, 53);
-	border: solid rgb(234, 67, 53);
-}
 .delete-commodity:hover {
+	color: rgb(234, 67, 53);
+	background-color: rgb(255, 255, 255);
+}
+.delete-commodity {
+	margin-top: 50px;
 	background-color: rgb(234, 67, 53);
 	color: rgb(255, 255, 255);
+	border: solid rgb(234, 67, 53);
 }
 
 .modal-header {
@@ -170,6 +184,16 @@ button:hover {
 	border: solid 1.5px;
 }
 
-th {
-	color: rgba(39, 103, 187, 0.7);
+.climacteric,
+.commodity-class {
+	text-transform: capitalize;
+	font-weight: bold;
+}
+
+.refs-table {
+	word-break: break-word;
+}
+
+.edit-col {
+	width: 10%;
 }

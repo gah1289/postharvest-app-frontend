@@ -1,3 +1,4 @@
+.profile-div,
 .login-div {
 	padding: 10px;
 	align-items: center;
@@ -6,12 +7,14 @@
 	font-weight: 500;
 }
 
+.profile-title,
 .login-title {
 	text-transform: uppercase;
 	color: rgba(255, 255, 255, 1);
 	font-size: 45px;
 }
 
+.profile-form,
 .login-form {
 	justify-content: center;
 	width: 500px;

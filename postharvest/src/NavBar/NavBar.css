@@ -9,19 +9,31 @@
 .navbar a {
 	color: rgb(137, 207, 240);
 	border: none;
-	/* font-size: 16px; */
-	/* height: 45px; */
+	background-color: rgba(0, 0, 0, 0);
+}
+
+.navbar button {
+	width: 55px;
+	font-size: 16px;
 }
 
 .navbar a:hover,
-.navbar button:hover {
+.navbar button:hover,
+.navbar button:active {
 	font-family: 'Source Sans Pro', sans-serif;
 	text-decoration: none;
 	color: rgb(170, 215, 236);
 	font-weight: 700;
+	border: none;
+	background-color: rgba(0, 0, 0, 0);
 }
+
 img {
 	min-height: var(--bs-navbar-toggler-font-size);
+}
+
+.navbar-toggler:active {
+	border: none;
 }
 
 .logged-in-btn {
@@ -29,4 +41,8 @@ img {
 	padding: 7px;
 	border-radius: 100px;
 	background-color: rgba(39, 103, 187, 1);
+}
+
+.windham-logo-img {
+	min-height: 30px;
 }
