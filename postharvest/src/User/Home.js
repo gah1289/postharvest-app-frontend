@@ -34,10 +34,6 @@ function Home() {
 		setIsLoading
 	] = useState(true);
 
-	// console.log(filteredCommodities);
-
-	let cards = [];
-
 	function setCards(filteredCommodities) {
 		let cards = [];
 		for (let commodity of filteredCommodities) {

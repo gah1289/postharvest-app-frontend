@@ -10,12 +10,12 @@ import ItemContext from '../ItemContext';
 function Signup() {
 	const { setIsLoggedIn, user } = useContext(ItemContext);
 	const INITIAL_STATE = {
-		username  : 'casey',
-		password  : 'password',
-		firstName : 'Casey',
-		lastName  : 'LaCourse',
-		email     : 'caseylacourse@gmail.com',
-		jobTitle  : 'Engineer'
+		username  : '',
+		password  : '',
+		firstName : '',
+		lastName  : '',
+		email     : '',
+		jobTitle  : ''
 	};
 
 	const [
@@ -81,13 +81,13 @@ function Signup() {
 						<Form className="login-form" onSubmit={handleSubmit}>
 							<Row>
 								<FormGroup row>
-									<Label sm={2} for="firstName">
-										First Name:{' '}
-									</Label>
-									<Col sm={5}>
+									<div className="label">
+										<Label for="firstName">First Name: </Label>{' '}
+									</div>
+									<Col>
 										<Input
 											name="firstName"
-											// required={true}
+											required
 											id="firstName"
 											type="text"
 											value={formData.firstName || ''}
@@ -96,13 +96,13 @@ function Signup() {
 									</Col>
 								</FormGroup>
 								<FormGroup row>
-									<Label sm={2} for="lastName">
-										Last Name:{' '}
-									</Label>
-									<Col sm={5}>
+									<div className="label">
+										<Label for="lastName">Last Name: </Label>
+									</div>
+									<Col>
 										<Input
 											name="lastName"
-											// required={true}
+											required
 											id="lastName"
 											type="text"
 											value={formData.lastName || ''}
@@ -111,13 +111,13 @@ function Signup() {
 									</Col>
 								</FormGroup>
 								<FormGroup row>
-									<Label sm={2} for="email">
-										Email:{' '}
-									</Label>
-									<Col sm={5}>
+									<div className="label">
+										<Label for="email">Email: </Label>
+									</div>
+									<Col>
 										<Input
 											name="email"
-											// required={true}
+											required
 											id="email"
 											type="email"
 											value={formData.email || ''}
@@ -126,13 +126,12 @@ function Signup() {
 									</Col>
 								</FormGroup>
 								<FormGroup row>
-									<Label sm={2} for="jobTitle">
-										Job Title:{' '}
-									</Label>
-									<Col sm={5}>
+									<div className="label">
+										<Label for="jobTitle">Job Title: </Label>
+									</div>
+									<Col>
 										<Input
 											name="jobTitle"
-											// required={true}
 											id="jobTitle"
 											type="text"
 											value={formData.jobTitle || ''}
@@ -144,15 +143,14 @@ function Signup() {
 							<div className="separator" />
 							<Row>
 								<FormGroup row>
-									<Label sm={2} for="username">
-										Username:{' '}
-									</Label>
-									<Col sm={5}>
+									<div className="label">
+										<Label for="username">Username: </Label>
+									</div>
+									<Col>
 										<Input
 											name="username"
 											invalid={usernameError}
 											id="username"
-											// required={true}
 											type="text"
 											value={formData.username || ''}
 											onChange={handleChange}
@@ -161,15 +159,14 @@ function Signup() {
 									</Col>
 								</FormGroup>
 								<FormGroup row>
-									<Label sm={2} for="password">
-										Password:{' '}
-									</Label>{' '}
-									<Col sm={5}>
+									<div className="label">
+										<Label for="password">Password: </Label>{' '}
+									</div>
+									<Col>
 										<Input
 											invalid={pwError}
 											name="password"
 											id="password"
-											// required={true}
 											type="password"
 											value={formData.password || ''}
 											onChange={handleChange}

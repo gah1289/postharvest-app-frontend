@@ -1,6 +1,6 @@
 import './Login.css';
-import React, { useEffect, useState, useContext } from 'react';
-import { Container, Row, Col, Button, Form, FormGroup, Label, Input, FormFeedback } from 'reactstrap';
+import React, { useState, useContext } from 'react';
+import { Container, Row, Col, Form, FormGroup, Label, Input, FormFeedback } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { useNavigate } from 'react-router-dom';
@@ -10,8 +10,8 @@ import ItemContext from '../ItemContext';
 function Login() {
 	const { setIsLoggedIn, user } = useContext(ItemContext);
 	const INITIAL_STATE = {
-		username : 'gah1289',
-		password : 'password'
+		username : '',
+		password : ''
 	};
 
 	const [
@@ -114,8 +114,11 @@ function Login() {
 						{/* <Button/> component on reactstrap keeps breaking by code >:(  */}
 					</Form>
 					<Container>
-						<Row className="justify-content-center text-center register-prompt">
-							Don't have an account? <a href="signup/">Register here</a>
+						<Row className="justify-content-center register-prompt text-align-center mt-3">
+							Don't have an account?{' '}
+							<div>
+								<a href="signup/">Register here</a>
+							</div>
 						</Row>
 					</Container>
 				</Container>

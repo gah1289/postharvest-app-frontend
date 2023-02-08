@@ -33,7 +33,7 @@ function AddRespirationForm(id) {
 
 		try {
 			const data = await PostharvestApi.addRespirationData(commodityId, formData);
-			console.log(data);
+
 			// refresh page and automatically show new data
 			window.location.reload(false);
 		} catch (e) {
