@@ -2,12 +2,14 @@
 
 ## User Flow
 ### NavBar
-- Appears at the top of every page:'
+- Appears at the top of every page: 
+  
   ![Screenshot](NavBar-Anon.png)
   - **User Logged Out:**
     - Button with Windham logo on the left that is a link to Home. 
     - Button with user logo on the right that is a drop down menu with links to the following Routes:
       -  Login 
+  
    ![Screenshot](NavBar-Admin.png)
   - **User Logged In:**
     - Button with Windham logo on the left that is a link to Home. 
