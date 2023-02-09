@@ -14,38 +14,41 @@
       - Logout
 
 ### Routes
-![Screenshot](Postharvest-Home.png)
-#### /
-- Shows a basic search bar for commodities.
 
-![Screenshot](Postharvest-Login.png)
+#### /
+- Shows a basic search bar for commodities. 
+- Cards of commodity name and variety appear upon search, user can click card to to to commodity page
+![Screenshot](Postharvest-Home.png)
+
 #### /login
 - Login form => onSubmit call Postharvest.Api.login(), logs the user in
+![Screenshot](Postharvest-Login.png)
 
-![Screenshot](Postharvest-Signup.png)
 #### /signup
-- Register form onSubmit call Postharvest.Api.register(), resisters the user and logs them in
+- Register form onSubmit call Postharvest.Api.register(), registers the user and logs them in
+![Screenshot](Postharvest-Signup.png)
 
-![Screenshot](Postharvest-Profile.png)
 #### /profile
 - Allows user to see and edit their profile information. 
-- Profile foorm onSubmit call Postharvest.Api.updateUser()
+- Profile form onSubmit call Postharvest.Api.updateUser()
 - Must confirm password before sending patch request to db
+![Screenshot](Postharvest-Profile.png)
 
-![Screenshot](Postharvest-Commodities-List.png)
 #### /search
 - Displays list of commodities. 
 - Filter by name
 - Each Item on the list is a link that directs the user to '/commodity/:id' 
 - Admins can add, update, or delete commodities
+  ![Screenshot](Postharvest-Commodities-List.png)
 
-![Screenshot](Postharvest-Commodity.png)
+
 #### /commodity/:id
   - Users and anon can see all information associated with commodity
  - Admins can add, update, and delete temperature recommendations, shelf life, ethylene, and respiration information
  - Admins can see and download associated shelf life studies
+![Screenshot](Postharvest-Commodity.png)
 
-![Screenshot](Postharvest-Studies.png)
+
 #### /studies-list
 - Authorization required: admin
   - If not admin, redirect to '/'
@@ -53,7 +56,7 @@
 - Edit button - reveals buttons to edit and delete each study
 - Edit commodities - reveals check list of all commodities. Allow user to set and update all commodities associated with the study
 - To do: add the ability to add studies
-
+![Screenshot](Postharvest-Studies.png)
 
 ## API
 **token**: Stores token for auth
