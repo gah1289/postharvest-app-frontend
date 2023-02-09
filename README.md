@@ -16,8 +16,6 @@
 ### Routes
 #### /
 - Shows a basic search bar for commodities.
-
- ### Schema
 ![Screenshot](Postharvest-Home.png)
 #### /login
 - Login form => onSubmit call Postharvest.Api.login(), logs the user in
