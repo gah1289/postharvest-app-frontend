@@ -3,14 +3,16 @@
 ## User Flow
 ### NavBar
 - Appears at the top of every page:
-  - User Logged Out: 
+  - **User Logged Out:**
     - Button with Windham logo on the left that is a link to Home. 
     - Button with user logo on the right that is a drop down menu with links to the following Routes:
       -  Login 
-  - User Logged In:
+  - **User Logged In:**
     - Button with Windham logo on the left that is a link to Home. 
     - Button with user initials on the right that is a drop down menu with links to the following Routes:
+      - Commodities
       - Profile 
+      - Shelf Life Studies (Only admin can see)
       - Logout
 
 ### Routes
@@ -103,7 +105,7 @@
 - **updateStudy**: Update study title, date, or objective in windham_studies given an id
 - **deleteStudy**: Delete shelf life study from windham_studies
 - **addCommoditiesToShelflife**: Add to windham_studies_commodities
--  **clearCommoditiesFromStudy**: Delete all commodity-study data from windham_studies_commodities
+- **clearCommoditiesFromStudy**: Delete all commodity-study data from windham_studies_commodities
 
 ### References
 - **addReference**: Add  references to refs table in db
