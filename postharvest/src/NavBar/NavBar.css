@@ -12,9 +12,23 @@
 	background-color: rgba(0, 0, 0, 0);
 }
 
+.fa-user {
+	min-height: 30px;
+}
+
 .navbar button {
 	width: 55px;
-	font-size: 16px;
+	font-size: 18px;
+}
+.navbar-collapse {
+	align-items: right;
+	justify-content: right;
+	text-align: right;
+}
+.navbar-nav {
+	width: 20%;
+	margin-left: 80%;
+	background-color: rgba(255, 255, 255, 0.1);
 }
 
 .navbar a:hover,

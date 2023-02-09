@@ -3,6 +3,10 @@
 	font-family: 'Source Sans Pro', sans-serif;
 }
 
+body {
+	font-size: 20px;
+}
+
 .studies-list h1 {
 	margin: 20px 0 50px;
 	text-transform: uppercase;
@@ -27,7 +31,7 @@
 .edit-study-link {
 	margin: 0 5px;
 	color: rgb(39, 103, 187);
-	font-size: 16px;
+	font-size: 18px;
 }
 
 .title-col {
@@ -45,6 +49,7 @@
 
 a,
 .commodities-list {
+	font-size: 20px;
 	text-align: left;
 	color: rgba(39, 103, 187, 0.7);
 }

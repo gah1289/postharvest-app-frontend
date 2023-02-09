@@ -45,7 +45,7 @@ function NavBar(props) {
 				</button>
 
 				<Collapse isOpen={!collapsed} navbar>
-					<Nav navbar className="align-items-center">
+					<Nav navbar className="align-items-center ">
 						{!isLoggedIn && (
 							<NavItem>
 								<NavLink href="/login">Log In</NavLink>

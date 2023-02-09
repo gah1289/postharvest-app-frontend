@@ -14,29 +14,38 @@
       - Logout
 
 ### Routes
+![Screenshot](Postharvest-Home.png)
 #### /
 - Shows a basic search bar for commodities.
-![Screenshot](Postharvest-Home.png)
+
+![Screenshot](Postharvest-Login.png)
 #### /login
 - Login form => onSubmit call Postharvest.Api.login(), logs the user in
+
+![Screenshot](Postharvest-Signup.png)
 #### /signup
 - Register form onSubmit call Postharvest.Api.register(), resisters the user and logs them in
+
+![Screenshot](Postharvest-Profile.png)
 #### /profile
 - Allows user to see and edit their profile information. 
 - Profile foorm onSubmit call Postharvest.Api.updateUser()
 - Must confirm password before sending patch request to db
+
+![Screenshot](Postharvest-Commodities-List.png)
 #### /search
 - Displays list of commodities. 
 - Filter by name
 - Each Item on the list is a link that directs the user to '/commodity/:id' 
 - Admins can add, update, or delete commodities
 
+![Screenshot](Postharvest-Commodity.png)
 #### /commodity/:id
   - Users and anon can see all information associated with commodity
  - Admins can add, update, and delete temperature recommendations, shelf life, ethylene, and respiration information
  - Admins can see and download associated shelf life studies
 
-
+![Screenshot](Postharvest-Studies.png)
 #### /studies-list
 - Authorization required: admin
   - If not admin, redirect to '/'
