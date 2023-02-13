@@ -72,13 +72,9 @@ function Home() {
 					<CommoditySearchForm filterCommodities={filterCommodities} />
 
 					<Row className="text-end link">
-						<Col xs="2" />
-						<Col>
-							<a href="/search">See all commodities</a>
-						</Col>
-						<Col xs="1" />
+						<a href="/search">See all commodities</a>
 					</Row>
-					<div className="text-center">
+					<div className="text-center home-page-commodities">
 						{filteredCommodities && (
 							<CardGroup className="cards">
 								{filteredCommodities.map((commodity) => (

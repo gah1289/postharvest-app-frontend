@@ -81,59 +81,59 @@ function EthyleneData(commodity) {
 				)}
 			</CardTitle>
 			{ethyleneClass && <CardTitle className="commodity-class">Class: {ethyleneClass}</CardTitle>}
+			<div className="table-responsive">
+				<Table>
+					{ethyleneSensitivity.length ? (
+						<thead>
+							<tr>
+								<th>Temperature ({'\u00b0'}C)</th>
+								<th>Ethylene Production (µl/kg·hr)</th>
+							</tr>
+						</thead>
+					) : (
+						<thead>
+							<tr>
+								<td>No Data Entered yet</td>
+							</tr>
+						</thead>
+					)}
 
-			<Table>
-				{ethyleneSensitivity.length ? (
-					<thead>
-						<tr>
-							<th>Temperature ({'\u00b0'}C)</th>
-							<th>Ethylene Production (µl/kg·hr)</th>
-						</tr>
-					</thead>
-				) : (
-					<thead>
-						<tr>
-							<td>No Data Entered yet</td>
-						</tr>
-					</thead>
-				)}
+					<tbody>
+						<Modal key={uuid()} isOpen={showEditEthyleneForm} toggle={editEthyleneForm}>
+							<EditEthyleneForm ethyleneData={editEthyleneData} />
+						</Modal>
 
-				<tbody>
-					<Modal key={uuid()} isOpen={showEditEthyleneForm} toggle={editEthyleneForm}>
-						<EditEthyleneForm ethyleneData={editEthyleneData} />
-					</Modal>
+						{ethyleneSensitivity.map((e) => (
+							<tr className={!showEditEthyleneForm ? 'edit-mode ' : 'view-mode'} key={uuid()}>
+								<td>{e.temperature}</td>
+								<td>
+									{e.c2h4Production}
 
-					{ethyleneSensitivity.map((e) => (
-						<tr className={!showEditEthyleneForm ? 'edit-mode ' : 'view-mode'} key={uuid()}>
-							<td>{e.temperature}</td>
-							<td>
-								{e.c2h4Production}
-
-								<a
-									className={editMode ? 'edit-mode edit edit-commodity-link' : 'view-mode'}
-									onClick={() => {
-										setEditEthyleneData(e);
-										editEthyleneForm(id);
-									}}
-								>
-									<FontAwesomeIcon icon="fa-solid fa-pen-to-square" />
-								</a>
-								<a
-									className={editMode ? 'edit-mode delete' : 'view-mode'}
-									onClick={() => {
-										PostharvestApi.deleteEthyleneData(e.id);
-										window.location.reload(false);
-									}}
-								>
-									<FontAwesomeIcon icon=" fa-solid fa-circle-xmark" />
-								</a>
-							</td>
-						</tr>
-					))}
-					<tr />
-				</tbody>
-			</Table>
-
+									<a
+										className={editMode ? 'edit-mode edit edit-commodity-link' : 'view-mode'}
+										onClick={() => {
+											setEditEthyleneData(e);
+											editEthyleneForm(id);
+										}}
+									>
+										<FontAwesomeIcon icon="fa-solid fa-pen-to-square" />
+									</a>
+									<a
+										className={editMode ? 'edit-mode delete' : 'view-mode'}
+										onClick={() => {
+											PostharvestApi.deleteEthyleneData(e.id);
+											window.location.reload(false);
+										}}
+									>
+										<FontAwesomeIcon icon=" fa-solid fa-circle-xmark" />
+									</a>
+								</td>
+							</tr>
+						))}
+						<tr />
+					</tbody>
+				</Table>
+			</div>
 			<Modal key={uuid()} isOpen={showAddEthyleneForm} toggle={toggleAddEthyleneForm}>
 				<AddEthyleneForm id={id} />
 			</Modal>

@@ -54,7 +54,7 @@ function EditTempForm(tempData) {
 							onChange={handleChange}
 							value={formData.description || ''}
 						/>
-						<Label htmlFor="minTemp">Minimum Temperature:</Label>
+						<Label htmlFor="minTemp">Minimum Temperature ({'\u00b0'}C):</Label>
 						<Input
 							type="text"
 							name="minTemp"
@@ -63,7 +63,7 @@ function EditTempForm(tempData) {
 							placeholder={minTemp}
 							value={formData.minTemp || ''}
 						/>
-						<Label htmlFor="optimumTemp">Optimum Temperature:</Label>
+						<Label htmlFor="optimumTemp">Optimum Temperature ({'\u00b0'}C):</Label>
 						<Input
 							type="text"
 							name="optimumTemp"

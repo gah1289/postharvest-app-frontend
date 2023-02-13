@@ -86,63 +86,65 @@ function RespirationData(commodity) {
 			{climacteric === true && <CardTitle className="climacteric">Climacteric</CardTitle>}
 			{climacteric === false && <CardTitle className="climacteric">Non-Climacteric</CardTitle>}
 			{respirationClass && <CardTitle className="commodity-class">Class: {respirationClass}</CardTitle>}
-			<Table>
-				{respirationRate.length ? (
-					<thead>
-						<tr>
-							<th>Temperature ({'\u00b0'}C)</th>
-							<th>Respiration Rate (ml/kg·hr)</th>
+			<div className="table-responsive">
+				<Table>
+					{respirationRate.length ? (
+						<thead>
+							<tr>
+								<th>Temperature ({'\u00b0'}C)</th>
+								<th>Respiration Rate (ml/kg·hr)</th>
 
-							<th />
-						</tr>
-					</thead>
-				) : (
-					<thead>
-						<tr>
-							<td>No Data Entered yet</td>
-						</tr>
-					</thead>
-				)}
+								<th />
+							</tr>
+						</thead>
+					) : (
+						<thead>
+							<tr>
+								<td>No Data Entered yet</td>
+							</tr>
+						</thead>
+					)}
 
-				<tbody>
-					<Modal key={uuid()} isOpen={showEditRespirationForm} toggle={editRespirationForm}>
-						<EditRespirationForm respirationData={editRespirationData} />
-					</Modal>
+					<tbody>
+						<Modal key={uuid()} isOpen={showEditRespirationForm} toggle={editRespirationForm}>
+							<EditRespirationForm respirationData={editRespirationData} />
+						</Modal>
 
-					{respirationRate.map((s) => (
-						<tr className={!showEditRespirationForm ? 'edit-mode ' : 'view-mode'} key={uuid()}>
-							<td>{s.temperature}</td>
-							<td>{s.rrRate}</td>
+						{respirationRate.map((s) => (
+							<tr className={!showEditRespirationForm ? 'edit-mode ' : 'view-mode'} key={uuid()}>
+								<td>{s.temperature}</td>
+								<td>{s.rrRate}</td>
 
-							<td className="edit-col">
-								<a
-									className={editMode ? 'edit-mode edit edit-commodity-link' : 'view-mode'}
-									onClick={() => {
-										setEditRespirationData(s);
-										editRespirationForm(id);
-									}}
-								>
-									<FontAwesomeIcon icon="fa-solid fa-pen-to-square" />
-								</a>
-								<a
-									className={editMode ? 'edit-mode delete' : 'view-mode'}
-									onClick={() => {
-										PostharvestApi.deleteRespirationData(s.id);
-										window.location.reload(false);
-									}}
-								>
-									<FontAwesomeIcon icon="  fa-circle-xmark" />
-								</a>
-							</td>
-						</tr>
-					))}
-					<tr />
-				</tbody>
-			</Table>
+								<td className="edit-col">
+									<a
+										className={editMode ? 'edit-mode edit edit-commodity-link' : 'view-mode'}
+										onClick={() => {
+											setEditRespirationData(s);
+											editRespirationForm(id);
+										}}
+									>
+										<FontAwesomeIcon icon="fa-solid fa-pen-to-square" />
+									</a>
+									<a
+										className={editMode ? 'edit-mode delete' : 'view-mode'}
+										onClick={() => {
+											PostharvestApi.deleteRespirationData(s.id);
+											window.location.reload(false);
+										}}
+									>
+										<FontAwesomeIcon icon="  fa-circle-xmark" />
+									</a>
+								</td>
+							</tr>
+						))}
+						<tr />
+					</tbody>
+				</Table>
 
-			<Modal key={uuid()} isOpen={showAddRespirationForm} toggle={toggleAddRespirationForm}>
-				<AddRespirationForm id={id} />
-			</Modal>
+				<Modal key={uuid()} isOpen={showAddRespirationForm} toggle={toggleAddRespirationForm}>
+					<AddRespirationForm id={id} />
+				</Modal>
+			</div>
 		</div>
 	);
 }

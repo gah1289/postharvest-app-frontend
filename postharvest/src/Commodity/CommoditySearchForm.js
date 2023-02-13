@@ -32,8 +32,7 @@ function CommoditySearchForm({ filterCommodities }) {
 	};
 	return (
 		<Row className="  justify-content-center text-center">
-			<Col xs="2" />
-			<Col className="search-bar">
+			<Col lg="7" className="search-bar">
 				<Form onSubmit={handleSubmit} className="d-flex flex-row mb-3 justify-content-center">
 					<InputGroup>
 						<Input
@@ -49,7 +48,7 @@ function CommoditySearchForm({ filterCommodities }) {
 					</button>
 				</Form>
 			</Col>
-			<Col xs="2" />
+
 			<div className="found-results">{numResultsMsg}</div>
 		</Row>
 	);

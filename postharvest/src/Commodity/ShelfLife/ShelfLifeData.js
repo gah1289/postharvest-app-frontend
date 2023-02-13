@@ -66,67 +66,67 @@ function ShelfLifeData(commodity) {
 					</a>
 				)}
 			</CardTitle>
+			<div class="table-responsive">
+				<Table>
+					{shelfLife.length ? (
+						<thead>
+							<tr>
+								<th>Temperature ({'\u00b0'}C)</th>
+								<th>Shelf Life</th>
+								<th>Packaging</th>
+								<th>Description </th>
+								<th />
+							</tr>
+						</thead>
+					) : (
+						<thead>
+							<tr>
+								<td>No Data Entered yet</td>
+							</tr>
+						</thead>
+					)}
 
-			<Table>
-				{shelfLife.length ? (
-					<thead>
-						<tr>
-							<th>Temperature ({'\u00b0'}C)</th>
-							<th>Shelf Life</th>
-							<th>Packaging</th>
-							<th>Description </th>
-							<th />
-						</tr>
-					</thead>
-				) : (
-					<thead>
-						<tr>
-							<td>No Data Entered yet</td>
-						</tr>
-					</thead>
-				)}
+					<tbody>
+						<Modal key={uuid()} isOpen={showEditShelfLifeForm} toggle={editShelfLifeForm}>
+							<EditShelfLifeForm shelfLifeData={editShelfLifeData} />
+						</Modal>
 
-				<tbody>
-					<Modal key={uuid()} isOpen={showEditShelfLifeForm} toggle={editShelfLifeForm}>
-						<EditShelfLifeForm shelfLifeData={editShelfLifeData} />
-					</Modal>
+						{shelfLife.map((s) => (
+							<tr className={!showEditShelfLifeForm ? 'edit-mode ' : 'view-mode'} key={uuid()}>
+								<td>{s.temperature}</td>
+								<td>{s.shelfLife}</td>
+								<td>{s.packaging}</td>
+								<td>{s.description}</td>
 
-					{shelfLife.map((s) => (
-						<tr className={!showEditShelfLifeForm ? 'edit-mode ' : 'view-mode'} key={uuid()}>
-							<td>{s.temperature}</td>
-							<td>{s.shelfLife}</td>
-							<td>{s.packaging}</td>
-							<td>{s.description}</td>
+								<td>
+									{editMode && (
+										<a
+											className="edit-commodity-link"
+											onClick={() => {
+												setEditShelfLifeData(s);
+												editShelfLifeForm(id);
+											}}
+										>
+											<FontAwesomeIcon icon="fa-solid fa-pen-to-square" />
+										</a>
+									)}
 
-							<td>
-								{editMode && (
 									<a
-										className="edit-commodity-link"
+										className={editMode ? 'edit-mode delete' : 'view-mode'}
 										onClick={() => {
-											setEditShelfLifeData(s);
-											editShelfLifeForm(id);
+											PostharvestApi.deleteShelfLifeData(s.id);
+											window.location.reload(false);
 										}}
 									>
-										<FontAwesomeIcon icon="fa-solid fa-pen-to-square" />
+										<FontAwesomeIcon icon=" fa-solid fa-circle-xmark" />
 									</a>
-								)}
-
-								<a
-									className={editMode ? 'edit-mode delete' : 'view-mode'}
-									onClick={() => {
-										PostharvestApi.deleteShelfLifeData(s.id);
-										window.location.reload(false);
-									}}
-								>
-									<FontAwesomeIcon icon=" fa-solid fa-circle-xmark" />
-								</a>
-							</td>
-						</tr>
-					))}
-					<tr />
-				</tbody>
-			</Table>
-
+								</td>
+							</tr>
+						))}
+						<tr />
+					</tbody>
+				</Table>
+			</div>
 			<Modal key={uuid()} isOpen={showAddShelfLifeForm} toggle={toggleAddShelfLifeForm}>
 				<AddShelfLifeForm id={id} />
 			</Modal>

@@ -89,8 +89,9 @@ function AddCommodityForm() {
 							<option value={true}>Climacteric</option>
 							<option value={false}>Non-climacteric</option>
 						</Input>
-
-						<button>Add Data</button>
+						<div className="modal-btn">
+							<button>Add Data</button>
+						</div>
 					</FormGroup>
 				</Form>
 			</ModalBody>

@@ -12,6 +12,10 @@
 	background-color: rgba(0, 0, 0, 0);
 }
 
+.navbar a {
+	font-size: 3.5vmin;
+}
+
 .fa-user {
 	min-height: 30px;
 }
@@ -28,7 +32,6 @@
 .navbar-nav {
 	width: 20%;
 	margin-left: 80%;
-	background-color: rgba(255, 255, 255, 0.1);
 }
 
 .navbar a:hover,
@@ -55,8 +58,14 @@ img {
 	padding: 7px;
 	border-radius: 100px;
 	background-color: rgba(39, 103, 187, 1);
+	min-width: fit-content;
 }
 
 .windham-logo-img {
 	min-height: 30px;
+}
+
+tr,
+tbody {
+	max-width: 98vw;
 }

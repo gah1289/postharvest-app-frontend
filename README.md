@@ -114,3 +114,10 @@
 ### References
 - **addReference**: Add  references to refs table in db
 - **deleteReference**: Delete reference from refs table in db
+
+## Tech Stack
+### Libraries
+- React
+
+### Frameworks
+- Bootstrap/Reactstrap

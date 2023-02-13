@@ -1,6 +1,8 @@
-import axios, { Axios } from 'axios';
+import axios from 'axios';
 
-const BASE_URL = process.env.REACT_APP_BASE_URL || 'http://localhost:3001';
+// const BASE_URL = process.env.REACT_APP_BASE_URL || 'http://localhost:3001';
+
+const BASE_URL = 'https://postharvest-app.herokuapp.com';
 
 class PostharvestApi {
 	// Store token for auth

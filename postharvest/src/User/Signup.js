@@ -76,7 +76,7 @@ function Signup() {
 		<div className="signup-bg">
 			<div>
 				<Container className="signup-form">
-					<Row className="postharvest-banner justify-content-center">Sign Up</Row>
+					<Row className="signup-title justify-content-center">Sign Up</Row>
 					<Row>
 						<Form className="login-form" onSubmit={handleSubmit}>
 							<Row>
@@ -173,7 +173,9 @@ function Signup() {
 										/>
 									</Col>
 								</FormGroup>
-								<button>Sign Up</button>
+								<div className="text-align-center">
+									<button>Sign Up</button>
+								</div>
 								<FormFeedback>{errors}</FormFeedback>
 							</Row>
 							{/* <Button/> component on reactstrap keeps breaking by code >:(  */}

@@ -11,13 +11,14 @@
 .login-title {
 	text-transform: uppercase;
 	color: rgba(255, 255, 255, 1);
-	font-size: 45px;
+	font-size: 6vw;
 }
 
 .profile-form,
 .login-form {
 	justify-content: center;
 	width: 500px;
+	max-width: 98vw;
 	padding: 10px;
 	align-items: center;
 	justify-content: center;
@@ -27,7 +28,9 @@
 	background-color: rgba(0, 0, 0, 0);
 	border: solid rgb(165, 221, 247);
 	width: 100px;
+	min-width: fit-content;
 	height: 50px;
+	min-height: fit-content;
 	color: rgb(165, 221, 247);
 	text-transform: uppercase;
 	border-radius: 25px;

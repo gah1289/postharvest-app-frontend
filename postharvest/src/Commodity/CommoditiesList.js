@@ -60,7 +60,7 @@ function CommoditiesList() {
 	};
 
 	if (isLoading) {
-		return <Spinner />;
+		return <Spinner variant="primary" />;
 	}
 
 	return (

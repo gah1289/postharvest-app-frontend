@@ -11,7 +11,7 @@
 
 .postharvest-banner {
 	font-family: 'Source Sans Pro', sans-serif;
-	font-size: 13vh;
+	font-size: 8vw;
 	margin-bottom: 40px;
 	text-transform: uppercase;
 	color: rgba(255, 255, 255, 1);
@@ -89,4 +89,9 @@ a {
 
 .footer {
 	color: rgb(0, 0, 0);
+}
+
+.home-page-commodities {
+	height: 200px;
+	min-height: fit-content;
 }

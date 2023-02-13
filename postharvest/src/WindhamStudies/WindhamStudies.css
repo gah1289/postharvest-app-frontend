@@ -87,3 +87,15 @@ a,
 	font-size: 20px;
 	margin-left: 15px;
 }
+
+.study-list-header {
+	margin-top: 20px;
+}
+
+.study-list-header a {
+	font-size: 30px;
+	padding: 0 60px;
+}
+.study-list-header a:hover {
+	cursor: pointer;
+}

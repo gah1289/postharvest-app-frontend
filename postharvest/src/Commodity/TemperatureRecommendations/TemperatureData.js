@@ -65,61 +65,62 @@ function TemperatureData(commodity) {
 					</a>
 				)}
 			</CardTitle>
-			<Table>
-				{temperatureRecommendations.length ? (
-					<thead>
-						<tr>
-							<th>Description</th>
-							<th>Minimum Temperature ({'\u00b0'}C)</th>
-							<th>Optimum Temperature</th>
-							<th>Relative Humidity</th>
-							<th />
-						</tr>
-					</thead>
-				) : (
-					<thead>
-						<tr>
-							<td>No Data Entered yet</td>
-						</tr>
-					</thead>
-				)}
-				<tbody>
-					<Modal key={uuid()} isOpen={showEditTempForm} toggle={editTempForm}>
-						<EditTempForm tempData={editTempData} />
-					</Modal>
+			<div className="table-responsive">
+				<Table>
+					{temperatureRecommendations.length ? (
+						<thead>
+							<tr>
+								<th>Description</th>
+								<th>Minimum Temperature ({'\u00b0'}C)</th>
+								<th>Recommended Temperature ({'\u00b0'}C)</th>
+								<th>Relative Humidity (%)</th>
+								<th />
+							</tr>
+						</thead>
+					) : (
+						<thead>
+							<tr>
+								<td>No Data Entered yet</td>
+							</tr>
+						</thead>
+					)}
+					<tbody>
+						<Modal key={uuid()} isOpen={showEditTempForm} toggle={editTempForm}>
+							<EditTempForm tempData={editTempData} />
+						</Modal>
 
-					{temperatureRecommendations.map((t) => (
-						<tr className={!showEditTempForm ? 'edit-mode ' : 'view-mode'} key={uuid()}>
-							<td>{t.description}</td>
-							<td>{t.minTemp}</td>
-							<td>{t.optimumTemp}</td>
-							<td>{t.rh}</td>
-							<td>
-								<a
-									className={editMode ? 'edit-mode edit edit-commodity-link' : 'view-mode'}
-									onClick={() => {
-										setEditTempData(t);
-										editTempForm(id);
-									}}
-								>
-									<FontAwesomeIcon icon="fa-solid fa-pen-to-square" />
-								</a>
-								<a
-									className={editMode ? 'edit-mode delete' : 'view-mode'}
-									onClick={() => {
-										PostharvestApi.deleteTempRec(t.id);
-										window.location.reload(false);
-									}}
-								>
-									<FontAwesomeIcon icon=" fa-solid fa-circle-xmark" />
-								</a>
-							</td>
-						</tr>
-					))}
-					<tr />
-				</tbody>
-			</Table>
-
+						{temperatureRecommendations.map((t) => (
+							<tr className={!showEditTempForm ? 'edit-mode ' : 'view-mode'} key={uuid()}>
+								<td>{t.description}</td>
+								<td>{t.minTemp}</td>
+								<td>{t.optimumTemp}</td>
+								<td>{t.rh.replace('%', '')}</td>
+								<td>
+									<a
+										className={editMode ? 'edit-mode edit edit-commodity-link' : 'view-mode'}
+										onClick={() => {
+											setEditTempData(t);
+											editTempForm(id);
+										}}
+									>
+										<FontAwesomeIcon icon="fa-solid fa-pen-to-square" />
+									</a>
+									<a
+										className={editMode ? 'edit-mode delete' : 'view-mode'}
+										onClick={() => {
+											PostharvestApi.deleteTempRec(t.id);
+											window.location.reload(false);
+										}}
+									>
+										<FontAwesomeIcon icon=" fa-solid fa-circle-xmark" />
+									</a>
+								</td>
+							</tr>
+						))}
+						<tr />
+					</tbody>
+				</Table>
+			</div>
 			<Modal key={uuid()} isOpen={showAddTempForm} toggle={toggleAddTempForm}>
 				<AddTempForm id={id} />
 			</Modal>
