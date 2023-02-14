@@ -118,6 +118,13 @@
 ## Tech Stack
 ### Libraries
 - React
+- React Router DOM
+- Axios
+- FontAwesome
 
+  
 ### Frameworks
 - Bootstrap/Reactstrap
+
+### NPM Packages
+- UUID

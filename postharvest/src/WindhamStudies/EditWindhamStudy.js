@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { Form, FormGroup, Label, Input, ModalHeader, ModalBody } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import { library } from '@fortawesome/fontawesome-svg-core';
 import PostharvestApi from '../api';
 import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus';
