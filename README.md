@@ -1,6 +1,10 @@
 # postharvest-app-frontend
 
 ## User Flow
+
+### App
+- Returns **NavBar** and **Routes** wrapped in an **ItemContextProvider** with user, logged in and loading variables.
+
 ### NavBar
 - Appears at the top of every page: 
   
@@ -9,6 +13,7 @@
     - Button with Windham logo on the left that is a link to Home. 
     - Button with user logo on the right that is a drop down menu with links to the following Routes:
       -  Login 
+      -  Commodities
   
    ![Screenshot](NavBar-Admin.png)
   - **User Logged In:**
@@ -19,50 +24,98 @@
       - Shelf Life Studies (Only admin can see)
       - Logout
 
-### Routes
+### Routes and Components
 
-#### /
-- Shows a basic search bar for commodities. 
-- Cards of commodity name and variety appear upon search, user can click card to to to commodity page
+#### Path: '/' - Component: Home
+- useEffect hook to call PostharvestApi.getCommodities() before loading and sets commodities state to result
+**Components**
+- **CommoditySearchForm**: Shows a basic search bar for commodities. Calls PostharvestApi.getCommodities(formData) onSubmit and returns array of filtered commodities
+- **CardGroup**: 
+  - **Cards** of commodity name and variety appear upon search, user can click card to to to commodity page
 ![Screenshot](Postharvest-Home.png)
 
-#### /login
-- Login form => onSubmit call Postharvest.Api.login(), logs the user in
+#### Path: '/login' - Component: Login
+**Components**:
+- **Form** => onSubmit call Postharvest.Api.login(), logs the user in
 ![Screenshot](Postharvest-Login.png)
 
-#### /signup
-- Register form onSubmit call Postharvest.Api.register(), registers the user and logs them in
+#### Path: '/signup' - Component: Signup
+**Components**:
+- **Form**: onSubmit call Postharvest.Api.register(), registers the user and logs them in
 ![Screenshot](Postharvest-Signup.png)
 
-#### /profile
-- Allows user to see and edit their profile information. 
-- Profile form onSubmit call Postharvest.Api.updateUser()
-- Must confirm password before sending patch request to db
+#### Path: '/logout' - Component: Logout
+- clears localStorage 
+- calls PostharvestApi.logout()
+- Navigates to **Home**
+
+#### Path: '/profile' - Component: Profile
+**Components**:
+- **Form**:
+  - Allows user to see and edit their profile information. 
+  - Profile form onSubmit call Postharvest.Api.updateUser()
+  - Must confirm password before sending patch request to db
+- **Modal**: Appears when user submits update form. Prompts user to enter their current password. If correct, calls updateUser() from API
 ![Screenshot](Postharvest-Profile.png)
 
-#### /search
-- Displays list of commodities. 
-- Filter by name
-- Each Item on the list is a link that directs the user to '/commodity/:id' 
-- Admins can add, update, or delete commodities
+#### Path: '/search' - Component: CommoditiesList
+- useEffect hook to call PostharvestApi.getCommodities() before loading and sets commodities state to result
+**Components**:
+- **CommoditySearchForm**: Shows a basic search bar for commodities. Calls PostharvestApi.getCommodities(formData) onSubmit and returns array of filtered commodities
+- **ListGroup**
+  - Displays list of commodities. 
+  - Each **ListGroupItem** is a link that directs the user to '/commodity/:id' 
+- **Modal**:
+  - **AddCommodityForm**: Admins can add commodity to the db, page refreshes and shows up in ListGroup when successful
   ![Screenshot](Postharvest-Commodities-List.png)
 
 
-#### /commodity/:id
-  - Users and anon can see all information associated with commodity
- - Admins can add, update, and delete temperature recommendations, shelf life, ethylene, and respiration information
- - Admins can see and download associated shelf life studies
+#### Path: '/commodity/:id' Component: Commodity
+- useEffect hook to call PostharvestApi.getCommodity(id) before loading and sets commodities state to result
+  - All users see all components associated with commodity except for Studies
+**Components**:
+- Edit button => onClick displays **Modal** 
+  - *only visible if user.current isAdmin*
+  - **EditCommodityForm**: onSubmit calls editCommodity(id, data) from API
+- **TemperatureData**: table showing data from commodity.temperatureRecommendations. If there's no data, shows 'No Data Entered yet'.
+  - Admins can see an add and edit button.
+    - Add button shows **AddTemperatureForm** component in Modal. On submit calls addTempRec from API
+    - Edit button shows:
+      - **EditTempForm** in Modal. onSubmit calls updateTempRec() from API. 
+    - Delete button: onClick calls deleteTempRec from API
+- **ShelfLifeData**: similar to TemperatureData with ShelfLife data and Api methods
+- **RespirationData**: similar to TemperatureData with Respiration Rate data and Api methods
+- **EthyleneData**: similar to TemperatureData with Ethylene data and Api methods
+- **WindhamStudies**: *only visible if user.current isAdmin*. similar to TemperatureData with WindhamStudy data and Api methods. Includes a button for user to download study from S3 Bucket.
+- **ReferenceData**: similar to TemperatureData with Reference data and Api methods. Only includes options to an add and delete references.  
+- Delete button => onClick displays **Modal**: 
+  - Asks user if they're sure they want to delete commodity. 
+  - Modal Button on click calls deleteCommodity(id) from API
 ![Screenshot](Postharvest-Commodity.png)
 
 
-#### /studies-list
+#### Path: '/studies-list' Component: StudiesList
 - Authorization required: admin
   - If not admin, redirect to '/'
-- Display list of all Windham Packaging studies. Show title, data, objective, commodities (with link going to /commodity/:id), and button to download.
-- Edit button - reveals buttons to edit and delete each study
-- Edit commodities - reveals check list of all commodities. Allow user to set and update all commodities associated with the study
-- To do: add the ability to add studies
+- useEffect on load calls getStudies() from API. Set up to eventually add a search bar component.
+**Components**:
+- Add button onClick shows **Modal**:
+  - **AddWindhamStudyForm**, onClick calls addStudy() from API
+- Edit Button onClick shows edit and delete buttons next to each study listed
+  - Edit Button onClick displays Modal with **EditWindhamStudyForm**. onSubmit calls updateStudy from API
+  - Delete button onClick calls deleteStudy from API
+- **Table**
+  - Display list of all Windham Packaging studies. Show title, data, objective, commodities (with link going to /commodity/:id), and button to download.
+  - Edit Commodities button onClick shows Modal with **EditWindhamStudiesCommodities**.
+    - Check list of all commodities in the db. 
+    - If commodity is already associated with study, that commmodity is checked.
+    - User can check and uncheck any commodity to associate or remove that commodity association
+    - onSubmit calls clearCommoditiesFromStudy() and/or addCommoditiesToStudy() from API
+- To do: connect S3 bucket to Heroku via Bucketeer
 ![Screenshot](Postharvest-Studies.png)
+
+#### Path: '*'  - Component: NotFound
+- Displays 404 page when page not found
 
 ## API
 **token**: Stores token for auth
@@ -108,7 +161,7 @@
 - **addStudy**: add a new study (not applied yet)
 - **updateStudy**: Update study title, date, or objective in windham_studies given an id
 - **deleteStudy**: Delete shelf life study from windham_studies
-- **addCommoditiesToShelflife**: Add to windham_studies_commodities
+- **addCommoditiesToStudy**: Add to windham_studies_commodities
 - **clearCommoditiesFromStudy**: Delete all commodity-study data from windham_studies_commodities
 
 ### References

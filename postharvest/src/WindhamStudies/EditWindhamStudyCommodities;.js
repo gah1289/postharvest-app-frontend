@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { Form, FormGroup, ModalBody, ModalHeader, Label, Input, Spinner } from 'reactstrap';
+import React, { useState, useEffect, useRef } from 'react';
+import { unmountComponentAtNode } from 'react-dom';
+import { Form, FormGroup, ModalBody, ModalHeader, Label, Input, Badge, Spinner } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import PostharvestApi from '../api';
 import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus';
@@ -16,6 +17,7 @@ function EditWindhamStudyCommodities(id) {
 
 	const INITIAL_STATE = { commodityId: [] };
 
+	// Use set to prevent duplicate commodities
 	const [
 		commodities,
 		setCommodities
@@ -57,7 +59,7 @@ function EditWindhamStudyCommodities(id) {
 				if (id.id.study.commodities.length) {
 					await PostharvestApi.clearCommoditiesFromStudy(studyId);
 				}
-				await PostharvestApi.addCommoditiesToShelflife(commodities, studyId);
+				await PostharvestApi.addCommoditiesToStudy(commodities, studyId);
 			}
 			else {
 				// if no commodities are checked, remove all commodities from study

@@ -84,7 +84,7 @@ function Commodity() {
 	}, []);
 
 	if (isLoading) {
-		return <Spinner />;
+		return <Spinner variant="primary" />;
 	}
 
 	const { commodityName, variety, scientificName, coolingMethod } = commodity || undefined;

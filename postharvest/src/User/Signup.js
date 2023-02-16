@@ -66,6 +66,7 @@ function Signup() {
 			navigate('/');
 		} catch (e) {
 			setPwError(true);
+			console.log(e[0]);
 			setErrors(e[0]);
 		}
 

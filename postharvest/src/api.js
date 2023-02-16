@@ -223,7 +223,9 @@ class PostharvestApi {
 	// get all studies
 	static async getStudies() {
 		let studies = [];
+		// returns array of studies but no commodity info
 		const res = await this.request(`studies/`);
+		// returns each study with commodity info
 		for (let study of res.studies) {
 			let s = await this.getStudy(study.id);
 			studies.push(s);
@@ -247,13 +249,14 @@ class PostharvestApi {
 
 	// Delete shelf life study from windham_studies
 	static async deleteStudy(id) {
+		await this.clearCommoditiesFromStudy(id);
 		const res = await this.request(`studies/${id}`, {}, 'delete');
 
 		return res;
 	}
 
 	// Add to windham_studies_commodities
-	static async addCommoditiesToShelflife(commodityIds, studyId) {
+	static async addCommoditiesToStudy(commodityIds, studyId) {
 		commodityIds.forEach(async (id) => await this.request(`studies/${id}`, { studyId }, 'post'));
 	}
 	// Delete all commodity-study data from windham_studies_commodities

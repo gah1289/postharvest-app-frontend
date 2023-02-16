@@ -62,7 +62,7 @@ function Home() {
 		getCommodities();
 	}, []);
 
-	if (isLoading) return <Spinner />;
+	if (isLoading) return <Spinner variant="primary" />;
 
 	return (
 		<div>

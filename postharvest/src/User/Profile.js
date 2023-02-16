@@ -62,6 +62,10 @@ function Profile() {
 		}
 		else {
 			setChangePwInvalid(false);
+			if (formData.password === '') {
+				// prevents setting the password to empty if a user goes to change their password and then clears it and submits the form.
+				formData.password = user.current.password;
+			}
 			setFormData({ password: formData.password });
 		}
 	};
@@ -123,10 +127,12 @@ function Profile() {
 	};
 
 	if (isLoading) {
-		return <Spinner />;
+		return <Spinner variant="primary" />;
 	}
 
-	if (!isLoggedIn) {
+	const lsUserName = localStorage.getItem('username') || undefined;
+
+	if (!isLoggedIn || !lsUserName) {
 		// redirect to login if user is not logged in
 		return <Navigate to="/login" />;
 	}
