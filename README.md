@@ -28,11 +28,10 @@
 
 #### Path: '/' - Component: Home
 - useEffect hook to call PostharvestApi.getCommodities() before loading and sets commodities state to result
-
-**Components**
-- **CommoditySearchForm**: Shows a basic search bar for commodities. Calls PostharvestApi.getCommodities(formData) onSubmit and returns array of filtered commodities
-- **CardGroup**: 
-  - **Cards** of commodity name and variety appear upon search, user can click card to to to commodity page
+- **Components**
+  - **CommoditySearchForm**: Shows a basic search bar for commodities. Calls PostharvestApi.getCommodities(formData) onSubmit and returns array of filtered commodities
+  - **CardGroup**: 
+    - **Cards** of commodity name and variety appear upon search, user can click card to to to commodity page
 ![Screenshot](Postharvest-Home.png)
 
 #### Path: '/login' - Component: Login
@@ -41,8 +40,8 @@
 ![Screenshot](Postharvest-Login.png)
 
 #### Path: '/signup' - Component: Signup
-**Components**:
-- **Form**: onSubmit call Postharvest.Api.register(), registers the user and logs them in
+- **Components**:
+  - **Form**: onSubmit call Postharvest.Api.register(), registers the user and logs them in
 ![Screenshot](Postharvest-Signup.png)
 
 #### Path: '/logout' - Component: Logout
@@ -51,69 +50,69 @@
 - Navigates to **Home**
 
 #### Path: '/profile' - Component: Profile
-**Components**:
-- **Form**:
-  - Allows user to see and edit their profile information. 
-  - Profile form onSubmit call Postharvest.Api.updateUser()
-  - Must confirm password before sending patch request to db
-- **Modal**: Appears when user submits update form. Prompts user to enter their current password. If correct, calls updateUser() from API
+- **Components**:
+  - **Form**:
+    - Allows user to see and edit their profile information. 
+    - Profile form onSubmit call Postharvest.Api.updateUser()
+    - Must confirm password before sending patch request to db
+  - **Modal**: Appears when user submits update form. Prompts user to enter their current password. If correct, calls updateUser() from API
 ![Screenshot](Postharvest-Profile.png)
 
 #### Path: '/search' - Component: CommoditiesList
 - useEffect hook to call PostharvestApi.getCommodities() before loading and sets commodities state to result
 
-**Components**:
-- **CommoditySearchForm**: Shows a basic search bar for commodities. Calls PostharvestApi.getCommodities(formData) onSubmit and returns array of filtered commodities
-- **ListGroup**
-  - Displays list of commodities. 
-  - Each **ListGroupItem** is a link that directs the user to '/commodity/:id' 
-- **Modal**:
-  - **AddCommodityForm**: Admins can add commodity to the db, page refreshes and shows up in ListGroup when successful
+- **Components**:
+  - **CommoditySearchForm**: Shows a basic search bar for commodities. Calls PostharvestApi.getCommodities(formData) onSubmit and returns array of filtered commodities
+  - **ListGroup**
+    - Displays list of commodities. 
+    - Each **ListGroupItem** is a link that directs the user to '/commodity/:id' 
+  - **Modal**:
+    - **AddCommodityForm**: Admins can add commodity to the db, page refreshes and shows up in ListGroup when successful
   ![Screenshot](Postharvest-Commodities-List.png)
 
 
-#### Path: '/commodity/:id' Component: Commodity
+#### Path: '/commodity/:id' - Component: Commodity
 - useEffect hook to call PostharvestApi.getCommodity(id) before loading and sets commodities state to result
   - All users see all components associated with commodity except for Studies
-**Components**:
-- Edit button => onClick displays **Modal** 
-  - *only visible if user.current isAdmin*
-  - **EditCommodityForm**: onSubmit calls editCommodity(id, data) from API
-- **TemperatureData**: table showing data from commodity.temperatureRecommendations. If there's no data, shows 'No Data Entered yet'.
-  - Admins can see an add and edit button.
-    - Add button shows **AddTemperatureForm** component in Modal. On submit calls addTempRec from API
-    - Edit button shows:
-      - **EditTempForm** in Modal. onSubmit calls updateTempRec() from API. 
-    - Delete button: onClick calls deleteTempRec from API
-- **ShelfLifeData**: similar to TemperatureData with ShelfLife data and Api methods
-- **RespirationData**: similar to TemperatureData with Respiration Rate data and Api methods
-- **EthyleneData**: similar to TemperatureData with Ethylene data and Api methods
-- **WindhamStudies**: *only visible if user.current isAdmin*. similar to TemperatureData with WindhamStudy data and Api methods. Includes a button for user to download study from S3 Bucket.
-- **ReferenceData**: similar to TemperatureData with Reference data and Api methods. Only includes options to an add and delete references.  
-- Delete button => onClick displays **Modal**: 
-  - Asks user if they're sure they want to delete commodity. 
-  - Modal Button on click calls deleteCommodity(id) from API
+- **Components**:
+  - Edit button => onClick displays **Modal** 
+    - *only visible if user.current isAdmin*
+    - **EditCommodityForm**: onSubmit calls editCommodity(id, data) from API
+  - **TemperatureData**: table showing data from commodity.temperatureRecommendations. If there's no data, shows 'No Data Entered yet'.
+    - Admins can see an add and edit button.
+      - Add button shows **AddTemperatureForm** component in Modal. On submit calls addTempRec from API
+      - Edit button shows:
+        - **EditTempForm** in Modal. onSubmit calls updateTempRec() from API. 
+      - Delete button: onClick calls deleteTempRec from API
+  - **ShelfLifeData**: similar to TemperatureData with ShelfLife data and Api methods
+  - **RespirationData**: similar to TemperatureData with Respiration Rate data and Api methods
+  - **EthyleneData**: similar to TemperatureData with Ethylene data and Api methods
+  - **WindhamStudies**: *only visible if user.current isAdmin*. similar to TemperatureData with WindhamStudy data and Api methods. Includes a button for user to download study from S3 Bucket.
+  - **ReferenceData**: similar to TemperatureData with Reference data and Api methods. Only includes options to an add and delete references.  
+  - Delete button => onClick displays **Modal**: 
+    - Asks user if they're sure they want to delete commodity. 
+    - Modal Button on click calls deleteCommodity(id) from API
 ![Screenshot](Postharvest-Commodity.png)
 
 
-#### Path: '/studies-list' Component: StudiesList
+#### Path: '/studies-list' - Component: StudiesList
 - Authorization required: admin
   - If not admin, redirect to '/'
 - useEffect on load calls getStudies() from API. Set up to eventually add a search bar component.
 
-**Components**:
-- Add button onClick shows **Modal**:
-  - **AddWindhamStudyForm**, onClick calls addStudy() from API
-- Edit Button onClick shows edit and delete buttons next to each study listed
-  - Edit Button onClick displays Modal with **EditWindhamStudyForm**. onSubmit calls updateStudy from API
-  - Delete button onClick calls deleteStudy from API
-- **Table**
-  - Display list of all Windham Packaging studies. Show title, data, objective, commodities (with link going to /commodity/:id), and button to download.
-  - Edit Commodities button onClick shows Modal with **EditWindhamStudiesCommodities**.
-    - Check list of all commodities in the db. 
-    - If commodity is already associated with study, that commmodity is checked.
-    - User can check and uncheck any commodity to associate or remove that commodity association
-    - onSubmit calls clearCommoditiesFromStudy() and/or addCommoditiesToStudy() from API
+- **Components**:
+  - Add button onClick shows **Modal**:
+    - **AddWindhamStudyForm**, onClick calls addStudy() from API
+  - Edit Button onClick shows edit and delete buttons next to each study listed
+    - Edit Button onClick displays Modal with **EditWindhamStudyForm**. onSubmit calls updateStudy from API
+    - Delete button onClick calls deleteStudy from API
+  - **Table**
+    - Display list of all Windham Packaging studies. Show title, data, objective, commodities (with link going to /commodity/:id), and button to download.
+    - Edit Commodities button onClick shows Modal with **EditWindhamStudiesCommodities**.
+      - Check list of all commodities in the db. 
+      - If commodity is already associated with study, that commmodity is checked.
+      - User can check and uncheck any commodity to associate or remove that commodity association
+      - onSubmit calls clearCommoditiesFromStudy() and/or addCommoditiesToStudy() from API
 - To do: connect S3 bucket to Heroku via Bucketeer
 ![Screenshot](Postharvest-Studies.png)
 
