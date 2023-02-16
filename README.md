@@ -28,6 +28,7 @@
 
 #### Path: '/' - Component: Home
 - useEffect hook to call PostharvestApi.getCommodities() before loading and sets commodities state to result
+
 **Components**
 - **CommoditySearchForm**: Shows a basic search bar for commodities. Calls PostharvestApi.getCommodities(formData) onSubmit and returns array of filtered commodities
 - **CardGroup**: 
@@ -60,6 +61,7 @@
 
 #### Path: '/search' - Component: CommoditiesList
 - useEffect hook to call PostharvestApi.getCommodities() before loading and sets commodities state to result
+
 **Components**:
 - **CommoditySearchForm**: Shows a basic search bar for commodities. Calls PostharvestApi.getCommodities(formData) onSubmit and returns array of filtered commodities
 - **ListGroup**
@@ -98,6 +100,7 @@
 - Authorization required: admin
   - If not admin, redirect to '/'
 - useEffect on load calls getStudies() from API. Set up to eventually add a search bar component.
+
 **Components**:
 - Add button onClick shows **Modal**:
   - **AddWindhamStudyForm**, onClick calls addStudy() from API
