@@ -235,7 +235,7 @@ class PostharvestApi {
 
 	// add a new study. Not being used yet
 	static async addStudy(data) {
-		data.source = data.source.replace(/C:\\fakepath\\/i, '/studies/');
+		data.source = data.source.replace(/C:\\fakepath\\/i, 'https://windham-studies.s3.amazonaws.com/');
 		const res = await this.request(`studies/`, { ...data }, 'post');
 
 		return res;
@@ -249,7 +249,11 @@ class PostharvestApi {
 
 	// Delete shelf life study from windham_studies
 	static async deleteStudy(id) {
-		await this.clearCommoditiesFromStudy(id);
+		// if there are no studies associated, no error is thrown
+		try {
+			await this.clearCommoditiesFromStudy(id);
+		} catch (e) {}
+
 		const res = await this.request(`studies/${id}`, {}, 'delete');
 
 		return res;

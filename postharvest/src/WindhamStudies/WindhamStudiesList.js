@@ -24,29 +24,17 @@ function StudiesList() {
 	const navigate = useNavigate();
 
 	const [
+		isLoading,
+		setIsLoading
+	] = useState(true);
+
+	// Set all studies in db
+	const [
 		studies,
 		setStudies
 	] = useState([]);
 
-	const [
-		editMode,
-		setEditMode
-	] = useState(false);
-
-	const [
-		editStudyData,
-		setEditStudyData
-	] = useState();
-	const [
-		editCommodityData,
-		setEditCommodityData
-	] = useState();
-
-	const [
-		showEditCommodityForm,
-		setShowEditCommodityForm
-	] = useState(false);
-
+	// Add study form
 	const [
 		showAddStudyForm,
 		setShowAddStudyForm
@@ -56,49 +44,70 @@ function StudiesList() {
 		showAddStudyForm ? setShowAddStudyForm(false) : setShowAddStudyForm(true);
 	};
 
-	const editStudyForm = () => {
-		showEditStudyForm ? setShowEditStudyForm(false) : setShowEditStudyForm(true);
-	};
-
-	const editCommodityForm = () => {
-		showEditCommodityForm ? setShowEditCommodityForm(false) : setShowEditCommodityForm(true);
-	};
-
+	// false - hide edit and delete buttons next to each study
+	// true - show
 	const [
-		showEditStudyForm,
-		setShowEditStudyForm
+		editMode,
+		setEditMode
 	] = useState(false);
 
 	const toggleEdit = () => {
 		editMode ? setEditMode(false) : setEditMode(true);
 	};
 
+	// edit study form
 	const [
-		isLoading,
-		setIsLoading
-	] = useState(true);
+		showEditStudyForm,
+		setShowEditStudyForm
+	] = useState(false);
 
-	const filterStudies = (s) => {
-		setStudies(s);
+	const [
+		editStudyData,
+		setEditStudyData
+	] = useState();
+
+	const editStudyForm = () => {
+		showEditStudyForm ? setShowEditStudyForm(false) : setShowEditStudyForm(true);
 	};
-	const location = useLocation();
+
+	// checklist for all commodities. Used to set associated commodities with each study
+	const [
+		showEditCommodityForm,
+		setShowEditCommodityForm
+	] = useState(false);
+
+	// array for commodities associated with each study
+	const [
+		editCommodityData,
+		setEditCommodityData
+	] = useState();
+
+	const editCommodityForm = () => {
+		showEditCommodityForm ? setShowEditCommodityForm(false) : setShowEditCommodityForm(true);
+	};
+
+	// Set up for eventual filtering of studies
+	// const filterStudies = (s) => {
+	// 	setStudies(s);
+	// };
+	// const location = useLocation();
 
 	useEffect(() => {
 		async function getStudies(data) {
-			if (location.state) {
-				setStudies(location.state.props);
-			}
-			else {
-				try {
-					let studiesFromApi = await PostharvestApi.getStudies();
-					filterStudies(studies);
-					setStudies(studiesFromApi);
-				} catch (e) {
-					if (e[0] === 'Unauthorized') {
-						return navigate('/');
-					}
+			// if (location.state) {
+			// 	setStudies(location.state.props);
+			// }
+			// else {
+			try {
+				let studiesFromApi = await PostharvestApi.getStudies();
+				// filterStudies(studies);
+				setStudies(studiesFromApi);
+			} catch (e) {
+				if (e[0] === 'Unauthorized') {
+					return navigate('/');
 				}
 			}
+			// }
 
 			setIsLoading(false);
 		}

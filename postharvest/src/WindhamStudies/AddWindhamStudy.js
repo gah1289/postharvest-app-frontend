@@ -6,7 +6,7 @@
 
 // AddWindhamStudy.js -->
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 import { Form, FormGroup, ModalBody, ModalHeader, Label, Input } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -35,6 +35,7 @@ function AddWindhamStudyForm() {
 		e.preventDefault();
 
 		try {
+			formData.source = formData.source.replace(/ /g, '');
 			const data = await PostharvestApi.addStudy(formData);
 
 			console.log(data);

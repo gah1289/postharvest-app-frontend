@@ -15,6 +15,8 @@ import { faCircleXmark } from '@fortawesome/free-solid-svg-icons/faCircleXmark';
 function EditWindhamStudyCommodities(id) {
 	library.add(faPlus, faCircleXmark);
 
+	const study = id.id.study;
+
 	const INITIAL_STATE = { commodityId: [] };
 
 	// Use set to prevent duplicate commodities
@@ -85,12 +87,12 @@ function EditWindhamStudyCommodities(id) {
 
 		getCommodities();
 		//set the commodities that are currently associated with the study
-		id.id.study.commodities.map((c) => setCommodities((commodities) => commodities.add(c.id), ...commodities));
+		study.commodities.map((c) => setCommodities((commodities) => commodities.add(c.id), ...commodities));
 	}, []);
 
 	// List all commodities in the db as checkbox options. If a commodity is already associated with a study, the checkbox should be checked.
 
-	const selectOptions = [];
+	let selectOptions = [];
 
 	function getSelectOptions() {
 		for (let commodity of allCommodities) {
