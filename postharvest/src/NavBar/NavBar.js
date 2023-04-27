@@ -1,15 +1,16 @@
 import React, { useState, useContext } from 'react';
-import { Collapse, Navbar, NavbarToggler, UncontrolledDropdown, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
-import logo from '../Images/windham-logo-blue.svg';
+import { Collapse, Navbar, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
+
 import './NavBar.css';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faUser } from '@fortawesome/free-solid-svg-icons/faUser';
+import { faCircleUser } from '@fortawesome/free-solid-svg-icons/faCircleUser';
+import { faHouse } from '@fortawesome/free-solid-svg-icons/faHouse';
 import ItemContext from '../ItemContext';
 
-function NavBar(props) {
+function NavBar() {
 	const [
 		collapsed,
 		setCollapsed
@@ -17,13 +18,14 @@ function NavBar(props) {
 	const { isLoggedIn, user } = useContext(ItemContext);
 
 	const toggleNavbar = () => setCollapsed(!collapsed);
-	library.add(faUser);
+	library.add(faCircleUser, faHouse);
 
 	return (
 		<div>
 			<Navbar color="faded" light>
 				<NavbarBrand href="/" className="me-auto">
-					<img alt="Windham Packaging Logo" className="windham-logo-img" src={logo} />
+					<FontAwesomeIcon icon="fa-solid fa-house" />
+					{/* <img alt="Windham Packaging Logo" className="windham-logo-img" src={logo} /> */}
 				</NavbarBrand>
 
 				<button
@@ -35,7 +37,7 @@ function NavBar(props) {
 					aria-expanded="false"
 					aria-label="Toggle navigation"
 				>
-					{!isLoggedIn && <FontAwesomeIcon icon="fa-solid fa-user" />}
+					{!isLoggedIn && <FontAwesomeIcon className="nav-icon" icon="fa-solid fa-circle-user" />}
 					{isLoggedIn && (
 						<div className="logged-in-btn">
 							{user.current.firstName[0]}

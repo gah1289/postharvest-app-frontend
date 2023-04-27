@@ -4,6 +4,7 @@ import { Container, Row, Col, Card, CardGroup, Spinner } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import CommoditySearchForm from '../Commodity/CommoditySearchForm';
 import PostharvestApi from '../api';
+import logo from '../Images/Windham Pkg Logo.png';
 
 function Home() {
 	const [
@@ -69,24 +70,25 @@ function Home() {
 			<div className="banner">
 				<Container>
 					<Row className="postharvest-banner justify-content-center ">Postharvest Database</Row>
-					<CommoditySearchForm filterCommodities={filterCommodities} />
 
-					<Row className="text-end link">
-						<a href="/search">See all commodities</a>
-					</Row>
-					<div className="text-center home-page-commodities">
-						{filteredCommodities && (
-							<CardGroup className="cards">
-								{filteredCommodities.map((commodity) => (
-									<a href={`commodity/${commodity.id}`}>
-										<Card className="commodity-card-home" key={commodity.id}>
-											<div className="commodity-name">{commodity.commodityName} </div>{' '}
-											<div className="variety-home">{commodity.variety} </div>{' '}
-										</Card>
-									</a>
-								))}
-							</CardGroup>
-						)}
+					<div id="home-search-bar">
+						<CommoditySearchForm filterCommodities={filterCommodities} />
+						<div className="text-center home-page-commodities">
+							{filteredCommodities && (
+								<CardGroup className="cards">
+									{filteredCommodities.map((commodity) => (
+										<a href={`commodity/${commodity.id}`}>
+											<Card className="commodity-card-home" key={commodity.id}>
+												<div>
+													<span className="commodity-name">{commodity.commodityName}</span>
+													<span className="variety-home">{commodity.variety} </span>{' '}
+												</div>{' '}
+											</Card>
+										</a>
+									))}
+								</CardGroup>
+							)}
+						</div>
 					</div>
 				</Container>
 			</div>
@@ -97,6 +99,7 @@ function Home() {
 					<Row>
 						<Col>
 							<a href="https://windhampkg.com/">Windham Packaging, LLC</a>
+							<img alt="Windham Packaging Logo" className="footer-logo" src={logo} />
 						</Col>
 					</Row>
 				</Container>

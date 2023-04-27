@@ -2,11 +2,15 @@ import React, { useState } from 'react';
 import PostharvestApi from '../api';
 import './Commodities.css';
 import { Row, Col, Form, Input, InputGroup } from 'reactstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons/faMagnifyingGlass';
 
 function CommoditySearchForm({ filterCommodities }) {
 	const INITIAL_STATE = {
 		commodityName : undefined
 	};
+	library.add(faMagnifyingGlass);
 	const [
 		formData,
 		setFormData
@@ -30,10 +34,18 @@ function CommoditySearchForm({ filterCommodities }) {
 		setNumResultsMsg(`Found: ${filteredCommodities.commodities.length} results`);
 		setFormData(INITIAL_STATE);
 	};
+	const showAll = async (e) => {
+		e.preventDefault();
+		// filter out commodities by search form data.
+		const allCommodities = await PostharvestApi.getCommodities({});
+		filterCommodities(allCommodities);
+		setNumResultsMsg(`Found: ${allCommodities.commodities.length} results`);
+		setFormData(INITIAL_STATE);
+	};
 	return (
 		<Row className="  justify-content-center text-center">
-			<Col lg="7" className="search-bar">
-				<Form onSubmit={handleSubmit} className="d-flex flex-row mb-3 justify-content-center">
+			<Col className="search-bar">
+				<Form className="d-flex flex-row mb-3 justify-content-center">
 					<InputGroup>
 						<Input
 							name="commodityName"
@@ -42,9 +54,18 @@ function CommoditySearchForm({ filterCommodities }) {
 							onChange={handleChange}
 							placeholder="Search by fruit or vegetable..."
 						/>
+						<FontAwesomeIcon className="search-icon" icon="fa-solid fa-magnifying-glass" />
 					</InputGroup>
-					<button disabled={!formData.commodityName} className="search-btn">
+					<button
+						onClick={handleSubmit}
+						disabled={!formData.commodityName}
+						id="filter"
+						className="search-btn"
+					>
 						Search
+					</button>
+					<button onClick={showAll} id="all" className="search-btn">
+						See All Commodities
 					</button>
 				</Form>
 			</Col>

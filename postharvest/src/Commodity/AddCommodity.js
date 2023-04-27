@@ -3,14 +3,10 @@
 import React, { useState } from 'react';
 import { Form, FormGroup, ModalBody, ModalHeader, Label, Input } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { library } from '@fortawesome/fontawesome-svg-core';
+
 import PostharvestApi from '../api';
-import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus';
 
 function AddCommodityForm() {
-	library.add(faPlus);
-
 	const INITIAL_STATE = {
 		commodityName  : '',
 		variety        : '',

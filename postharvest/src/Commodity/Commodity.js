@@ -127,6 +127,7 @@ function Commodity() {
 							{commodityName}: {variety}
 							{user.current.isAdmin && (
 								<a
+									href="#"
 									className="edit-commodity-link"
 									onClick={() => {
 										editCommodityForm();

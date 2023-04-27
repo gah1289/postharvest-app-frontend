@@ -11,7 +11,7 @@
 
 .postharvest-banner {
 	font-family: 'Source Sans Pro', sans-serif;
-	font-size: 8vw;
+	font-size: 5vw;
 	margin-bottom: 40px;
 	text-transform: uppercase;
 	color: rgba(255, 255, 255, 1);
@@ -19,28 +19,77 @@
 }
 
 .search-bar input {
-	font-family: 'Source Sans Pro', sans-serif;
+	font-family: 'Open Sans', sans-serif;
 	font-weight: bolder;
 	letter-spacing: 1.5px;
-	width: 50%;
 	height: 40px;
 	padding: 10px;
-	background: url("../Images/search-regular.svg") no-repeat;
-	background-color: rgba(255, 255, 255, 1);
+	background-color: rgba(255, 255, 255, 0);
+	border: none;
+	padding-left: 50px;
 	background-position: 95%, 5%;
 	background-size: 20px;
+	text-transform: uppercase;
+}
+
+#home-search-bar input {
+	color: #fff;
+	-webkit-text-fill-color: #fff;
+	width: 460px;
+	border-bottom: 1px solid #fff;
+	border-radius: 0;
+	transition: 0.3s ease-in-out;
+}
+
+#home-search-bar {
+	/* background-color: rgba(255, 255, 255, 0.2); */
+	max-height: fit-content;
+	width: 50vw;
+	min-width: 450px;
+	margin: auto;
+	border-radius: 25px;
+	padding: 10px;
+}
+
+#home-search-bar hr {
+	color: #fff;
+}
+
+.home-page-commodities {
+	min-height: fit-content;
+}
+
+.search-bar input:active,
+.search-bar input:focus {
+	background-color: rgba(255, 255, 255, 0.1);
+	border: none;
+	border-bottom: transparent;
+	border-color: transparent;
+	box-shadow: 0 0 3px 1px #fff;
+}
+
+.search-bar input:focus::placeholder {
+	color: transparent;
+	-webkit-text-fill-color: transparent;
+}
+
+.search-icon {
+	position: absolute;
+	left: 15px;
+	top: 10px;
 }
 
 .banner {
 	color: rgb(255, 255, 255);
-	height: fit-content;
-	min-height: 300px;
-	background-image: linear-gradient(96.5deg, rgba(39, 103, 187, 1) 10.4%, rgba(16, 72, 144, 1) 87.7%);
+	min-height: 75vh;
+	/* min-height: 300px; */
+	background: url("../Images/Title Page.png") no-repeat;
 	float: inline-end;
 }
 
 .magnifying-glass {
 	background-color: rgba(255, 255, 255, 1);
+	color: #fff;
 }
 
 .footer {
@@ -48,6 +97,17 @@
 	font-family: 'Source Sans Pro', sans-serif;
 	text-transform: uppercase;
 	letter-spacing: 1.5px;
+	font-size: 16px;
+}
+
+.footer a {
+	font-size: 16px;
+}
+
+.footer-logo {
+	height: 20px;
+	margin-left: 5px;
+	padding-bottom: 3px;
 }
 
 .cards {
@@ -55,26 +115,54 @@
 	justify-content: center;
 	flex-wrap: wrap;
 	padding: 10px;
+
+	border-top: 1px solid rgba(255, 255, 255, 0.2);
+	backdrop-filter: blur(15px);
+	box-shadow: 0 15px 25px rgba(0, 0, 0, 0.1);
+}
+
+.cards a {
+	width: 50%;
+	color: rgba(255, 255, 255, 1);
+}
+
+.cards a:hover {
+	background-color: rgba(255, 255, 255, 0.1);
+	box-shadow: 0 15px 25px rgba(0, 0, 0, 0.1);
+	border-radius: 10px;
 }
 
 .commodity-card-home {
+	border-radius: 0;
 	margin: 10px;
 	align-self: center;
-	width: 150px;
-	background-color: rgba(255, 255, 255, 0.3);
-	height: 60px;
+	text-transform: uppercase;
+	font-size: 17px;
+	background-color: rgba(255, 255, 255, 0);
+	border: none;
+}
+
+.fa-arrow-up-right-from-square {
+	height: 13px;
+	padding-bottom: 3px;
+	margin-left: 7px;
+	visibility: hidden;
+	display: inline;
+}
+
+.commodity-card-home:hover {
+	color: #fff;
 }
 
 .commodity-name {
-	text-transform: uppercase;
-	color: rgba(255, 255, 255, 1);
 	font-weight: bold;
-	font-size: 20px;
+	display: inline;
 }
 
 .variety-home {
 	color: rgba(255, 255, 255, 1);
-	font-size: 18px;
+	margin-left: 5px;
+	display: inline;
 }
 
 a {
@@ -88,9 +176,4 @@ a {
 
 .footer {
 	color: rgb(0, 0, 0);
-}
-
-.home-page-commodities {
-	height: 200px;
-	min-height: fit-content;
 }

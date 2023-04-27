@@ -38,13 +38,23 @@
 }
 .search-btn {
 	margin-left: 5px;
-	background-color: rgba(39, 103, 187, 1);
+	background-color: #008cff;
+	border: solid 1px #fff;
 	color: rgba(255, 255, 255, 1);
-	border: none;
+	font-family: 'Open Sans';
+	font-size: 16px;
 }
 .search-btn:hover {
-	background-color: rgb(27, 71, 129);
 	transition: 0.3s;
+}
+
+#list-search-bar input {
+	color: #008cff;
+	-webkit-text-fill-color: #008cff;
+}
+
+#list-search-bar button:hover {
+	background-color: rgb(27, 71, 129);
 }
 
 button {
@@ -52,7 +62,7 @@ button {
 	border-radius: 0.375rem;
 	text-transform: uppercase;
 	height: 40px;
-	color: rgba(39, 103, 187, 1);
+	/* color: rgba(39, 103, 187, 1); */
 	background-color: rgba(255, 255, 255, 1);
 	transition: 0.3s;
 }

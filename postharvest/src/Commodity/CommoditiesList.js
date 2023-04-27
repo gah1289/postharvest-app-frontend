@@ -67,7 +67,7 @@ function CommoditiesList() {
 		<div className="commodities-list">
 			<h1>Commodities</h1>
 			<Row>
-				<Col className="mb-3">
+				<Col className="mb-3" id="list-search-bar">
 					<CommoditySearchForm filterCommodities={filterCommodities}> </CommoditySearchForm>
 				</Col>
 			</Row>
