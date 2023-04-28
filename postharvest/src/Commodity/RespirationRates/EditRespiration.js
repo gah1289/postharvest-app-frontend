@@ -3,14 +3,10 @@
 import React, { useState } from 'react';
 import { Form, FormGroup, Label, Input, ModalHeader, ModalBody } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { library } from '@fortawesome/fontawesome-svg-core';
+
 import PostharvestApi from '../../api';
-import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus';
 
 function EditRespirationForm(respirationData) {
-	library.add(faPlus);
-
 	const { id, temperature, rrRate, rrClass } = respirationData.respirationData;
 
 	const INITIAL_STATE = {};
@@ -43,7 +39,7 @@ function EditRespirationForm(respirationData) {
 		<div>
 			<ModalHeader className="edit-modal">Edit Respiration Rate</ModalHeader>
 			<ModalBody>
-				<Form onSubmit={handleSubmit}>
+				<Form>
 					<FormGroup>
 						<Label htmlFor="temperature">Temperature ({'\u00b0'}C):</Label>
 						<Input
@@ -74,7 +70,20 @@ function EditRespirationForm(respirationData) {
 						/>
 
 						<div className="modal-btn">
-							<button>Edit</button>
+							<button onClick={handleSubmit} className="save-data">
+								<i class="fa-light fa-floppy-disk" />
+							</button>
+
+							<button
+								className=" delete"
+								onClick={() => {
+									console.log(id);
+									PostharvestApi.deleteEthyleneData(id);
+									window.location.reload(false);
+								}}
+							>
+								<i class=" fa-light fa-trash-xmark" />
+							</button>
 						</div>
 					</FormGroup>
 				</Form>

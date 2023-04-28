@@ -3,19 +3,14 @@ import { v4 as uuid } from 'uuid';
 import React, { useState, useContext } from 'react';
 import { Table, Modal, CardTitle } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { library } from '@fortawesome/fontawesome-svg-core';
 
 import PostharvestApi from '../../api';
 import ItemContext from '../../ItemContext';
-import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus';
-import { faPenToSquare } from '@fortawesome/free-solid-svg-icons/faPenToSquare';
 
 import AddRespirationForm from './AddRespiration';
 import EditRespirationForm from './EditRespiration';
 
 function RespirationData(commodity) {
-	library.add(faPlus, faPenToSquare);
 	const { id, respirationRate, climacteric } = commodity.commodity;
 
 	const { user } = useContext(ItemContext);
@@ -63,26 +58,9 @@ function RespirationData(commodity) {
 		showEditRespirationForm ? setShowEditRespirationForm(false) : setShowEditRespirationForm(true);
 	};
 
-	const toggleEdit = () => {
-		editMode ? setEditMode(false) : setEditMode(true);
-	};
-
 	return (
 		<div>
-			<CardTitle tag="h2">
-				Respiration{' '}
-				{user.current.isAdmin && (
-					<a onClick={toggleAddRespirationForm} className="edit-commodity-link">
-						<FontAwesomeIcon icon=" fa-circle-plus" />
-					</a>
-				)}
-				{user.current.isAdmin && (
-					<a className="edit-commodity-link" onClick={toggleEdit}>
-						{!editMode && <FontAwesomeIcon icon="fa-solid fa-pen-to-square" />}
-						{editMode && <FontAwesomeIcon icon="fa-eye" />}
-					</a>
-				)}
-			</CardTitle>
+			<CardTitle tag="h2">Respiration </CardTitle>
 			{climacteric === true && <CardTitle className="climacteric">Climacteric</CardTitle>}
 			{climacteric === false && <CardTitle className="climacteric">Non-Climacteric</CardTitle>}
 			{respirationClass && <CardTitle className="commodity-class">Class: {respirationClass}</CardTitle>}
@@ -116,28 +94,29 @@ function RespirationData(commodity) {
 								<td>{s.rrRate}</td>
 
 								<td className="edit-col">
-									<a
-										className={editMode ? 'edit-mode edit edit-commodity-link' : 'view-mode'}
-										onClick={() => {
-											setEditRespirationData(s);
-											editRespirationForm(id);
-										}}
-									>
-										<FontAwesomeIcon icon="fa-solid fa-pen-to-square" />
-									</a>
-									<a
-										className={editMode ? 'edit-mode delete' : 'view-mode'}
-										onClick={() => {
-											PostharvestApi.deleteRespirationData(s.id);
-											window.location.reload(false);
-										}}
-									>
-										<FontAwesomeIcon icon="  fa-circle-xmark" />
-									</a>
+									{user.current.isAdmin && (
+										<a
+											onClick={() => {
+												setEditRespirationData(s);
+												editRespirationForm(id);
+											}}
+										>
+											<i class="fa-regular fa-ellipsis-vertical" />
+										</a>
+									)}
 								</td>
 							</tr>
 						))}
 						<tr />
+						{user.current.isAdmin && (
+							<tr className="add-data">
+								{' '}
+								<a onClick={toggleAddRespirationForm} className="edit-commodity-link">
+									<i class="fa-solid fa-circle-plus" />
+									Add Respiration Data{' '}
+								</a>{' '}
+							</tr>
+						)}
 					</tbody>
 				</Table>
 

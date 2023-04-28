@@ -7,15 +7,8 @@ import PostharvestApi from '../api';
 import CommoditySearchForm from './CommoditySearchForm';
 import AddCommodityForm from './AddCommodity';
 import ItemContext from '../ItemContext';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import * as Icons from '@fortawesome/free-solid-svg-icons';
 
 function CommoditiesList() {
-	const iconList = Object.keys(Icons).filter((key) => key !== 'fas' && key !== 'prefix').map((icon) => Icons[icon]);
-
-	library.add(...iconList);
-
 	const { user } = useContext(ItemContext);
 	const [
 		commodities,
@@ -78,7 +71,8 @@ function CommoditiesList() {
 			<div className="commodities-list-search-form">
 				{user.current.isAdmin && (
 					<button onClick={addCommodityForm} className="add-commodity-btn">
-						<FontAwesomeIcon className="variety-list" icon="plus" /> Add
+						<i class="fa-light fa-plus variety-list" />
+						Add
 					</button>
 				)}
 			</div>
@@ -92,12 +86,7 @@ function CommoditiesList() {
 						tag="a"
 					>
 						{commodity.commodityName}
-						{commodity.variety && (
-							<span className="variety-list">
-								{' '}
-								<FontAwesomeIcon icon="caret-right" /> {commodity.variety}{' '}
-							</span>
-						)}
+						{commodity.variety && <span className="variety-list"> {commodity.variety} </span>}
 					</ListGroupItem>
 				))}
 			</ListGroup>

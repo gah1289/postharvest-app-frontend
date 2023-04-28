@@ -4,13 +4,9 @@ import React, { useState } from 'react';
 import { Form, FormGroup, Label, Input, ModalHeader, ModalBody } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import { library } from '@fortawesome/fontawesome-svg-core';
 import PostharvestApi from '../../api';
-import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus';
 
 function EditEthyleneForm(ethyleneData) {
-	library.add(faPlus);
-
 	const { id, temperature, c2h4Class, c2h4Production } = ethyleneData.ethyleneData;
 
 	const INITIAL_STATE = {};
@@ -43,7 +39,7 @@ function EditEthyleneForm(ethyleneData) {
 		<div className="edit-modal">
 			<ModalHeader>Edit Ethylene Data</ModalHeader>
 			<ModalBody>
-				<Form onSubmit={handleSubmit}>
+				<Form>
 					<FormGroup>
 						<Label htmlFor="temperature">Temperature ({'\u00b0'}C):</Label>
 						<Input
@@ -73,7 +69,20 @@ function EditEthyleneForm(ethyleneData) {
 							value={formData.c2h4Class || ''}
 						/>
 						<div className="modal-btn">
-							<button>Edit</button>
+							<button onClick={handleSubmit} className="save-data">
+								<i class="fa-light fa-floppy-disk" />
+							</button>
+
+							<button
+								className=" delete"
+								onClick={() => {
+									console.log(id);
+									PostharvestApi.deleteEthyleneData(id);
+									window.location.reload(false);
+								}}
+							>
+								<i class=" fa-light fa-trash-xmark" />
+							</button>
 						</div>
 					</FormGroup>
 				</Form>

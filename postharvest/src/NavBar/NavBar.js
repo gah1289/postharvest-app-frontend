@@ -4,10 +4,7 @@ import { Collapse, Navbar, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap
 import './NavBar.css';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { faCircleUser } from '@fortawesome/free-solid-svg-icons/faCircleUser';
-import { faHouse } from '@fortawesome/free-solid-svg-icons/faHouse';
+
 import ItemContext from '../ItemContext';
 
 function NavBar() {
@@ -18,14 +15,12 @@ function NavBar() {
 	const { isLoggedIn, user } = useContext(ItemContext);
 
 	const toggleNavbar = () => setCollapsed(!collapsed);
-	library.add(faCircleUser, faHouse);
 
 	return (
 		<div>
 			<Navbar color="faded" light>
 				<NavbarBrand href="/" className="me-auto">
-					<FontAwesomeIcon icon="fa-solid fa-house" />
-					{/* <img alt="Windham Packaging Logo" className="windham-logo-img" src={logo} /> */}
+					<i class="fa-sharp fa-solid fa-house" />
 				</NavbarBrand>
 
 				<button
@@ -37,7 +32,7 @@ function NavBar() {
 					aria-expanded="false"
 					aria-label="Toggle navigation"
 				>
-					{!isLoggedIn && <FontAwesomeIcon className="nav-icon" icon="fa-solid fa-circle-user" />}
+					{!isLoggedIn && <i class="fa-solid fa-user" />}
 					{isLoggedIn && (
 						<div className="logged-in-btn">
 							{user.current.firstName[0]}

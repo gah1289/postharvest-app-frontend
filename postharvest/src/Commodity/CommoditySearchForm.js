@@ -2,15 +2,12 @@ import React, { useState } from 'react';
 import PostharvestApi from '../api';
 import './Commodities.css';
 import { Row, Col, Form, Input, InputGroup } from 'reactstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons/faMagnifyingGlass';
 
 function CommoditySearchForm({ filterCommodities }) {
 	const INITIAL_STATE = {
 		commodityName : undefined
 	};
-	library.add(faMagnifyingGlass);
+
 	const [
 		formData,
 		setFormData
@@ -54,7 +51,7 @@ function CommoditySearchForm({ filterCommodities }) {
 							onChange={handleChange}
 							placeholder="Search by fruit or vegetable..."
 						/>
-						<FontAwesomeIcon className="search-icon" icon="fa-solid fa-magnifying-glass" />
+						<i class="fa-regular fa-magnifying-glass search-icon" />
 					</InputGroup>
 					<button
 						onClick={handleSubmit}

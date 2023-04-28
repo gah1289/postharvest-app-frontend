@@ -3,18 +3,13 @@ import { v4 as uuid } from 'uuid';
 import React, { useState, useContext } from 'react';
 import { Table, Modal, CardTitle } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { library } from '@fortawesome/fontawesome-svg-core';
 
-import PostharvestApi from '../../api';
 import ItemContext from '../../ItemContext';
-import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus';
-import { faPenToSquare } from '@fortawesome/free-solid-svg-icons/faPenToSquare';
+
 import AddEthyleneForm from './AddEthylene';
 import EditEthyleneForm from './EditEthylene';
 
 function EthyleneData(commodity) {
-	library.add(faPlus, faPenToSquare);
 	const { id, ethyleneSensitivity } = commodity.commodity;
 
 	const { user } = useContext(ItemContext);
@@ -33,10 +28,6 @@ function EthyleneData(commodity) {
 	}
 	getEthyleneClass();
 
-	const [
-		editMode,
-		setEditMode
-	] = useState(false);
 	const [
 		editEthyleneData,
 		setEditEthyleneData
@@ -60,26 +51,9 @@ function EthyleneData(commodity) {
 		showEditEthyleneForm ? setShowEditEthyleneForm(false) : setShowEditEthyleneForm(true);
 	};
 
-	const toggleEdit = () => {
-		editMode ? setEditMode(false) : setEditMode(true);
-	};
-
 	return (
 		<div>
-			<CardTitle tag="h2">
-				Ethylene{' '}
-				{user.current.isAdmin && (
-					<a onClick={toggleAddEthyleneForm} className="edit-commodity-link">
-						<FontAwesomeIcon icon=" fa-circle-plus" />
-					</a>
-				)}
-				{user.current.isAdmin && (
-					<a className="edit-commodity-link" onClick={toggleEdit}>
-						{!editMode && <FontAwesomeIcon icon="fa-solid fa-pen-to-square" />}
-						{editMode && <FontAwesomeIcon icon="fa-eye" />}
-					</a>
-				)}
-			</CardTitle>
+			<CardTitle tag="h2">Ethylene </CardTitle>
 			{ethyleneClass && <CardTitle className="commodity-class">Class: {ethyleneClass}</CardTitle>}
 			<div className="table-responsive">
 				<Table>
@@ -88,6 +62,7 @@ function EthyleneData(commodity) {
 							<tr>
 								<th>Temperature ({'\u00b0'}C)</th>
 								<th>Ethylene Production (µl/kg·hr)</th>
+								<th />
 							</tr>
 						</thead>
 					) : (
@@ -106,37 +81,29 @@ function EthyleneData(commodity) {
 						{ethyleneSensitivity.map((e) => (
 							<tr className={!showEditEthyleneForm ? 'edit-mode ' : 'view-mode'} key={uuid()}>
 								<td>{e.temperature}</td>
-								<td>
-									{e.c2h4Production}
-
-									<a
-										className={editMode ? 'edit-mode edit edit-commodity-link' : 'view-mode'}
-										onClick={() => {
-											setEditEthyleneData(e);
-											editEthyleneForm(id);
-										}}
-									>
-										<FontAwesomeIcon icon="fa-solid fa-pen-to-square" />
-									</a>
-									<a
-										className={editMode ? 'edit-mode delete' : 'view-mode'}
-										onClick={() => {
-											PostharvestApi.deleteEthyleneData(e.id);
-											window.location.reload(false);
-										}}
-									>
-										<FontAwesomeIcon icon=" fa-solid fa-circle-xmark" />
-									</a>
+								<td>{e.c2h4Production}</td>
+								<td className="edit-col">
+									{user.current.isAdmin && (
+										<a
+											onClick={() => {
+												setEditEthyleneData(e);
+												editEthyleneForm(id);
+											}}
+										>
+											<i class="fa-light fa-pen" />
+										</a>
+									)}
 								</td>
 							</tr>
 						))}
 						<tr />
+						{user.current.isAdmin && <AddEthyleneForm id={id} />}
 					</tbody>
 				</Table>
 			</div>
-			<Modal key={uuid()} isOpen={showAddEthyleneForm} toggle={toggleAddEthyleneForm}>
+			{/* <Modal key={uuid()} isOpen={showAddEthyleneForm} toggle={toggleAddEthyleneForm}>
 				<AddEthyleneForm id={id} />
-			</Modal>
+			</Modal> */}
 		</div>
 	);
 }

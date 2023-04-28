@@ -1,21 +1,26 @@
-// import '../Commodities.css';
-
+import '../Commodities.css';
 import React, { useState } from 'react';
-import { Form, FormGroup, ModalBody, ModalHeader, Label, Input } from 'reactstrap';
+import { Input } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { library } from '@fortawesome/fontawesome-svg-core';
+
 import PostharvestApi from '../../api';
-import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus';
 
 function AddEthyleneForm(id) {
-	library.add(faPlus);
 	const commodityId = id.id;
 
 	const INITIAL_STATE = {
 		temperature    : '',
 		c2h4Production : '',
 		c2h4Class      : ''
+	};
+
+	const [
+		showAddEthyleneForm,
+		setShowAddEthyleneForm
+	] = useState(false);
+
+	const toggleAddEthyleneForm = () => {
+		showAddEthyleneForm ? setShowAddEthyleneForm(false) : setShowAddEthyleneForm(true);
 	};
 
 	const [
@@ -32,7 +37,7 @@ function AddEthyleneForm(id) {
 		e.preventDefault();
 
 		try {
-			const data = await PostharvestApi.addEthyleneData(commodityId, formData);
+			await PostharvestApi.addEthyleneData(commodityId, formData);
 
 			// refresh page and automatically show new data
 			window.location.reload(false);
@@ -44,45 +49,52 @@ function AddEthyleneForm(id) {
 	};
 
 	return (
-		<div className="add-modal">
-			<ModalHeader>Add Ethylene Data</ModalHeader>
-			<ModalBody>
-				<Form onSubmit={handleSubmit}>
-					<FormGroup>
-						<Label htmlFor="temperature">Temperature ({'\u00b0'}C):</Label>
-						<Input
-							type="text"
-							name="temperature"
-							id="temperature"
-							onChange={handleChange}
-							value={formData.temperature || ''}
-						/>
-						<Label htmlFor="c2h4Production">Ethylene Production:</Label>
-						<Input
-							type="text"
-							name="c2h4Production"
-							id="c2h4Production"
-							onChange={handleChange}
-							value={formData.c2h4Production || ''}
-						/>
-						<Label htmlFor="c2h4Class">Ethylene Class:</Label>
-						<Input
-							type="text"
-							name="c2h4Class"
-							id="c2h4Class"
-							onChange={handleChange}
-							value={formData.c2h4Class || ''}
-						/>
+		<tr className="add-data">
+			{showAddEthyleneForm && (
+				<td>
+					<Input
+						type="text"
+						placeholder={`Temperature (\u00b0C)`}
+						name="temperature"
+						id="temperature"
+						onChange={handleChange}
+						value={formData.temperature || ''}
+					>
+						{' '}
+					</Input>
+				</td>
+			)}
 
-						<div className="modal-btn">
-							<button>
-								<FontAwesomeIcon icon="plus" /> Data
-							</button>
-						</div>
-					</FormGroup>
-				</Form>
-			</ModalBody>
-		</div>
+			{showAddEthyleneForm && (
+				<td>
+					<Input
+						type="text"
+						name="c2h4Production"
+						placeholder="Ethylene Production"
+						id="c2h4Production"
+						onChange={handleChange}
+						value={formData.c2h4Production || ''}
+					/>
+				</td>
+			)}
+			{!showAddEthyleneForm && (
+				<td colSpan={3}>
+					<a onClick={toggleAddEthyleneForm} className="edit-commodity-link">
+						<i class="fa-solid fa-circle-plus" /> Ethylene Data
+					</a>
+				</td>
+			)}
+			{showAddEthyleneForm && (
+				<td>
+					<a onClick={handleSubmit} className="edit-commodity-link">
+						<i class="fa-solid fa-floppy-disk" />
+					</a>
+					<a onClick={toggleAddEthyleneForm} className="edit-commodity-link">
+						<i class="fa-regular fa-xmark" />
+					</a>
+				</td>
+			)}
+		</tr>
 	);
 }
 

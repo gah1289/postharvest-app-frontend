@@ -17,9 +17,7 @@ import {
 } from 'reactstrap';
 import { v4 as uuid } from 'uuid';
 import ItemContext from '../ItemContext';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import * as Icons from '@fortawesome/free-solid-svg-icons';
+
 import TemperatureData from './TemperatureRecommendations/TemperatureData';
 import EthyleneData from './EthyleneSensitivity/EthyleneData';
 import ShelfLifeData from './ShelfLife/ShelfLifeData';
@@ -29,10 +27,6 @@ import WindhamStudies from './WindhamStudies/WindhamStudyData';
 import EditCommodityForm from './EditCommodityForm';
 
 function Commodity() {
-	const iconList = Object.keys(Icons).filter((key) => key !== 'fas' && key !== 'prefix').map((icon) => Icons[icon]);
-
-	library.add(...iconList);
-
 	const { user } = useContext(ItemContext);
 	const { id } = useParams();
 	const [
@@ -119,7 +113,7 @@ function Commodity() {
 					<div className="back-to-commodities justify-content-left">
 						{' '}
 						<a href="/search">
-							<FontAwesomeIcon icon="arrow-left" /> Commodities
+							<i class="fa-light fa-arrow-left" /> Commodities
 						</a>
 					</div>
 					<Row>
@@ -133,7 +127,7 @@ function Commodity() {
 										editCommodityForm();
 									}}
 								>
-									<FontAwesomeIcon icon="fa-solid fa-pen-to-square" />
+									<i class="fa-light fa-pen-to-square" />
 								</a>
 							)}
 						</Col>
@@ -158,7 +152,7 @@ function Commodity() {
 				<ReferenceData commodity={commodity} />
 				{user.current.isAdmin && (
 					<button className="delete-commodity" onClick={deleteModal}>
-						<FontAwesomeIcon icon="fa-solid fa-trash-can" /> Delete
+						<i class="fa-light fa-pen-to-square" /> Delete
 					</button>
 				)}
 			</CardBody>
